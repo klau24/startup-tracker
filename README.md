@@ -1,4 +1,4 @@
-# TO-DO
+## TO-DO
 * Setup prettierrc to run in vs-code and on every commit
 * Create sidebar component
 * Write test cases
