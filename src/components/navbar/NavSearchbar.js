@@ -10,7 +10,7 @@ function NavSearchbar() {
                type="text"
                name="search"
                placeholder="Search startup"
-               autocomplete="off"
+               autoComplete="off"
                aria-label="Search startup"
                className="pr-3 py-2 pl-10 font-semibold placeholder-gray-500 text-black rounded-2xl ring-2 ring-gray-300 "
             ></input>

@@ -6,12 +6,10 @@ import { MenuIcon } from '@heroicons/react/outline'
 const Navbar = ({ toggle }) => {
    return (
       <nav
-         className="flex justify-around items-center h-16 bg-white text-black relative shadow-sm font-mono"
+         className="flex justify-evenly items-center h-16 bg-white text-black relative shadow-sm font-mono"
          role="navigation"
       >
-         <Link to="/" className="pl-4">
-            startup-tracker
-         </Link>
+         <Link to="/">startup-tracker</Link>
          <NavSearchbar />
          <div className="px-4 cursor-pointer md:hidden" onClick={toggle}>
             <MenuIcon className="h-6 w-6 text-gray-500" />
