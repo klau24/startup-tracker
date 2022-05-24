@@ -34,14 +34,16 @@ function App() {
       <div className="w-screen h-screen">
          <Navbar toggle={toggle} />
          <NavDropdown isOpen={isOpen} toggle={toggle} />
-         <Routes>
-            <Route path="/" exact element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/screening" element={<Screening />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-         </Routes>
-         <Sidebar />
+         <div className="flex">
+            <Sidebar />
+            <Routes>
+               <Route path="/" exact element={<Home />} />
+               <Route path="/dashboard" element={<Dashboard />} />
+               <Route path="/screening" element={<Screening />} />
+               <Route path="/about" element={<About />} />
+               <Route path="/contact" element={<Contact />} />
+            </Routes>
+         </div>
       </div>
    )
 }
