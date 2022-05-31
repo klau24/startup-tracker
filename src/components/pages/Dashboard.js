@@ -14,6 +14,7 @@ import {
 } from 'chart.js'
 import { Bar, Pie, Scatter, Bubble, Line, PolarArea } from 'react-chartjs-2'
 import { faker } from '@faker-js/faker'
+import annotationPlugin from 'chartjs-plugin-annotation'
 
 ChartJS.register(
    CategoryScale,
@@ -25,7 +26,8 @@ ChartJS.register(
    ArcElement,
    PointElement,
    LineElement,
-   RadialLinearScale
+   RadialLinearScale,
+   annotationPlugin
 )
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
 
@@ -207,18 +209,27 @@ function Dashboard() {
                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
                            yAxisID: 'y',
                         },
-                        {
-                           label: 'Dataset 2',
-                           data: labels.map(() =>
-                              faker.datatype.number({ min: -1000, max: 1000 })
-                           ),
-                           borderColor: 'rgb(53, 162, 235)',
-                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                           yAxisID: 'y1',
-                        },
                      ],
                   }}
-                  options={{ responsive: true, maintainAspectRatio: true }}
+                  options={{
+                     responsive: true,
+                     maintainAspectRatio: true,
+                     plugins: {
+                        autocolors: false,
+                        annotation: {
+                           annotations: {
+                              line1: {
+                                 type: 'line',
+                                 xMin: 'April',
+                                 xMax: 'April',
+                                 borderColor: 'black',
+                                 borderWidth: 2,
+                                 borderDash: [10, 15],
+                              },
+                           },
+                        },
+                     },
+                  }}
                />
 
                <div className="flex h-1/2 w-full justify-left pt-5 pl-5">
