@@ -9,7 +9,9 @@
       "@testing-library/user-event": "^13.5.0",
       "chart.js": "^3.7.1",
       "chartjs-plugin-annotation": "^1.4.0",
+      "cors": "^2.8.5",
       "express": "^4.18.1",
+      "firebase": "^9.8.2",
       "react": "^18.1.0",
       "react-chartjs-2": "^4.1.0",
       "react-dom": "^18.1.0",
@@ -45,9 +47,11 @@
       ]
    },
    "devDependencies": {
+      "@babel/helper-compilation-targets": "^7.18.2",
       "@faker-js/faker": "^7.0.1",
       "husky": "^8.0.1",
       "prettier": "2.6.2",
       "tailwindcss": "^3.0.24"
-   }
+   },
+   "type": "module"
 }

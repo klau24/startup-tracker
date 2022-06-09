@@ -1,0 +1,29 @@
+import { Firebase } from 'firebase'
+
+const firebaseConfig = {
+   apiKey: 'AIzaSyAUFAmGa9rFF1vE6qPIw8Jgk7X08Vxfp9Y',
+
+   authDomain: 'twitter-data-cce17.firebaseapp.com',
+
+   databaseURL: 'https://twitter-data-cce17-default-rtdb.firebaseio.com',
+
+   projectId: 'twitter-data-cce17',
+
+   storageBucket: 'twitter-data-cce17.appspot.com',
+
+   messagingSenderId: '666831500521',
+
+   appId: '1:666831500521:web:a4c65eccb27206d1c3ec78',
+
+   measurementId: 'G-FFSJ1K993T',
+}
+
+// Initialize Firebase
+
+Firebase.initializeApp(firebaseConfig)
+
+const db = firebase.firestore()
+
+// Calling companies collection
+const Companies = db.collection('companies')
+module.exports = Companies
