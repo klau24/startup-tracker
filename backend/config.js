@@ -1,29 +1,42 @@
-import { Firebase } from 'firebase'
+// Import the functions you need from the SDKs you need
+/*
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
-   apiKey: 'AIzaSyAUFAmGa9rFF1vE6qPIw8Jgk7X08Vxfp9Y',
 
-   authDomain: 'twitter-data-cce17.firebaseapp.com',
+  apiKey: "AIzaSyAUFAmGa9rFF1vE6qPIw8Jgk7X08Vxfp9Y",
 
-   databaseURL: 'https://twitter-data-cce17-default-rtdb.firebaseio.com',
+  authDomain: "twitter-data-cce17.firebaseapp.com",
 
-   projectId: 'twitter-data-cce17',
+  databaseURL: "https://twitter-data-cce17-default-rtdb.firebaseio.com",
 
-   storageBucket: 'twitter-data-cce17.appspot.com',
+  projectId: "twitter-data-cce17",
 
-   messagingSenderId: '666831500521',
+  storageBucket: "twitter-data-cce17.appspot.com",
 
-   appId: '1:666831500521:web:a4c65eccb27206d1c3ec78',
+  messagingSenderId: "666831500521",
 
-   measurementId: 'G-FFSJ1K993T',
-}
+  appId: "1:666831500521:web:a4c65eccb27206d1c3ec78",
+
+  measurementId: "G-FFSJ1K993T"
+
+};
 
 // Initialize Firebase
 
-Firebase.initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
-const db = firebase.firestore()
+export const db = getFirestore(app);
+*/
 
-// Calling companies collection
-const Companies = db.collection('companies')
-module.exports = Companies
+var admin = require('firebase-admin')
+
+var serviceAccount = require('./serviceAccountKey.json')
+
+admin.initializeApp({
+   credential: admin.credential.cert(serviceAccount),
+   databaseURL: 'https://twitter-data-cce17-default-rtdb.firebaseio.com',
+})
+
+export const db = admin.firestore()

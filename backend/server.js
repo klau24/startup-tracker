@@ -1,20 +1,26 @@
-import { express } from 'express'
-import { cors } from 'cors'
-import { Companies } from './config.js'
+import { collection, getDocs } from 'firebase/firestore/lite'
+import express from 'express'
+import { db } from './config.js'
 
 var app = express()
-
 app.use(express.json())
-app.use(cors())
 
 var HTTP_PORT = 8000
 
 // getting all company names in the db
 app.get('/', async (req, res) => {
-   const snapshot = await Companies.get()
-   const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-   console.log(list)
-   //res.send(list);
+   res.json({ hello: 'world' })
+})
+
+// getting all company names in the db
+app.get('/companies', async (req, res) => {
+   let companies = db.collection('companies')
+
+   companies.get().then((querySnapshot) => {
+      querySnapshot.forEach((document) => {
+         console.log(document.id)
+      })
+   })
 })
 
 app.listen(HTTP_PORT, () => {
