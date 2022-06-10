@@ -1,25 +1,49 @@
-import { collection, getDocs } from 'firebase/firestore/lite'
-import express from 'express'
-import { db } from './config.js'
-
+var express = require('express')
 var app = express()
 app.use(express.json())
-
 var HTTP_PORT = 8000
 
-// getting all company names in the db
+var admin = require('firebase-admin')
+
+var serviceAccount = require('./serviceAccountKey.json')
+
+admin.initializeApp({
+   credential: admin.credential.cert(serviceAccount),
+   databaseURL: 'https://twitter-data-cce17-default-rtdb.firebaseio.com',
+})
+
+const db = admin.firestore()
+
 app.get('/', async (req, res) => {
    res.json({ hello: 'world' })
 })
 
-// getting all company names in the db
-app.get('/companies', async (req, res) => {
+app.get('/api/companies', (req, res) => {
    let companies = db.collection('companies')
+   var data = {}
+   var count = 0
 
    companies.get().then((querySnapshot) => {
       querySnapshot.forEach((document) => {
-         console.log(document.id)
+         data[count] = document.id
+         count++
       })
+      res.send(data)
+   })
+})
+
+app.get('/api/weeklyData/:company/', (req, res) => {
+   let weekly_data = db
+      .collection('companies')
+      .doc(req.params['company'])
+      .collection('weekly_data')
+   var data = {}
+
+   weekly_data.get().then((querySnapshot) => {
+      querySnapshot.forEach((document) => {
+         data[document.data().week] = document.data()
+      })
+      res.send(data)
    })
 })
 

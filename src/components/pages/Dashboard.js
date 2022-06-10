@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
    Chart as ChartJS,
    CategoryScale,
@@ -15,6 +15,7 @@ import {
 import { Bar, Pie, Scatter, Bubble, Line, PolarArea } from 'react-chartjs-2'
 import { faker } from '@faker-js/faker'
 import annotationPlugin from 'chartjs-plugin-annotation'
+import axios from 'axios'
 
 ChartJS.register(
    CategoryScale,
@@ -32,6 +33,15 @@ ChartJS.register(
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
 
 function Dashboard() {
+   const [weeklyData, setWeeklyData] = useState(0)
+
+   useEffect(() => {
+      axios.get('/api/weeklyData/PrizePool').then((res) => {
+         setWeeklyData(res.data)
+         console.log(res.data)
+      })
+   }, [])
+
    return (
       <div className="h-screen w-5/6">
          <div className="flex h-1/2 justify-center items-center">
@@ -66,31 +76,14 @@ function Dashboard() {
             </div>
 
             <div className="h-full w-1/3 border-r-2 border-b-2 border-bg-stone-100">
-               <Bar
+               <Line
                   data={{
-                     labels: [
-                        'January',
-                        'February',
-                        'March',
-                        'April',
-                        'May',
-                        'June',
-                        'July',
-                     ],
+                     labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'Dataset 1',
-                           data: labels.map(() =>
-                              faker.datatype.number({ min: 0, max: 1000 })
-                           ),
+                           label: 'PrizePool Weekly Users',
+                           data: [342, 45, 322, 202, 192, 2862, 1696],
                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        },
-                        {
-                           label: 'Dataset 2',
-                           data: labels.map(() =>
-                              faker.datatype.number({ min: 0, max: 1000 })
-                           ),
-                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
                         },
                      ],
                   }}
@@ -98,7 +91,8 @@ function Dashboard() {
                />
                <div className="flex h-1/2 w-full justify-left pt-5 pl-5">
                   <p>
-                     Title: My bar chart
+                     Title: PrizePool Weekly Users From 2021-08-05
+                     <br />
                      <br />
                      Description: Lorem Ipsum is simply dummy text of the
                      printing and typesetting industry. Lorem Ipsum has been the
@@ -110,16 +104,14 @@ function Dashboard() {
             </div>
 
             <div className="h-full w-1/3 border-r-2 border-b-2 border-bg-stone-100">
-               <Scatter
+               <Bar
                   data={{
+                     labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'A dataset',
-                           data: Array.from({ length: 100 }, () => ({
-                              x: faker.datatype.number({ min: -100, max: 100 }),
-                              y: faker.datatype.number({ min: -100, max: 100 }),
-                           })),
-                           backgroundColor: 'rgba(255, 99, 132, 1)',
+                           label: 'PrizePool Weekly User Tweets',
+                           data: [406, 46, 352, 207, 209], //Object.values(weeklyData['2021-08-05']['nlp_features']),
+                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
                         },
                      ],
                   }}
@@ -128,7 +120,8 @@ function Dashboard() {
 
                <div className="flex h-1/2 w-full justify-left pt-5 pl-5">
                   <p>
-                     Title: My scatter chart
+                     Title: PrizePool Weekly Users Tweets From 2021-08-05
+                     <br />
                      <br />
                      Description: Lorem Ipsum is simply dummy text of the
                      printing and typesetting industry. Lorem Ipsum has been the
