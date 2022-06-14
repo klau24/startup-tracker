@@ -14,6 +14,10 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
+// fix graphs to update
+// add more graphs
+// remove text
+
 app.get('/', async (req, res) => {
    res.json({ hello: 'world' })
 })
