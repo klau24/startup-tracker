@@ -13,7 +13,6 @@ import {
    RadialLinearScale,
 } from 'chart.js'
 import { Bar, Pie, Scatter, Bubble, Line, PolarArea } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import axios from 'axios'
 
@@ -30,7 +29,8 @@ ChartJS.register(
    RadialLinearScale,
    annotationPlugin
 )
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+
+const company = 'Yotascale'
 
 function parseWeeklyData(key, weeklyData, nlpFlag) {
    var parsedData = {}
@@ -51,7 +51,7 @@ function Dashboard() {
    const [weeklyData, setWeeklyData] = useState(0)
 
    useEffect(() => {
-      axios.get('/api/weeklyData/PrizePool').then((res) => {
+      axios.get('/api/weeklyData/'.concat(company)).then((res) => {
          setWeeklyData(res.data)
       })
    }, [])
@@ -65,7 +65,7 @@ function Dashboard() {
                      labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'PrizePool Weekly Company Tweets',
+                           label: company.concat(' Weekly Company Tweets'),
                            data: parseWeeklyData(
                               'company_tweets',
                               weeklyData,
@@ -85,7 +85,7 @@ function Dashboard() {
                      labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'PrizePool Weekly Users',
+                           label: company.concat(' Weekly Users'),
                            data: parseWeeklyData('users', weeklyData, 0),
                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
                         },
@@ -101,7 +101,7 @@ function Dashboard() {
                      labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'PrizePool Weekly User Tweets',
+                           label: company.concat(' Weekly User Tweets'),
                            data: parseWeeklyData('user_tweets', weeklyData, 0),
                            backgroundColor: 'rgba(53, 162, 235, 0.5)',
                         },
@@ -119,7 +119,7 @@ function Dashboard() {
                      labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'PrizePool Weekly Average Mentions',
+                           label: company.concat(' Weekly Average Mentions'),
                            data: parseWeeklyData('avg_mentions', weeklyData, 1),
                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
                         },
@@ -135,7 +135,9 @@ function Dashboard() {
                      labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'PrizePool Weekly Average VADER Sentiment',
+                           label: company.concat(
+                              ' Weekly Average VADER Sentiment'
+                           ),
                            data: parseWeeklyData(
                               'avg_vader_sentiment',
                               weeklyData,
@@ -155,7 +157,9 @@ function Dashboard() {
                      labels: Object.keys(weeklyData),
                      datasets: [
                         {
-                           label: 'PrizePool Weekly Average Tweet Characters',
+                           label: company.concat(
+                              ' Weekly Average Tweet Characters'
+                           ),
                            data: parseWeeklyData('avg_chars', weeklyData, 1),
                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
                         },
