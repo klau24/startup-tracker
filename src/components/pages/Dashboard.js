@@ -12,9 +12,11 @@ import {
    LineElement,
    RadialLinearScale,
 } from 'chart.js'
-import { Bar, Pie, Scatter, Bubble, Line, PolarArea } from 'react-chartjs-2'
+import { Bar, Line } from 'react-chartjs-2'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import axios from 'axios'
+import BarGraphCard from '../BarGraphCard'
+import LineGraphCard from '../LineGraphCard'
 
 ChartJS.register(
    CategoryScale,
@@ -58,114 +60,54 @@ function Dashboard() {
 
    return (
       <div className="h-screen w-5/6">
-         <div className="flex h-1/2 justify-center items-center">
-            <div className="h-full w-1/2 border-r-2 border-b-2 border-bg-stone-100">
-               <Bar
-                  data={{
-                     labels: Object.keys(weeklyData),
-                     datasets: [
-                        {
-                           label: company.concat(' Weekly Company Tweets'),
-                           data: parseWeeklyData(
-                              'company_tweets',
-                              weeklyData,
-                              0
-                           ),
-                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                        },
-                     ],
-                  }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+         <div className="flex h-1/2 justify-center items-center pl-3.5 pt-4">
+            <div className="h-full w-full">
+               <BarGraphCard
+                  title={company.concat(' Weekly Company Tweets')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('company_tweets', weeklyData, 0)}
                />
             </div>
 
-            <div className="h-full w-full border-r-2 border-b-2 border-bg-stone-100">
-               <Line
-                  data={{
-                     labels: Object.keys(weeklyData),
-                     datasets: [
-                        {
-                           label: company.concat(' Weekly Users'),
-                           data: parseWeeklyData('users', weeklyData, 0),
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        },
-                     ],
-                  }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+            <div className="h-full w-full">
+               <LineGraphCard
+                  title={company.concat(' Weekly Users')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('users', weeklyData, 0)}
                />
             </div>
 
-            <div className="h-full w-full border-r-2 border-b-2 border-bg-stone-100">
-               <Bar
-                  data={{
-                     labels: Object.keys(weeklyData),
-                     datasets: [
-                        {
-                           label: company.concat(' Weekly User Tweets'),
-                           data: parseWeeklyData('user_tweets', weeklyData, 0),
-                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                        },
-                     ],
-                  }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+            <div className="h-full w-full">
+               <BarGraphCard
+                  title={company.concat(' Weekly User Tweets')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('user_tweets', weeklyData, 0)}
                />
             </div>
          </div>
 
-         <div className="flex h-1/2 justify-center items-center">
-            <div className="h-full w-fullborder-r-2 border-b-2 border-bg-stone-100">
-               <Line
-                  data={{
-                     labels: Object.keys(weeklyData),
-                     datasets: [
-                        {
-                           label: company.concat(' Weekly Average Mentions'),
-                           data: parseWeeklyData('avg_mentions', weeklyData, 1),
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        },
-                     ],
-                  }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+         <div className="flex h-1/2 justify-center items-center pl-3.5">
+            <div className="h-full w-full">
+               <LineGraphCard
+                  title={company.concat(' Weekly Average Mentions')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('avg_mentions', weeklyData, 1)}
                />
             </div>
 
-            <div className="h-full w-full border-r-2 border-b-2 border-bg-stone-100">
-               <Bar
-                  data={{
-                     labels: Object.keys(weeklyData),
-                     datasets: [
-                        {
-                           label: company.concat(
-                              ' Weekly Average VADER Sentiment'
-                           ),
-                           data: parseWeeklyData(
-                              'avg_vader_sentiment',
-                              weeklyData,
-                              1
-                           ),
-                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                        },
-                     ],
-                  }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+            <div className="h-full w-full">
+               <BarGraphCard
+                  title={company.concat(' Weekly Average VADER Sentiment')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('avg_vader_sentiment', weeklyData, 1)}
                />
             </div>
 
-            <div className="h-full w-1/3 border-r-2 border-b-2 border-bg-stone-100">
-               <Line
-                  data={{
-                     labels: Object.keys(weeklyData),
-                     datasets: [
-                        {
-                           label: company.concat(
-                              ' Weekly Average Tweet Characters'
-                           ),
-                           data: parseWeeklyData('avg_chars', weeklyData, 1),
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        },
-                     ],
-                  }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+            <div className="h-full w-full">
+               <LineGraphCard
+                  title={company.concat(' Weekly Average Tweet Characters')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('avg_chars', weeklyData, 1)}
                />
             </div>
          </div>
