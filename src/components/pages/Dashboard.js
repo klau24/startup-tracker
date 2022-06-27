@@ -33,14 +33,34 @@ ChartJS.register(
 
 let company = 'Yotascale'
 
+function parseWeeklyDataHas(weeklyData) {
+   var parsedData = {}
+   var innerJson = {}
+   var jsonArr = []
+
+   for (let date in weeklyData) {
+      for (let feat in weeklyData[date]['nlp_features']) {
+         if (feat.indexOf('has_') >= 0) {
+            innerJson[feat] = weeklyData[date]['nlp_features'][feat]
+         }
+      }
+      parsedData[date] = innerJson
+      jsonArr.push(parsedData)
+      parsedData = {}
+      innerJson = {}
+   }
+
+   return jsonArr.splice(-4)
+}
+
 function parseWeeklyData(key, weeklyData, nlpFlag) {
    var parsedData = {}
 
-   for (let item in weeklyData) {
+   for (let date in weeklyData) {
       if (nlpFlag) {
-         parsedData[item] = weeklyData[item]['nlp_features'][key]
+         parsedData[date] = weeklyData[date]['nlp_features'][key]
       } else {
-         parsedData[item] = weeklyData[item][key]
+         parsedData[date] = weeklyData[date][key]
       }
    }
    return parsedData
@@ -48,6 +68,7 @@ function parseWeeklyData(key, weeklyData, nlpFlag) {
 
 function Dashboard() {
    const [weeklyData, setWeeklyData] = useState(0)
+   const [weeklyHasData, setWeeklyHasData] = useState([])
 
    useEffect(() => {
       if (company.indexOf(' ') >= 0) {
@@ -55,6 +76,7 @@ function Dashboard() {
       }
       axios.get('/api/weeklyData/'.concat(company)).then((res) => {
          setWeeklyData(res.data)
+         setWeeklyHasData(parseWeeklyDataHas(res.data))
       })
    }, [])
 

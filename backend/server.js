@@ -30,7 +30,6 @@ app.get('/api/companies', (req, res) => {
 
 app.get('/api/weeklyData/:company/', (req, res) => {
    let company = req.params['company']
-   console.log(company)
    if (company.indexOf('+') >= 0) {
       company = company.replace('+', ' ')
       console.log(company)
