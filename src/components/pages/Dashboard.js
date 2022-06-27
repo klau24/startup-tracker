@@ -12,7 +12,6 @@ import {
    LineElement,
    RadialLinearScale,
 } from 'chart.js'
-import { Bar, Line } from 'react-chartjs-2'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import axios from 'axios'
 import BarGraphCard from '../BarGraphCard'
@@ -32,17 +31,15 @@ ChartJS.register(
    annotationPlugin
 )
 
-const company = 'Yotascale'
+let company = 'Yotascale'
 
 function parseWeeklyData(key, weeklyData, nlpFlag) {
    var parsedData = {}
 
-   if (nlpFlag) {
-      for (let item in weeklyData) {
+   for (let item in weeklyData) {
+      if (nlpFlag) {
          parsedData[item] = weeklyData[item]['nlp_features'][key]
-      }
-   } else {
-      for (let item in weeklyData) {
+      } else {
          parsedData[item] = weeklyData[item][key]
       }
    }
@@ -53,6 +50,9 @@ function Dashboard() {
    const [weeklyData, setWeeklyData] = useState(0)
 
    useEffect(() => {
+      if (company.indexOf(' ') >= 0) {
+         company = company.replace(' ', '+')
+      }
       axios.get('/api/weeklyData/'.concat(company)).then((res) => {
          setWeeklyData(res.data)
       })

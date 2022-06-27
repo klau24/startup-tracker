@@ -14,14 +14,6 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
-// fix graphs to update
-// add more graphs
-// remove text
-
-app.get('/', async (req, res) => {
-   res.json({ hello: 'world' })
-})
-
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('companies')
    var data = {}
@@ -37,9 +29,15 @@ app.get('/api/companies', (req, res) => {
 })
 
 app.get('/api/weeklyData/:company/', (req, res) => {
+   let company = req.params['company']
+   console.log(company)
+   if (company.indexOf('+') >= 0) {
+      company = company.replace('+', ' ')
+      console.log(company)
+   }
    let weekly_data = db
       .collection('companies')
-      .doc(req.params['company'])
+      .doc(company)
       .collection('weekly_data')
    var data = {}
 

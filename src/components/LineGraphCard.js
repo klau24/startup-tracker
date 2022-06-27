@@ -4,10 +4,16 @@ import CardContent from '@mui/material/CardContent'
 import { Line } from 'react-chartjs-2'
 
 function LineGraphCard(props) {
-   const [expanded, setExpanded] = React.useState(false)
-
    return (
-      <Card sx={{ width: 320, height: 380, overflow: 'auto' }}>
+      <Card
+         sx={{
+            width: 320,
+            height: 380,
+            overflow: 'auto',
+            borderRadius: '15px',
+            boxShadow: 3,
+         }}
+      >
          <CardContent className="h-full">
             <Line
                data={{
