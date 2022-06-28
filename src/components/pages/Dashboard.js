@@ -16,6 +16,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 import axios from 'axios'
 import BarGraphCard from '../BarGraphCard'
 import LineGraphCard from '../LineGraphCard'
+import StackedBarGraphCard from '../StackedBarGraphCard'
 
 ChartJS.register(
    CategoryScale,
@@ -34,22 +35,30 @@ ChartJS.register(
 let company = 'Yotascale'
 
 function parseWeeklyDataHas(weeklyData) {
-   var parsedData = {}
-   var innerJson = {}
+   var dataArr = []
    var jsonArr = []
+   var colors = [
+      'rgba(53, 162, 235, 0.5)',
+      'rgb(255, 99, 132)',
+      'rgb(75, 192, 192)',
+      'rgb(33, 234, 152)',
+   ]
+   var count = 0
 
    for (let date in weeklyData) {
       for (let feat in weeklyData[date]['nlp_features']) {
          if (feat.indexOf('has_') >= 0) {
-            innerJson[feat] = weeklyData[date]['nlp_features'][feat]
+            dataArr.push(weeklyData[date]['nlp_features'][feat])
          }
       }
-      parsedData[date] = innerJson
-      jsonArr.push(parsedData)
-      parsedData = {}
-      innerJson = {}
+      jsonArr.push({
+         label: date,
+         data: dataArr,
+         backgroundColor: colors[count % 4],
+      })
+      count++
+      dataArr = []
    }
-
    return jsonArr.splice(-4)
 }
 
@@ -84,10 +93,15 @@ function Dashboard() {
       <div className="h-screen w-5/6">
          <div className="flex h-1/2 justify-center items-center pl-3.5 pt-4">
             <div className="h-full w-full">
-               <BarGraphCard
+               <StackedBarGraphCard
                   title={company.concat(' Weekly Company Tweets')}
-                  labels={Object.keys(weeklyData)}
-                  data={parseWeeklyData('company_tweets', weeklyData, 0)}
+                  labels={[
+                     'has_emoticon_ratio',
+                     'has_hashtag_ratio',
+                     'has_link_ratio',
+                     'has_mention_ratio',
+                  ]}
+                  data={weeklyHasData}
                />
             </div>
 
