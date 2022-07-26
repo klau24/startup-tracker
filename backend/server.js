@@ -1,8 +1,9 @@
 var express = require('express')
 var app = express()
 app.use(express.json())
-var HTTP_PORT = 8080
+var path = require('path')
 
+var HTTP_PORT = 8080
 var admin = require('firebase-admin')
 
 var serviceAccount = require('./serviceAccountKey.json')
@@ -13,6 +14,8 @@ admin.initializeApp({
 })
 
 const db = admin.firestore()
+
+app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('companies')
@@ -46,6 +49,10 @@ app.get('/api/weeklyData/:company/', (req, res) => {
       })
       res.send(data)
    })
+})
+
+app.get('/', (req, res) => {
+   res.sendFile(path.join(__dirname, 'client', 'index.html'))
 })
 
 app.listen(HTTP_PORT, () => {
