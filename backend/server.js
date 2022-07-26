@@ -1,7 +1,7 @@
 var express = require('express')
 var app = express()
 app.use(express.json())
-var HTTP_PORT = 8000
+var HTTP_PORT = 8080
 
 var admin = require('firebase-admin')
 
