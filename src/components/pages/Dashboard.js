@@ -14,6 +14,8 @@ import {
 } from 'chart.js'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import axios from 'axios'
+import Grid from '@mui/material/Grid'
+
 import BarGraphCard from '../BarGraphCard'
 import LineGraphCard from '../LineGraphCard'
 import StackedBarGraphCard from '../StackedBarGraphCard'
@@ -90,64 +92,60 @@ function Dashboard() {
    }, [])
 
    return (
-      <div className="h-screen w-5/6">
-         <div className="flex h-1/2 justify-center items-center pl-3.5 pt-4">
-            <div className="h-full w-full">
-               <StackedBarGraphCard
-                  title={company.concat(' Weekly Company Tweets')}
-                  labels={[
-                     'has_emoticon_ratio',
-                     'has_hashtag_ratio',
-                     'has_link_ratio',
-                     'has_mention_ratio',
-                  ]}
-                  data={weeklyHasData}
-               />
-            </div>
+      <Grid className="p-4" container spacing={2}>
+         <Grid item xs={12} s={6} md={4}>
+            <StackedBarGraphCard
+               title={company.concat(' Weekly Company Tweets')}
+               labels={[
+                  'has_emoticon_ratio',
+                  'has_hashtag_ratio',
+                  'has_link_ratio',
+                  'has_mention_ratio',
+               ]}
+               data={weeklyHasData}
+            />
+         </Grid>
 
-            <div className="h-full w-full">
-               <LineGraphCard
-                  title={company.concat(' Weekly Users')}
-                  labels={Object.keys(weeklyData)}
-                  data={parseWeeklyData('users', weeklyData, 0)}
-               />
-            </div>
+         <Grid item xs={12} s={6} md={4}>
+            <LineGraphCard
+               title={company.concat(' Weekly Users')}
+               labels={Object.keys(weeklyData)}
+               data={parseWeeklyData('users', weeklyData, 0)}
+            />
+         </Grid>
 
-            <div className="h-full w-full">
-               <BarGraphCard
-                  title={company.concat(' Weekly User Tweets')}
-                  labels={Object.keys(weeklyData)}
-                  data={parseWeeklyData('user_tweets', weeklyData, 0)}
-               />
-            </div>
-         </div>
+         <Grid item xs={12} s={6} md={4}>
+            <BarGraphCard
+               title={company.concat(' Weekly User Tweets')}
+               labels={Object.keys(weeklyData)}
+               data={parseWeeklyData('user_tweets', weeklyData, 0)}
+            />
+         </Grid>
 
-         <div className="flex h-1/2 justify-center items-center pl-3.5">
-            <div className="h-full w-full">
-               <LineGraphCard
-                  title={company.concat(' Weekly Average Mentions')}
-                  labels={Object.keys(weeklyData)}
-                  data={parseWeeklyData('avg_mentions', weeklyData, 1)}
-               />
-            </div>
+         <Grid item xs={12} s={6} md={4}>
+            <LineGraphCard
+               title={company.concat(' Weekly Average Mentions')}
+               labels={Object.keys(weeklyData)}
+               data={parseWeeklyData('avg_mentions', weeklyData, 1)}
+            />
+         </Grid>
 
-            <div className="h-full w-full">
-               <BarGraphCard
-                  title={company.concat(' Weekly Average VADER Sentiment')}
-                  labels={Object.keys(weeklyData)}
-                  data={parseWeeklyData('avg_vader_sentiment', weeklyData, 1)}
-               />
-            </div>
+         <Grid item xs={12} s={6} md={4}>
+            <BarGraphCard
+               title={company.concat(' Weekly Average VADER Sentiment')}
+               labels={Object.keys(weeklyData)}
+               data={parseWeeklyData('avg_vader_sentiment', weeklyData, 1)}
+            />
+         </Grid>
 
-            <div className="h-full w-full">
-               <LineGraphCard
-                  title={company.concat(' Weekly Average Tweet Characters')}
-                  labels={Object.keys(weeklyData)}
-                  data={parseWeeklyData('avg_chars', weeklyData, 1)}
-               />
-            </div>
-         </div>
-      </div>
+         <Grid item xs={12} s={6} md={4}>
+            <LineGraphCard
+               title={company.concat(' Weekly Average Tweet Characters')}
+               labels={Object.keys(weeklyData)}
+               data={parseWeeklyData('avg_chars', weeklyData, 1)}
+            />
+         </Grid>
+      </Grid>
    )
 }
 
