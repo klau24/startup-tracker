@@ -7,11 +7,11 @@ function StackedBarGraphCard(props) {
    return (
       <Card
          sx={{
-            width: 320,
-            height: 380,
+            minWidth: '20vw',
             overflow: 'auto',
-            borderRadius: '15px',
+            borderRadius: '20px',
             boxShadow: 3,
+            height: '50vh',
          }}
       >
          <CardContent className="h-full">
