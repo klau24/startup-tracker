@@ -15,7 +15,7 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
-app.use(express.static(path.join(__dirname, 'client')))
+//app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('companies')
@@ -51,9 +51,37 @@ app.get('/api/weeklyData/:company/', (req, res) => {
    })
 })
 
-app.get('/', (req, res) => {
-   res.sendFile(path.join(__dirname, 'client', 'index.html'))
+app.get('/api/twitterData/:company/', (req, res) => {
+   let company = req.params['company']
+   let twitterData = db
+      .collection('company_data')
+      .doc(company)
+      .collection('company_twitter_data')
+      .limit(1)
+
+   var data = {}
+
+   twitterData.get().then((querySnapshot) => {
+      querySnapshot.forEach((document) => {
+         data[document.id] = document.data()
+      })
+
+      // Summary of twitter account stats as of most recent date
+      twitterData
+         .limit(1)
+         .get()
+         .then((querySnapshot) => {
+            querySnapshot.forEach((document) => {
+               data['summary'] = document.data()['data']['public_metrics']
+               res.send(data)
+            })
+         })
+   })
 })
+
+/*app.get('/', (req, res) => {
+   res.sendFile(path.join(__dirname, 'client', 'index.html'))
+})*/
 
 app.listen(HTTP_PORT, () => {
    console.log('Server running on port %PORT%'.replace('%PORT%', HTTP_PORT))

@@ -1,7 +1,7 @@
 export const SidebarData = [
    {
       title: "Company's Twitter",
-      link: '/companys-twitter',
+      link: '/company-twitter',
    },
    {
       title: 'Tweet Contents',

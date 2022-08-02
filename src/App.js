@@ -8,6 +8,7 @@ import Screening from './components/pages/Screening'
 import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import Sidebar from './components/sidebar/Sidebar'
+import CompanyTwitter from './components/pages/CompanyTwitter'
 
 function App() {
    const [isOpen, setIsOpen] = useState(false)
@@ -42,6 +43,7 @@ function App() {
                <Route path="/screening" element={<Screening />} />
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />
+               <Route path="/company-twitter" element={<CompanyTwitter />} />
             </Routes>
          </div>
       </div>

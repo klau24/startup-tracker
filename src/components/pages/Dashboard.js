@@ -78,7 +78,7 @@ function parseWeeklyData(key, weeklyData, nlpFlag) {
 }
 
 function Dashboard() {
-   const [weeklyData, setWeeklyData] = useState(0)
+   const [weeklyData, setWeeklyData] = useState([])
    const [weeklyHasData, setWeeklyHasData] = useState([])
 
    useEffect(() => {
