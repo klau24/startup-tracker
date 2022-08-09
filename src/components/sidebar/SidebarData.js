@@ -5,7 +5,7 @@ export const SidebarData = [
    },
    {
       title: 'Tweet Contents',
-      link: '/tweet-contents',
+      link: '/tweet-content',
    },
    {
       title: 'Media Mentions',

@@ -9,12 +9,22 @@ import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import Sidebar from './components/sidebar/Sidebar'
 import CompanyTwitter from './components/pages/CompanyTwitter'
+import TweetContent from './components/pages/TweetContent'
 
 function App() {
    const [isOpen, setIsOpen] = useState(false)
+   const [navbarSearch, setNavbarSearch] = useState(null)
 
    const toggle = () => {
       setIsOpen(!isOpen)
+   }
+
+   const handleNavbarSearch = (searchVal) => {
+      if (searchVal.target.nodeName === 'LI') {
+         setNavbarSearch(searchVal.target.textContent)
+      } else if (searchVal.target.nodeName === 'INPUT') {
+         setNavbarSearch(searchVal.target.value)
+      }
    }
 
    useEffect(() => {
@@ -33,17 +43,27 @@ function App() {
 
    return (
       <div className="w-screen h-screen">
-         <Navbar toggle={toggle} />
+         <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
          <NavDropdown isOpen={isOpen} toggle={toggle} />
          <div className="flex">
             <Sidebar />
             <Routes>
                <Route path="/" exact element={<Home />} />
-               <Route path="/dashboard" element={<Dashboard />} />
+               <Route
+                  path="/dashboard"
+                  element={<Dashboard company={navbarSearch} />}
+               />
                <Route path="/screening" element={<Screening />} />
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />
-               <Route path="/company-twitter" element={<CompanyTwitter />} />
+               <Route
+                  path="/company-twitter"
+                  element={<CompanyTwitter company={navbarSearch} />}
+               />
+               <Route
+                  path="/tweet-content"
+                  element={<TweetContent company={navbarSearch} />}
+               />
             </Routes>
          </div>
       </div>

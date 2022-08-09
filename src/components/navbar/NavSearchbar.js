@@ -1,47 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import { SearchIcon } from '@heroicons/react/outline'
+import React from 'react'
+import Autocomplete from '@mui/material/Autocomplete'
+import TextField from '@mui/material/TextField'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-function NavSearchbar() {
-   const [companies, setCompanies] = useState([])
-
-   useEffect(() => {
-      axios.get('/api/companies').then((res) => {
-         setCompanies(res.data)
-      })
-   }, [])
+function NavSearchbar(props) {
+   const theme = createTheme({
+      components: {
+         MuiOutlinedInput: {
+            styleOverrides: {
+               root: {
+                  borderRadius: 20,
+                  '.MuiOutlinedInput-notchedOutline': {
+                     borderColor: '#808080',
+                  },
+               },
+            },
+         },
+      },
+   })
 
    return (
-      <form className="pl-4" action="">
-         <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
-            <SearchIcon className="h-5 w-5 absolute ml-3 pointer-events-none" />
-            <input
-               type="text"
-               name="search"
-               placeholder="Search startup"
-               autoComplete="off"
-               aria-label="Search startup"
-               className="pr-3 py-2 pl-10 font-semibold placeholder-gray-500 text-black rounded-2xl ring-2 ring-gray-300 "
-            ></input>
-         </div>
-      </form>
+      <div>
+         <ThemeProvider theme={theme}>
+            <Autocomplete
+               id="search-startup"
+               style={{ width: 300 }}
+               freeSolo
+               options={props.companies.map((company) => company.label)}
+               onChange={props.handleNavbarSearch}
+               renderInput={(params) => (
+                  <TextField {...params} label="Search Startup" />
+               )}
+            />
+         </ThemeProvider>
+      </div>
    )
 }
 
 export default NavSearchbar
-
-/*
-<form className="pl-4" action="">
-         <div className="relative flex items-center text-gray-400 focus-within:text-gray-600">
-            <SearchIcon className="h-5 w-5 absolute ml-3 pointer-events-none" />
-            <input
-               type="text"
-               name="search"
-               placeholder="Search startup"
-               autoComplete="off"
-               aria-label="Search startup"
-               className="pr-3 py-2 pl-10 font-semibold placeholder-gray-500 text-black rounded-2xl ring-2 ring-gray-300 "
-            ></input>
-         </div>
-      </form>
-*/

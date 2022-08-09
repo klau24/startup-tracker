@@ -5,21 +5,26 @@ import axios from 'axios'
 let company = 'Yotascale'
 
 // Figure out how to implement with grid
-function CompanyTwitter() {
+function CompanyTwitter(props) {
    const [twitterData, setTwitterData] = useState(null)
 
    useEffect(() => {
-      axios
-         .get('/api/twitterData/'.concat(company))
-         .then((res) => {
-            console.log('res: ', res.data)
-            setTwitterData(res.data)
-            console.log('twitterData: ', twitterData)
-         })
-         .catch((err) => {
-            console.log(err)
-         })
-   }, [])
+      var company = props.company
+
+      if (company) {
+         if (props.company.indexOf(' ') >= 0) {
+            company = company.replace(' ', '+')
+         }
+         axios
+            .get('/api/twitterData/'.concat(company))
+            .then((res) => {
+               setTwitterData(res.data)
+            })
+            .catch((err) => {
+               console.log(err)
+            })
+      }
+   }, [props.company])
 
    if (twitterData) {
       return (

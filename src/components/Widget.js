@@ -7,9 +7,11 @@ function Widget(props) {
          <span className="text-2xl">{props.title}</span>
          <div className="flex mt-5 mb-5 mr-0 ml-0 items-center">
             <span className="text-3xl font-bold">{props.data}</span>
-            <span className="flex items-center ml-5">
-               +0 % <KeyboardArrowUpIcon className="text-green-500" />
-            </span>
+            {props.showPercent && (
+               <span className="flex items-center ml-5">
+                  +0 % <KeyboardArrowUpIcon className="text-green-500" />
+               </span>
+            )}
          </div>
          <span className="text-base text-gray-400">Compared to last month</span>
       </div>

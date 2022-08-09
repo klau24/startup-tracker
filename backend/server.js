@@ -19,15 +19,19 @@ const db = admin.firestore()
 
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('companies')
-   var data = {}
+   var companyArr = []
+   var company = {}
    var count = 0
 
    companies.get().then((querySnapshot) => {
       querySnapshot.forEach((document) => {
-         data[count] = document.id
+         company['label'] = document.id
+         company['id'] = count
+         companyArr.push(company)
+         company = {}
          count++
       })
-      res.send(data)
+      res.send(companyArr)
    })
 })
 
@@ -35,8 +39,8 @@ app.get('/api/weeklyData/:company/', (req, res) => {
    let company = req.params['company']
    if (company.indexOf('+') >= 0) {
       company = company.replace('+', ' ')
-      console.log(company)
    }
+
    let weekly_data = db
       .collection('companies')
       .doc(company)
@@ -53,11 +57,14 @@ app.get('/api/weeklyData/:company/', (req, res) => {
 
 app.get('/api/twitterData/:company/', (req, res) => {
    let company = req.params['company']
+   if (company.indexOf('+') >= 0) {
+      company = company.replace('+', ' ')
+   }
+
    let twitterData = db
       .collection('company_data')
       .doc(company)
       .collection('company_twitter_data')
-      .limit(1)
 
    var data = {}
 
@@ -76,6 +83,90 @@ app.get('/api/twitterData/:company/', (req, res) => {
                res.send(data)
             })
          })
+   })
+})
+
+app.get('/api/tweets/:company/', (req, res) => {
+   let company = req.params['company']
+   if (company.indexOf('+') >= 0) {
+      company = company.replace('+', ' ')
+   }
+
+   let tweetData = db
+      .collection('company_data')
+      .doc(company)
+      .collection('tweets')
+
+   var data = { data: {} }
+   var wordCloud = {}
+   var wordCloudArr = []
+   var tweetCount = 0
+   var avgSyllables = 0
+   var avgWords = 0
+   var avgReadGrade = 0
+   var likeCount = 0
+   var retweetCount = 0
+
+   tweetData.get().then((querySnapshot) => {
+      querySnapshot.forEach((document) => {
+         document.data()['tweets'].forEach((tweet) => {
+            tweet['nlp_features']['processed_tweet'].split(' ').map((word) => {
+               if (word in wordCloud) {
+                  wordCloud[word]++
+               } else {
+                  wordCloud[word] = 1
+               }
+            })
+
+            avgSyllables +=
+               tweet['nlp_features']['readability_features']['sentence info'][
+                  'syllables'
+               ]
+            avgWords +=
+               tweet['nlp_features']['readability_features']['sentence info'][
+                  'words'
+               ]
+            avgReadGrade +=
+               tweet['nlp_features']['readability_features'][
+                  'readability grades'
+               ]['Coleman-Liau']
+            likeCount += tweet['public_metrics']['like_count']
+            retweetCount += tweet['public_metrics']['retweet_count']
+            tweetCount++
+         })
+
+         date = document.id.split(' ')[0]
+         if (date in data['data']) {
+            data['data'][date]['likeCount'] += likeCount
+            data['data'][date]['retweetCount'] += retweetCount
+         } else {
+            data['data'][document.id] = {
+               likeCount: likeCount,
+               retweetCount: retweetCount,
+            }
+         }
+
+         likeCount = 0
+         retweetCount = 0
+      })
+
+      avgSyllables /= tweetCount
+      avgWords /= tweetCount
+      avgReadGrade /= tweetCount
+
+      for (var i in wordCloud) {
+         if (wordCloud[i] > 1) {
+            wordCloudArr.push({ text: i, value: wordCloud[i] })
+         }
+      }
+      data['wordFrequency'] = wordCloudArr
+      data['summaryData'] = {
+         avgSyllables: avgSyllables.toFixed(2),
+         avgWords: avgWords.toFixed(2),
+         avgReadGrade: avgReadGrade.toFixed(2),
+      }
+
+      res.send(data)
    })
 })
 

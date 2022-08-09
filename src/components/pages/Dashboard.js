@@ -34,7 +34,7 @@ ChartJS.register(
    annotationPlugin
 )
 
-let company = 'Yotascale'
+//let company = 'Yotascale'
 
 function parseWeeklyDataHas(weeklyData) {
    var dataArr = []
@@ -77,76 +77,86 @@ function parseWeeklyData(key, weeklyData, nlpFlag) {
    return parsedData
 }
 
-function Dashboard() {
+function Dashboard(props) {
    const [weeklyData, setWeeklyData] = useState([])
    const [weeklyHasData, setWeeklyHasData] = useState([])
 
    useEffect(() => {
-      if (company.indexOf(' ') >= 0) {
-         company = company.replace(' ', '+')
+      var company = props.company
+      if (company) {
+         if (props.company.indexOf(' ') >= 0) {
+            company = company.replace(' ', '+')
+         }
+
+         axios.get('/api/weeklyData/'.concat(company)).then((res) => {
+            setWeeklyData(res.data)
+            setWeeklyHasData(parseWeeklyDataHas(res.data))
+         })
       }
-      axios.get('/api/weeklyData/'.concat(company)).then((res) => {
-         setWeeklyData(res.data)
-         setWeeklyHasData(parseWeeklyDataHas(res.data))
-      })
-   }, [])
+   }, [props.company])
 
-   return (
-      <Grid className="p-4" container spacing={2}>
-         <Grid item xs={12} s={6} md={4}>
-            <StackedBarGraphCard
-               title={company.concat(' Weekly Company Tweets')}
-               labels={[
-                  'has_emoticon_ratio',
-                  'has_hashtag_ratio',
-                  'has_link_ratio',
-                  'has_mention_ratio',
-               ]}
-               data={weeklyHasData}
-            />
-         </Grid>
+   if (props.company) {
+      return (
+         <Grid className="p-4" container spacing={2}>
+            <Grid item xs={12} s={6} md={4}>
+               <StackedBarGraphCard
+                  title={props.company.concat(' Weekly Company Tweets')}
+                  labels={[
+                     'has_emoticon_ratio',
+                     'has_hashtag_ratio',
+                     'has_link_ratio',
+                     'has_mention_ratio',
+                  ]}
+                  data={weeklyHasData}
+               />
+            </Grid>
 
-         <Grid item xs={12} s={6} md={4}>
-            <LineGraphCard
-               title={company.concat(' Weekly Users')}
-               labels={Object.keys(weeklyData)}
-               data={parseWeeklyData('users', weeklyData, 0)}
-            />
-         </Grid>
+            <Grid item xs={12} s={6} md={4}>
+               <LineGraphCard
+                  title={props.company.concat(' Weekly Users')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('users', weeklyData, 0)}
+               />
+            </Grid>
 
-         <Grid item xs={12} s={6} md={4}>
-            <BarGraphCard
-               title={company.concat(' Weekly User Tweets')}
-               labels={Object.keys(weeklyData)}
-               data={parseWeeklyData('user_tweets', weeklyData, 0)}
-            />
-         </Grid>
+            <Grid item xs={12} s={6} md={4}>
+               <BarGraphCard
+                  title={props.company.concat(' Weekly User Tweets')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('user_tweets', weeklyData, 0)}
+               />
+            </Grid>
 
-         <Grid item xs={12} s={6} md={4}>
-            <LineGraphCard
-               title={company.concat(' Weekly Average Mentions')}
-               labels={Object.keys(weeklyData)}
-               data={parseWeeklyData('avg_mentions', weeklyData, 1)}
-            />
-         </Grid>
+            <Grid item xs={12} s={6} md={4}>
+               <LineGraphCard
+                  title={props.company.concat(' Weekly Average Mentions')}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('avg_mentions', weeklyData, 1)}
+               />
+            </Grid>
 
-         <Grid item xs={12} s={6} md={4}>
-            <BarGraphCard
-               title={company.concat(' Weekly Average VADER Sentiment')}
-               labels={Object.keys(weeklyData)}
-               data={parseWeeklyData('avg_vader_sentiment', weeklyData, 1)}
-            />
-         </Grid>
+            <Grid item xs={12} s={6} md={4}>
+               <BarGraphCard
+                  title={props.company.concat(
+                     ' Weekly Average VADER Sentiment'
+                  )}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('avg_vader_sentiment', weeklyData, 1)}
+               />
+            </Grid>
 
-         <Grid item xs={12} s={6} md={4}>
-            <LineGraphCard
-               title={company.concat(' Weekly Average Tweet Characters')}
-               labels={Object.keys(weeklyData)}
-               data={parseWeeklyData('avg_chars', weeklyData, 1)}
-            />
+            <Grid item xs={12} s={6} md={4}>
+               <LineGraphCard
+                  title={props.company.concat(
+                     ' Weekly Average Tweet Characters'
+                  )}
+                  labels={Object.keys(weeklyData)}
+                  data={parseWeeklyData('avg_chars', weeklyData, 1)}
+               />
+            </Grid>
          </Grid>
-      </Grid>
-   )
+      )
+   }
 }
 
 export default Dashboard
