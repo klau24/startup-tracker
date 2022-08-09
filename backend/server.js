@@ -15,7 +15,7 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
-//app.use(express.static(path.join(__dirname, 'client')))
+app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('companies')
@@ -170,9 +170,9 @@ app.get('/api/tweets/:company/', (req, res) => {
    })
 })
 
-/*app.get('/', (req, res) => {
+app.get('/', (req, res) => {
    res.sendFile(path.join(__dirname, 'client', 'index.html'))
-})*/
+})
 
 app.listen(HTTP_PORT, () => {
    console.log('Server running on port %PORT%'.replace('%PORT%', HTTP_PORT))
