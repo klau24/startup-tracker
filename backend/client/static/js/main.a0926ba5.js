@@ -1,4 +1,4 @@
-/*! For license information please see main.9d80200d.js.LICENSE.txt */
+/*! For license information please see main.a0926ba5.js.LICENSE.txt */
 !(function () {
    var e = {
          76: function (e, t, n) {
@@ -28711,7 +28711,7 @@
             il = rl
          var ol = function (e) {
                return (0, Nt.jsx)(Hs, {
-                  sx: { minWidth: 275 },
+                  sx: { minWidth: 275, borderRadius: 4, boxShadow: 3 },
                   children: (0, Nt.jsxs)(Ys, {
                      children: [
                         (0, Nt.jsx)(il, {
@@ -53597,4 +53597,4 @@
          )
       })()
 })()
-//# sourceMappingURL=main.9d80200d.js.map
+//# sourceMappingURL=main.a0926ba5.js.map
