@@ -393,9 +393,6 @@ video {
 .ml-5 {
    margin-left: 1.25rem;
 }
-.mt-3 {
-   margin-top: 0.75rem;
-}
 .flex {
    display: flex;
 }
@@ -432,11 +429,11 @@ video {
 .w-6 {
    width: 1.5rem;
 }
-.w-full {
-   width: 100%;
-}
 .w-1\/6 {
    width: 16.666667%;
+}
+.w-full {
+   width: 100%;
 }
 .flex-1 {
    flex: 1 1;
@@ -461,9 +458,6 @@ video {
 }
 .justify-center {
    justify-content: center;
-}
-.justify-between {
-   justify-content: space-between;
 }
 .justify-evenly {
    justify-content: space-evenly;
@@ -492,6 +486,9 @@ video {
    padding-left: 1rem;
    padding-right: 1rem;
 }
+.pl-3 {
+   padding-left: 0.75rem;
+}
 .text-left {
    text-align: left;
 }
@@ -502,17 +499,12 @@ video {
    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       Liberation Mono, Courier New, monospace;
 }
-.text-2xl {
-   font-size: 1.5rem;
-   line-height: 2rem;
-}
-.text-3xl {
-   font-size: 1.875rem;
-   line-height: 2.25rem;
-}
 .text-base {
    font-size: 1rem;
    line-height: 1.5rem;
+}
+.font-normal {
+   font-weight: 400;
 }
 .font-bold {
    font-weight: 700;
@@ -564,6 +556,16 @@ video {
    -webkit-text-decoration-line: underline;
    text-decoration-line: underline;
 }
+@media (min-width: 640px) {
+   .sm\:text-base {
+      font-size: 1rem;
+      line-height: 1.5rem;
+   }
+   .sm\:text-lg {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+   }
+}
 @media (min-width: 768px) {
    .md\:block {
       display: block;
@@ -571,5 +573,23 @@ video {
    .md\:hidden {
       display: none;
    }
+   .md\:text-lg {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+   }
+   .md\:text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+   }
 }
-/*# sourceMappingURL=main.649bc9ac.css.map*/
+@media (min-width: 1024px) {
+   .lg\:text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+   }
+   .lg\:text-3xl {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+   }
+}
+/*# sourceMappingURL=main.17150f1a.css.map*/
