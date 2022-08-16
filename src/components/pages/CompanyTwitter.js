@@ -1,12 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import Widget from '../Widget'
 import axios from 'axios'
+import Grid from '@mui/material/Grid'
+import BarGraphCard from '../BarGraphCard'
+import LineGraphCard from '../LineGraphCard'
+import StackedBarGraphCard from '../StackedBarGraphCard'
+import Sidebar from '../sidebar/Sidebar'
 
-let company = 'Yotascale'
+import {
+   Chart as ChartJS,
+   CategoryScale,
+   LinearScale,
+   BarElement,
+   Title,
+   Tooltip,
+   Legend,
+   ArcElement,
+   PointElement,
+   LineElement,
+   RadialLinearScale,
+} from 'chart.js'
 
-// Figure out how to implement with grid
+import annotationPlugin from 'chartjs-plugin-annotation'
+
+ChartJS.register(
+   CategoryScale,
+   LinearScale,
+   BarElement,
+   Title,
+   Tooltip,
+   Legend,
+   ArcElement,
+   PointElement,
+   LineElement,
+   RadialLinearScale,
+   annotationPlugin
+)
+
 function CompanyTwitter(props) {
    const [twitterData, setTwitterData] = useState(null)
+   const [weeklyData, setWeeklyData] = useState(null)
+   const [weeklyHasData, setWeeklyHasData] = useState(null)
 
    useEffect(() => {
       var company = props.company
@@ -23,29 +57,142 @@ function CompanyTwitter(props) {
             .catch((err) => {
                console.log(err)
             })
+
+         axios.get('/api/weeklyData/'.concat(company)).then((res) => {
+            setWeeklyData(res.data)
+            setWeeklyHasData(parseWeeklyDataHas(res.data))
+         })
       }
    }, [props.company])
 
-   if (twitterData) {
+   function parseWeeklyDataHas(weeklyData) {
+      var dataArr = []
+      var jsonArr = []
+      var colors = [
+         'rgba(53, 162, 235, 0.5)',
+         'rgb(255, 99, 132)',
+         'rgb(75, 192, 192)',
+         'rgb(33, 234, 152)',
+      ]
+      var count = 0
+
+      for (let date in weeklyData) {
+         for (let feat in weeklyData[date]['nlp_features']) {
+            if (feat.indexOf('has_') >= 0) {
+               dataArr.push(weeklyData[date]['nlp_features'][feat])
+            }
+         }
+         jsonArr.push({
+            label: date,
+            data: dataArr,
+            backgroundColor: colors[count % 4],
+         })
+         count++
+         dataArr = []
+      }
+      return jsonArr.splice(-4)
+   }
+
+   function parseWeeklyData(key, weeklyData, nlpFlag) {
+      var parsedData = {}
+
+      for (let date in weeklyData) {
+         if (nlpFlag) {
+            parsedData[date] = weeklyData[date]['nlp_features'][key]
+         } else {
+            parsedData[date] = weeklyData[date][key]
+         }
+      }
+      return parsedData
+   }
+
+   if (twitterData && weeklyData && weeklyHasData) {
       return (
-         <div className="w-full flex justify-between mt-3">
-            <Widget
-               title="Follower Count"
-               data={twitterData['summary']['followers_count']}
-            />
-            <Widget
-               title="Following Count"
-               data={twitterData['summary']['following_count']}
-            />
-            <Widget
-               title="Number of Tweets"
-               data={twitterData['summary']['tweet_count']}
-            />
-            <Widget
-               title="Public List Count"
-               data={twitterData['summary']['listed_count']}
-            />
-         </div>
+         <>
+            <Sidebar />
+            <Grid
+               className="p-4"
+               container
+               justifyContent="center"
+               style={{ height: '95vh', overflow: 'auto' }}
+               spacing={2}
+            >
+               <Grid item xs={12} s={6} md={3}>
+                  <Widget
+                     title="Follower Count"
+                     data={twitterData['summary']['followers_count']}
+                     showPercent={true}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={3}>
+                  <Widget
+                     title="Following Count"
+                     data={twitterData['summary']['following_count']}
+                     showPercent={true}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={3}>
+                  <Widget
+                     title="Number of Tweets"
+                     data={twitterData['summary']['tweet_count']}
+                     showPercent={true}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={3}>
+                  <Widget
+                     title="Public List Count"
+                     data={twitterData['summary']['listed_count']}
+                     showPercent={true}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={4}>
+                  <StackedBarGraphCard
+                     title={props.company.concat(' Weekly Company Tweets')}
+                     labels={[
+                        'has_emoticon_ratio',
+                        'has_hashtag_ratio',
+                        'has_link_ratio',
+                        'has_mention_ratio',
+                     ]}
+                     data={weeklyHasData}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={4}>
+                  <LineGraphCard
+                     title={props.company.concat(' Weekly Users')}
+                     labels={Object.keys(weeklyData)}
+                     data={parseWeeklyData('users', weeklyData, 0)}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={4}>
+                  <LineGraphCard
+                     title={props.company.concat(' Weekly Average Mentions')}
+                     labels={Object.keys(weeklyData)}
+                     data={parseWeeklyData('avg_mentions', weeklyData, 1)}
+                  />
+               </Grid>
+
+               <Grid item xs={12} s={6} md={4}>
+                  <BarGraphCard
+                     title={props.company.concat(
+                        ' Weekly Average VADER Sentiment'
+                     )}
+                     labels={Object.keys(weeklyData)}
+                     data={parseWeeklyData(
+                        'avg_vader_sentiment',
+                        weeklyData,
+                        1
+                     )}
+                  />
+               </Grid>
+            </Grid>
+         </>
       )
    }
 }

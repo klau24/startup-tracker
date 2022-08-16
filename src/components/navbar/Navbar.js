@@ -39,7 +39,7 @@ const Navbar = (props) => {
                <Link className="p-4 hover:underline" to="/">
                   Home
                </Link>
-               <Link className="p-4 hover:underline" to="/dashboard">
+               <Link className="p-4 hover:underline" to="/company-twitter">
                   Dashboard
                </Link>
                <Link className="p-4 hover:underline" to="/screening">

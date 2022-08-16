@@ -3,11 +3,9 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/navbar/Navbar'
 import NavDropdown from './components//navbar/NavDropdown'
 import Home from './components/pages/Home'
-import Dashboard from './components/pages/Dashboard'
 import Screening from './components/pages/Screening'
 import About from './components/pages/About'
 import Contact from './components/pages/Contact'
-import Sidebar from './components/sidebar/Sidebar'
 import CompanyTwitter from './components/pages/CompanyTwitter'
 import TweetContent from './components/pages/TweetContent'
 
@@ -46,13 +44,8 @@ function App() {
          <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
          <NavDropdown isOpen={isOpen} toggle={toggle} />
          <div className="flex">
-            <Sidebar />
             <Routes>
                <Route path="/" exact element={<Home />} />
-               <Route
-                  path="/dashboard"
-                  element={<Dashboard company={navbarSearch} />}
-               />
                <Route path="/screening" element={<Screening />} />
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />
