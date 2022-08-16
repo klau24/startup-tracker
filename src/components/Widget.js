@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 function Widget(props) {
    return (
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 275, borderRadius: 4, boxShadow: 3 }}>
          <CardContent>
             <Typography sx={{ fontSize: 18 }} color="black" gutterBottom>
                {props.title}
