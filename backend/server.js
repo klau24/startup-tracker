@@ -70,19 +70,27 @@ app.get('/api/twitterData/:company/', (req, res) => {
 
    twitterData.get().then((querySnapshot) => {
       querySnapshot.forEach((document) => {
-         data[document.id] = document.data()
+         if (document.id != '1. Company Data') {
+            data[document.id] = document.data()
+         }
       })
 
+      var dates = Object.keys(data)
+      var mostRecent = dates[dates.length - 1]
+      data['summary'] = data[mostRecent]['data']['public_metrics']
+      res.send(data)
       // Summary of twitter account stats as of most recent date
-      twitterData
+      /* twitterData
+         .orderBy(documentId())
          .limit(1)
          .get()
          .then((querySnapshot) => {
             querySnapshot.forEach((document) => {
+               console.log(document.id)
                data['summary'] = document.data()['data']['public_metrics']
                res.send(data)
             })
-         })
+         }) */
    })
 })
 
