@@ -18,14 +18,14 @@ const db = admin.firestore()
 app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/companies', (req, res) => {
-   let companies = db.collection('companies')
+   let companies = db.collection('company_data').doc('1. Supported Companies')
    var companyArr = []
    var company = {}
    var count = 0
 
    companies.get().then((querySnapshot) => {
-      querySnapshot.forEach((document) => {
-         company['label'] = document.id
+      querySnapshot.data()['companies'].forEach((c) => {
+         company['label'] = c
          company['id'] = count
          companyArr.push(company)
          company = {}

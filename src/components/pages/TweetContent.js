@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
-import WordCloudCard from '../WordCloudCard'
 import Widget from '../Widget'
-import LineGraphCard from '../LineGraphCard'
-import BarGraphCard from '../BarGraphCard'
 import Sidebar from '../sidebar/Sidebar'
+import FilterButton from '../FilterButton'
+import ContentCard from '../ContentCard'
+import { TweetContentData } from './TweetContentData'
 
 function TweetContent(props) {
    const [tweetData, setTweetData] = useState(null)
    const [weeklyData, setWeeklyData] = useState(null)
+   const [filterItems, setFilterItems] = useState(
+      [TweetContentData.map((content) => content['data'])][0]
+   )
 
    useEffect(() => {
       var company = props.company
@@ -36,7 +39,7 @@ function TweetContent(props) {
                console.log(err)
             })
       }
-   }, [props.company])
+   }, [props.company, props.filterItems])
 
    function parseWeeklyData(key, weeklyData, nlpFlag) {
       var parsedData = {}
@@ -51,6 +54,18 @@ function TweetContent(props) {
       return parsedData
    }
 
+   function handleFilterItems(item) {
+      var itemsArr = [...filterItems]
+
+      if (itemsArr.indexOf(item) === -1) {
+         itemsArr.push(item)
+         setFilterItems(itemsArr)
+      } else {
+         itemsArr = itemsArr.filter((c) => c !== item)
+         setFilterItems(itemsArr)
+      }
+   }
+
    if (tweetData && weeklyData) {
       return (
          <>
@@ -61,6 +76,24 @@ function TweetContent(props) {
                spacing={2}
                style={{ height: '95vh', overflow: 'auto' }}
             >
+               <Grid
+                  className="p-4"
+                  container
+                  spacing={1}
+                  style={{ height: '4.5vh' }}
+               >
+                  {TweetContentData.map((content) => {
+                     return (
+                        <Grid item>
+                           <FilterButton
+                              text={content['data']}
+                              filterItems={handleFilterItems}
+                           />
+                        </Grid>
+                     )
+                  })}
+               </Grid>
+
                <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title={'Average Coleman-Liau Readability Grade'}
@@ -82,43 +115,90 @@ function TweetContent(props) {
                      showPercent={false}
                   />
                </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <WordCloudCard words={tweetData['wordFrequency']} />
-               </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <LineGraphCard
-                     title={props.company.concat(' Tweet Likes')}
-                     labels={Object.keys(tweetData['data'])}
-                     data={Object.values(tweetData['data']).map(
-                        (val) => val['likeCount']
-                     )}
-                  />
-               </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <LineGraphCard
-                     title={props.company.concat(' Retweets')}
-                     labels={Object.keys(tweetData['data'])}
-                     data={Object.values(tweetData['data']).map(
-                        (val) => val['retweetCount']
-                     )}
-                  />
-               </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <BarGraphCard
-                     title={props.company.concat(' Weekly User Tweets')}
-                     labels={Object.keys(weeklyData)}
-                     data={parseWeeklyData('user_tweets', weeklyData, 0)}
-                  />
-               </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <LineGraphCard
-                     title={props.company.concat(
-                        ' Weekly Average Tweet Characters'
-                     )}
-                     labels={Object.keys(weeklyData)}
-                     data={parseWeeklyData('avg_chars', weeklyData, 1)}
-                  />
-               </Grid>
+
+               {filterItems.map((item) => {
+                  switch (item) {
+                     case 'Word Cloud':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="wordCloud"
+                                 data={{ words: tweetData['wordFrequency'] }}
+                              />
+                           </Grid>
+                        )
+                     case 'Tweet Likes':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: props.company.concat(' Tweet Likes'),
+                                    labels: Object.keys(tweetData['data']),
+                                    data: Object.values(tweetData['data']).map(
+                                       (val) => val['likeCount']
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Retweet':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: props.company.concat(' Retweets'),
+                                    labels: Object.keys(tweetData['data']),
+                                    data: Object.values(tweetData['data']).map(
+                                       (val) => val['retweetCount']
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'User Tweets':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="bar"
+                                 data={{
+                                    title: props.company.concat(
+                                       ' Weekly User Tweets'
+                                    ),
+                                    labels: Object.keys(weeklyData),
+                                    data: parseWeeklyData(
+                                       'user_tweets',
+                                       weeklyData,
+                                       0
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Average Tweet Characters':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: props.company.concat(
+                                       ' Weekly Average Tweet Characters'
+                                    ),
+                                    labels: Object.keys(weeklyData),
+                                    data: parseWeeklyData(
+                                       'avg_chars',
+                                       weeklyData,
+                                       1
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     default:
+                        return <div></div>
+                  }
+               })}
             </Grid>
          </>
       )

@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Widget from '../Widget'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
-import BarGraphCard from '../BarGraphCard'
-import LineGraphCard from '../LineGraphCard'
-import StackedBarGraphCard from '../StackedBarGraphCard'
 import Sidebar from '../sidebar/Sidebar'
-
+import ContentCard from '../ContentCard'
 import {
    Chart as ChartJS,
    CategoryScale,
@@ -150,45 +147,57 @@ function CompanyTwitter(props) {
                </Grid>
 
                <Grid item xs={12} s={6} md={4}>
-                  <StackedBarGraphCard
-                     title={props.company.concat(' Weekly Company Tweets')}
-                     labels={[
-                        'has_emoticon_ratio',
-                        'has_hashtag_ratio',
-                        'has_link_ratio',
-                        'has_mention_ratio',
-                     ]}
-                     data={weeklyHasData}
+                  <ContentCard
+                     cardType="stackedBar"
+                     data={{
+                        title: props.company.concat(' Weekly Company Tweets'),
+                        labels: [
+                           'has_emoticon_ratio',
+                           'has_hashtag_ratio',
+                           'has_link_ratio',
+                           'has_mention_ratio',
+                        ],
+                        data: weeklyHasData,
+                     }}
                   />
                </Grid>
 
                <Grid item xs={12} s={6} md={4}>
-                  <LineGraphCard
-                     title={props.company.concat(' Weekly Users')}
-                     labels={Object.keys(weeklyData)}
-                     data={parseWeeklyData('users', weeklyData, 0)}
+                  <ContentCard
+                     cardType="line"
+                     data={{
+                        title: props.company.concat(' Weekly Users'),
+                        labels: Object.keys(weeklyData),
+                        data: parseWeeklyData('users', weeklyData, 0),
+                     }}
                   />
                </Grid>
 
                <Grid item xs={12} s={6} md={4}>
-                  <LineGraphCard
-                     title={props.company.concat(' Weekly Average Mentions')}
-                     labels={Object.keys(weeklyData)}
-                     data={parseWeeklyData('avg_mentions', weeklyData, 1)}
+                  <ContentCard
+                     cardType="line"
+                     data={{
+                        title: props.company.concat(' Weekly Average Mentions'),
+                        labels: Object.keys(weeklyData),
+                        data: parseWeeklyData('avg_mentions', weeklyData, 1),
+                     }}
                   />
                </Grid>
 
                <Grid item xs={12} s={6} md={4}>
-                  <BarGraphCard
-                     title={props.company.concat(
-                        ' Weekly Average VADER Sentiment'
-                     )}
-                     labels={Object.keys(weeklyData)}
-                     data={parseWeeklyData(
-                        'avg_vader_sentiment',
-                        weeklyData,
-                        1
-                     )}
+                  <ContentCard
+                     cardType="bar"
+                     data={{
+                        title: props.company.concat(
+                           ' Weekly Average VADER Sentiment'
+                        ),
+                        labels: Object.keys(weeklyData),
+                        data: parseWeeklyData(
+                           'avg_vader_sentiment',
+                           weeklyData,
+                           1
+                        ),
+                     }}
                   />
                </Grid>
             </Grid>
