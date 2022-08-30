@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom'
 import NavSearchbar from './NavSearchbar'
 import { MenuIcon } from '@heroicons/react/outline'
 import axios from 'axios'
+import { useLocation } from 'react-router-dom'
 
 const Navbar = (props) => {
    const [companies, setCompanies] = useState(null)
+   const [location, setLocation] = useState(null)
 
+   let currPage = useLocation()
    useEffect(() => {
       axios
          .get('/api/companies')
@@ -16,8 +19,20 @@ const Navbar = (props) => {
          .catch((err) => {
             console.log(err)
          })
-   }, [])
+      setLocation(currPage.pathname)
+   }, [currPage.pathname])
 
+   const renderSearchbar = () => {
+      if (location !== '/') {
+         return (
+            <NavSearchbar
+               width={300}
+               companies={companies}
+               handleNavbarSearch={props.handleNavbarSearch}
+            />
+         )
+      }
+   }
    if (companies) {
       return (
          <nav
@@ -25,10 +40,7 @@ const Navbar = (props) => {
             role="navigation"
          >
             <Link to="/">startup-tracker</Link>
-            <NavSearchbar
-               companies={companies}
-               handleNavbarSearch={props.handleNavbarSearch}
-            />
+            {renderSearchbar()}
             <div
                className="px-4 cursor-pointer md:hidden"
                onClick={props.toggle}

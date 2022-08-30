@@ -55,7 +55,7 @@ app.get('/api/weeklyData/:company/', (req, res) => {
    })
 })
 
-app.get('/api/twitterData/:company/', (req, res) => {
+app.get('/api/companyTwitterData/:company/', (req, res) => {
    let company = req.params['company']
    if (company.indexOf('+') >= 0) {
       company = company.replace('+', ' ')
@@ -79,18 +79,6 @@ app.get('/api/twitterData/:company/', (req, res) => {
       var mostRecent = dates[dates.length - 1]
       data['summary'] = data[mostRecent]['data']['public_metrics']
       res.send(data)
-      // Summary of twitter account stats as of most recent date
-      /* twitterData
-         .orderBy(documentId())
-         .limit(1)
-         .get()
-         .then((querySnapshot) => {
-            querySnapshot.forEach((document) => {
-               console.log(document.id)
-               data['summary'] = document.data()['data']['public_metrics']
-               res.send(data)
-            })
-         }) */
    })
 })
 

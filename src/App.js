@@ -8,11 +8,13 @@ import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import CompanyTwitter from './components/pages/CompanyTwitter'
 import TweetContent from './components/pages/TweetContent'
+import { useNavigate } from 'react-router-dom'
 
 function App() {
    const [isOpen, setIsOpen] = useState(false)
    const [navbarSearch, setNavbarSearch] = useState(null)
 
+   const navigate = useNavigate()
    const toggle = () => {
       setIsOpen(!isOpen)
    }
@@ -20,6 +22,7 @@ function App() {
    const handleNavbarSearch = (searchVal) => {
       if (searchVal.target.nodeName === 'LI') {
          setNavbarSearch(searchVal.target.textContent)
+         navigate('/company-twitter')
       } else if (searchVal.target.nodeName === 'INPUT') {
          setNavbarSearch(searchVal.target.value)
       }
@@ -45,7 +48,11 @@ function App() {
          <NavDropdown isOpen={isOpen} toggle={toggle} />
          <div className="flex">
             <Routes>
-               <Route path="/" exact element={<Home />} />
+               <Route
+                  path="/"
+                  exact
+                  element={<Home handleNavbarSearch={handleNavbarSearch} />}
+               />
                <Route path="/screening" element={<Screening />} />
                <Route path="/about" element={<About />} />
                <Route path="/contact" element={<Contact />} />

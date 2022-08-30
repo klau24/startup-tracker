@@ -5,6 +5,7 @@ import Widget from '../Widget'
 import Sidebar from '../sidebar/Sidebar'
 import FilterButton from '../FilterButton'
 import ContentCard from '../ContentCard'
+import SortSelector from '../SortSelector'
 import { TweetContentData } from './TweetContentData'
 
 function TweetContent(props) {
@@ -92,6 +93,7 @@ function TweetContent(props) {
                         </Grid>
                      )
                   })}
+                  <SortSelector />
                </Grid>
 
                <Grid item xs={12} s={6} md={4}>
@@ -195,8 +197,6 @@ function TweetContent(props) {
                               />
                            </Grid>
                         )
-                     default:
-                        return <div></div>
                   }
                })}
             </Grid>
