@@ -32,20 +32,3 @@ function Home(props) {
 }
 
 export default Home
-/*
-<Grid
-               className="p-4"
-               container
-               justifyContent="center"
-               style={{ height: '100vh'}}
-               spacing={2}
-            >
-            <Grid item xs={12} s={12} md={12}>
-               <h1>startup-tracker</h1>
-               <NavSearchbar
-                           companies={companies}
-                           handleNavbarSearch={props.handleNavbarSearch}
-               />
-            </Grid>
-            
-         </Grid>*/

@@ -70,7 +70,6 @@ function TweetContent(props) {
    if (tweetData && weeklyData) {
       return (
          <>
-            <Sidebar />
             <Grid
                className="p-4"
                container

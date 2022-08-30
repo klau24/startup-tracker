@@ -124,7 +124,6 @@ function CompanyTwitter(props) {
    if (twitterData && weeklyData && weeklyHasData) {
       return (
          <>
-            <Sidebar />
             <Grid
                className="p-4"
                container

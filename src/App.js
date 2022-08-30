@@ -8,12 +8,14 @@ import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import CompanyTwitter from './components/pages/CompanyTwitter'
 import TweetContent from './components/pages/TweetContent'
-import { useNavigate } from 'react-router-dom'
+import Sidebar from './components/sidebar/Sidebar'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 function App() {
    const [isOpen, setIsOpen] = useState(false)
    const [navbarSearch, setNavbarSearch] = useState(null)
 
+   const currPage = useLocation()
    const navigate = useNavigate()
    const toggle = () => {
       setIsOpen(!isOpen)
@@ -40,13 +42,19 @@ function App() {
       return () => {
          window.removeEventListener('resize', hideMenu)
       }
-   })
+   }, [currPage.pathname])
 
+   const renderSidebar = () => {
+      if (currPage.pathname !== '/') {
+         return <Sidebar />
+      }
+   }
    return (
       <div className="w-screen h-screen">
          <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
          <NavDropdown isOpen={isOpen} toggle={toggle} />
          <div className="flex">
+            {renderSidebar()}
             <Routes>
                <Route
                   path="/"
