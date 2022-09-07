@@ -77,7 +77,7 @@ function TweetContent(props) {
                style={{ height: '95vh', overflow: 'auto' }}
             >
                <Grid
-                  className="p-4"
+                  className="p-4 pb-12"
                   container
                   spacing={1}
                   style={{ height: '4.5vh' }}

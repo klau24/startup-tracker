@@ -369,30 +369,6 @@ video {
 .m-0 {
    margin: 0;
 }
-.mb-0 {
-   margin-bottom: 0;
-}
-.ml-6 {
-   margin-left: 1.5rem;
-}
-.mr-6 {
-   margin-right: 1.5rem;
-}
-.mt-5 {
-   margin-top: 1.25rem;
-}
-.mb-5 {
-   margin-bottom: 1.25rem;
-}
-.mr-0 {
-   margin-right: 0;
-}
-.ml-0 {
-   margin-left: 0;
-}
-.ml-5 {
-   margin-left: 1.25rem;
-}
 .flex {
    display: flex;
 }
@@ -408,14 +384,14 @@ video {
 .h-full {
    height: 100%;
 }
-.h-1\/6 {
-   height: 16.666667%;
-}
 .h-20 {
    height: 5rem;
 }
 .h-6 {
    height: 1.5rem;
+}
+.h-1\/2 {
+   height: 50%;
 }
 .h-auto {
    height: auto;
@@ -429,14 +405,11 @@ video {
 .w-6 {
    width: 1.5rem;
 }
-.w-1\/6 {
-   width: 16.666667%;
-}
 .w-full {
    width: 100%;
 }
-.flex-1 {
-   flex: 1 1;
+.w-1\/6 {
+   width: 16.666667%;
 }
 .cursor-pointer {
    cursor: pointer;
@@ -453,6 +426,9 @@ video {
 .flex-row {
    flex-direction: row;
 }
+.flex-col {
+   flex-direction: column;
+}
 .items-center {
    align-items: center;
 }
@@ -462,9 +438,6 @@ video {
 .justify-evenly {
    justify-content: space-evenly;
 }
-.rounded-xl {
-   border-radius: 0.75rem;
-}
 .bg-white {
    --tw-bg-opacity: 1;
    background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -473,11 +446,11 @@ video {
    --tw-bg-opacity: 1;
    background-color: rgb(245 245 244 / var(--tw-bg-opacity));
 }
-.p-9 {
-   padding: 2.25rem;
-}
 .p-4 {
    padding: 1rem;
+}
+.p-10 {
+   padding: 2.5rem;
 }
 .p-0 {
    padding: 0;
@@ -488,6 +461,9 @@ video {
 }
 .pl-3 {
    padding-left: 0.75rem;
+}
+.pb-12 {
+   padding-bottom: 3rem;
 }
 .text-left {
    text-align: left;
@@ -503,19 +479,16 @@ video {
    font-size: 1rem;
    line-height: 1.5rem;
 }
+.text-5xl {
+   font-size: 3rem;
+   line-height: 1;
+}
 .font-normal {
    font-weight: 400;
-}
-.font-bold {
-   font-weight: 700;
 }
 .text-green-500 {
    --tw-text-opacity: 1;
    color: rgb(34 197 94 / var(--tw-text-opacity));
-}
-.text-gray-400 {
-   --tw-text-opacity: 1;
-   color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 .text-black {
    --tw-text-opacity: 1;
@@ -525,21 +498,20 @@ video {
    --tw-text-opacity: 1;
    color: rgb(107 114 128 / var(--tw-text-opacity));
 }
-.shadow-xl {
-   --tw-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 8px 10px -6px rgba(0, 0, 0, 0.1);
-   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color),
-      0 8px 10px -6px var(--tw-shadow-color);
-}
-.shadow-sm,
-.shadow-xl {
+.shadow-sm {
+   --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
    box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
       var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
-.shadow-sm {
-   --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+.filter {
+   -webkit-filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 .hover\:cursor-pointer:hover {
    cursor: pointer;
@@ -556,16 +528,6 @@ video {
    -webkit-text-decoration-line: underline;
    text-decoration-line: underline;
 }
-@media (min-width: 640px) {
-   .sm\:text-base {
-      font-size: 1rem;
-      line-height: 1.5rem;
-   }
-   .sm\:text-lg {
-      font-size: 1.125rem;
-      line-height: 1.75rem;
-   }
-}
 @media (min-width: 768px) {
    .md\:block {
       display: block;
@@ -573,23 +535,5 @@ video {
    .md\:hidden {
       display: none;
    }
-   .md\:text-lg {
-      font-size: 1.125rem;
-      line-height: 1.75rem;
-   }
-   .md\:text-xl {
-      font-size: 1.25rem;
-      line-height: 1.75rem;
-   }
 }
-@media (min-width: 1024px) {
-   .lg\:text-2xl {
-      font-size: 1.5rem;
-      line-height: 2rem;
-   }
-   .lg\:text-3xl {
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-   }
-}
-/*# sourceMappingURL=main.17150f1a.css.map*/
+/*# sourceMappingURL=main.360231c4.css.map*/
