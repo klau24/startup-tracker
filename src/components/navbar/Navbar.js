@@ -36,7 +36,7 @@ const Navbar = (props) => {
    if (companies) {
       return (
          <nav
-            className="flex justify-evenly items-center h-20 bg-white text-black relative shadow-sm font-mono"
+            className="flex justify-evenly items-center h-20 bg-stHeader text-black relative shadow-sm font-mono"
             role="navigation"
          >
             <Link to="/">startup-tracker</Link>

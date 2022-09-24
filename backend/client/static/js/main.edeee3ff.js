@@ -29888,11 +29888,9 @@
                                    )
                            } else
                               h &&
-                                 c
-                                    .addRule(d, {}, s)
-                                    .addRule(u.key, r[d], {
-                                       selector: u.selector,
-                                    })
+                                 c.addRule(d, {}, s).addRule(u.key, r[d], {
+                                    selector: u.selector,
+                                 })
                            delete r[d]
                         }
                      }

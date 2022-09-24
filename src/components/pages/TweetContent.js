@@ -76,6 +76,11 @@ function TweetContent(props) {
                spacing={2}
                style={{ height: '95vh', overflow: 'auto' }}
             >
+               <Grid item xs={12} s={12} md={12}>
+                  <h1 className="text-center text-2xl font-bold">
+                     {props.company}
+                  </h1>
+               </Grid>
                <Grid
                   className="p-4 pb-12"
                   container
@@ -97,7 +102,7 @@ function TweetContent(props) {
 
                <Grid item xs={12} s={6} md={4}>
                   <Widget
-                     title={'Average Coleman-Liau Readability Grade'}
+                     title={'Average Readability Grade'}
                      data={tweetData['summaryData']['avgReadGrade']}
                      showPercent={false}
                   />
@@ -134,7 +139,7 @@ function TweetContent(props) {
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: props.company.concat(' Tweet Likes'),
+                                    title: 'Tweet Likes',
                                     labels: Object.keys(tweetData['data']),
                                     data: Object.values(tweetData['data']).map(
                                        (val) => val['likeCount']
@@ -149,7 +154,7 @@ function TweetContent(props) {
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: props.company.concat(' Retweets'),
+                                    title: 'Retweets',
                                     labels: Object.keys(tweetData['data']),
                                     data: Object.values(tweetData['data']).map(
                                        (val) => val['retweetCount']
@@ -164,9 +169,7 @@ function TweetContent(props) {
                               <ContentCard
                                  cardType="bar"
                                  data={{
-                                    title: props.company.concat(
-                                       ' Weekly User Tweets'
-                                    ),
+                                    title: 'Weekly User Tweets',
                                     labels: Object.keys(weeklyData),
                                     data: parseWeeklyData(
                                        'user_tweets',
@@ -183,9 +186,7 @@ function TweetContent(props) {
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: props.company.concat(
-                                       ' Weekly Average Tweet Characters'
-                                    ),
+                                    title: 'Weekly Average Tweet Characters',
                                     labels: Object.keys(weeklyData),
                                     data: parseWeeklyData(
                                        'avg_chars',

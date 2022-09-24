@@ -17,6 +17,22 @@ const db = admin.firestore()
 
 app.use(express.static(path.join(__dirname, 'client')))
 
+app.get('/api/:company/:time/:feature', (req, res) => {
+   let data = []
+   let featureData = db
+      .collection('company_data')
+      .doc(req.params['company'])
+      .collection(req.params['time'])
+      .doc(req.params['feature'])
+      .collection('data')
+      .doc('1. Top 10')
+   featureData.get().then((querySnapshot) => {
+      Object.keys(querySnapshot.data()).forEach((key) => {
+         data.push({ text: key, value: querySnapshot.data()[key] })
+      })
+      res.send(data)
+   })
+})
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('company_data').doc('1. Supported Companies')
    var companyArr = []

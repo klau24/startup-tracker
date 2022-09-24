@@ -131,6 +131,11 @@ function CompanyTwitter(props) {
                style={{ height: '95vh', overflow: 'auto' }}
                spacing={2}
             >
+               <Grid item xs={12} s={12} md={12}>
+                  <h1 className="text-center text-2xl font-bold">
+                     {props.company}
+                  </h1>
+               </Grid>
                <Grid
                   className="p-4 pb-12"
                   container
@@ -190,9 +195,7 @@ function CompanyTwitter(props) {
                               <ContentCard
                                  cardType="stackedBar"
                                  data={{
-                                    title: props.company.concat(
-                                       ' Weekly Company Tweets'
-                                    ),
+                                    title: 'Weekly Company Tweets',
                                     labels: [
                                        'has_emoticon_ratio',
                                        'has_hashtag_ratio',
@@ -210,9 +213,7 @@ function CompanyTwitter(props) {
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: props.company.concat(
-                                       ' Weekly Users'
-                                    ),
+                                    title: 'Weekly Users',
                                     labels: Object.keys(weeklyData),
                                     data: parseWeeklyData(
                                        'users',
@@ -229,9 +230,7 @@ function CompanyTwitter(props) {
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: props.company.concat(
-                                       ' Weekly Average Mentions'
-                                    ),
+                                    title: 'Weekly Average Mentions',
                                     labels: Object.keys(weeklyData),
                                     data: parseWeeklyData(
                                        'avg_mentions',
@@ -248,9 +247,7 @@ function CompanyTwitter(props) {
                               <ContentCard
                                  cardType="bar"
                                  data={{
-                                    title: props.company.concat(
-                                       ' Weekly Average VADER Sentiment'
-                                    ),
+                                    title: 'Weekly Average VADER Sentiment',
                                     labels: Object.keys(weeklyData),
                                     data: parseWeeklyData(
                                        'avg_vader_sentiment',

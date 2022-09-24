@@ -3,6 +3,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Line, Bar } from 'react-chartjs-2'
 import ReactWordcloud from 'react-wordcloud'
+import { padding } from '@mui/system'
 
 function ContentCard(props) {
    const renderSelection = () => {
@@ -14,13 +15,20 @@ function ContentCard(props) {
                      labels: props.data['labels'],
                      datasets: [
                         {
-                           label: props.data['title'],
                            data: props.data['data'],
-                           backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                           backgroundColor: '#ffffff ',
+                           borderColor: '#B2002C',
                         },
                      ],
                   }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+                  options={{
+                     responsive: true,
+                     maintainAspectRatio: false,
+                     plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: props.data['title'] },
+                     },
+                  }}
                />
             )
          case 'bar':
@@ -30,21 +38,28 @@ function ContentCard(props) {
                      labels: props.data['labels'],
                      datasets: [
                         {
-                           label: props.data['title'],
                            data: props.data['data'],
-                           backgroundColor: 'rgba(53, 162, 235, 0.5)',
+                           backgroundColor: '#B2002C ',
                         },
                      ],
                   }}
-                  options={{ responsive: true, maintainAspectRatio: false }}
+                  options={{
+                     responsive: true,
+                     maintainAspectRatio: false,
+                     plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: props.data['title'] },
+                     },
+                  }}
                />
             )
          case 'wordCloud':
             return (
                <ReactWordcloud
-                  size={[400, 600]}
+                  size={[200, 300]}
                   fontsizes={[70, 100]}
                   words={props.data['words']}
+                  options={{ padding: 1, fontSizes: [20, 70] }}
                />
             )
          case 'stackedBar':
@@ -77,7 +92,6 @@ function ContentCard(props) {
       <Card
          sx={{
             minWidth: '20vw',
-            overflow: 'auto',
             borderRadius: '20px',
             boxShadow: 3,
             height: '50vh',
@@ -85,14 +99,7 @@ function ContentCard(props) {
       >
          <CardContent className="h-full">{renderSelection()}</CardContent>
          <CardContent>
-            <p>
-               Lorem Ipsum is simply dummy text of the printing and typesetting
-               industry. Lorem Ipsum has been the industry's standard dummy text
-               ever since the 1500s, when an unknown printer took a galley of
-               type and scrambled it to make a type specimen book. It has
-               survived not only five centuries, but also the leap into
-               electronic typesetting, remaining essentially unchanged.
-            </p>
+            <p></p>
          </CardContent>
       </Card>
    )

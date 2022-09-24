@@ -3,7 +3,7 @@ import { SidebarData } from './SidebarData'
 
 function Sidebar() {
    return (
-      <nav className="h-screen w-1/6 font-mono bg-stone-100">
+      <nav className="h-screen w-1/6 font-mono bg-stSidebar">
          <ul className="h-auto w-full p-0 text-center">
             {SidebarData.map((item, key) => {
                return (
