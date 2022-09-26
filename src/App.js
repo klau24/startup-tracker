@@ -69,7 +69,7 @@ function App() {
                   element={<CompanyTwitter company={navbarSearch} />}
                />
                <Route
-                  path="/tweet-content"
+                  path="/user-tweets"
                   element={<TweetContent company={navbarSearch} />}
                />
             </Routes>

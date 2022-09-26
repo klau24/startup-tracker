@@ -1,8 +1,6 @@
 import TwitterIcon from '@mui/icons-material/Twitter'
 import MessageIcon from '@mui/icons-material/Message'
-import NewspaperIcon from '@mui/icons-material/Newspaper'
-import LocationOnIcon from '@mui/icons-material/LocationOn'
-import LanguageIcon from '@mui/icons-material/Language'
+import DevicesIcon from '@mui/icons-material/Devices'
 
 export const SidebarData = [
    {
@@ -11,23 +9,13 @@ export const SidebarData = [
       link: '/company-twitter',
    },
    {
-      title: 'Tweet Contents',
+      title: 'User Tweets',
       icon: MessageIcon,
-      link: '/tweet-content',
+      link: '/user-tweets',
    },
    {
-      title: 'Media Mentions',
-      icon: NewspaperIcon,
-      link: '/media-mentions',
-   },
-   {
-      title: 'Geolocation',
-      icon: LocationOnIcon,
-      link: '/geolocation',
-   },
-   {
-      title: 'Website Traffic',
-      icon: LanguageIcon,
-      link: '/website-traffic',
+      title: 'Advanced NLP',
+      icon: DevicesIcon,
+      link: '/advanced-nlp',
    },
 ]

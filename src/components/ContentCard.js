@@ -5,7 +5,6 @@ import { Line, Bar } from 'react-chartjs-2'
 import ReactWordcloud from 'react-wordcloud'
 import InfoIcon from '@mui/icons-material/Info'
 import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
 
 function ContentCard(props) {
    const renderSelection = () => {
@@ -98,10 +97,10 @@ function ContentCard(props) {
             height: '50vh',
          }}
       >
-         <CardContent className="h-4/5">
-            <InfoIcon style={{ color: 'grey' }} />
-            {renderSelection()}
-         </CardContent>
+         <CardHeader
+            action={<InfoIcon className="mr-3" style={{ color: 'gray' }} />}
+         />
+         <CardContent className="h-4/5">{renderSelection()}</CardContent>
       </Card>
    )
 }
