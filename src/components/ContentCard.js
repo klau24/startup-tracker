@@ -3,7 +3,9 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import { Line, Bar } from 'react-chartjs-2'
 import ReactWordcloud from 'react-wordcloud'
-import { padding } from '@mui/system'
+import InfoIcon from '@mui/icons-material/Info'
+import CardHeader from '@material-ui/core/CardHeader'
+import IconButton from '@material-ui/core/IconButton'
 
 function ContentCard(props) {
    const renderSelection = () => {
@@ -56,7 +58,6 @@ function ContentCard(props) {
          case 'wordCloud':
             return (
                <ReactWordcloud
-                  size={[200, 300]}
                   fontsizes={[70, 100]}
                   words={props.data['words']}
                   options={{ padding: 1, fontSizes: [20, 70] }}
@@ -97,9 +98,9 @@ function ContentCard(props) {
             height: '50vh',
          }}
       >
-         <CardContent className="h-full">{renderSelection()}</CardContent>
-         <CardContent>
-            <p></p>
+         <CardContent className="h-4/5">
+            <InfoIcon style={{ color: 'grey' }} />
+            {renderSelection()}
          </CardContent>
       </Card>
    )

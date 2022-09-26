@@ -139,6 +139,7 @@ function CompanyTwitter(props) {
                <Grid
                   className="p-4 pb-12"
                   container
+                  justifyContent="center"
                   spacing={1}
                   style={{ height: '4.5vh' }}
                >
@@ -155,7 +156,7 @@ function CompanyTwitter(props) {
                   <SortSelector />
                </Grid>
 
-               <Grid item xs={12} s={6} md={3}>
+               <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title="Follower Count"
                      data={twitterData['summary']['followers_count']}
@@ -163,7 +164,7 @@ function CompanyTwitter(props) {
                   />
                </Grid>
 
-               <Grid item xs={12} s={6} md={3}>
+               <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title="Following Count"
                      data={twitterData['summary']['following_count']}
@@ -171,18 +172,10 @@ function CompanyTwitter(props) {
                   />
                </Grid>
 
-               <Grid item xs={12} s={6} md={3}>
+               <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title="Number of Tweets"
                      data={twitterData['summary']['tweet_count']}
-                     showPercent={true}
-                  />
-               </Grid>
-
-               <Grid item xs={12} s={6} md={3}>
-                  <Widget
-                     title="Public List Count"
-                     data={twitterData['summary']['listed_count']}
                      showPercent={true}
                   />
                </Grid>

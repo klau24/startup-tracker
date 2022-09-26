@@ -23,7 +23,6 @@ function Sidebar(props) {
 
    const drawer = (
       <div>
-         <Toolbar />
          <List>
             {SidebarData.map((item, index) => (
                <ListItem key={item} sx={{ padding: 2 }}>

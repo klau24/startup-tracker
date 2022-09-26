@@ -84,6 +84,7 @@ function TweetContent(props) {
                <Grid
                   className="p-4 pb-12"
                   container
+                  justifyContent="center"
                   spacing={1}
                   style={{ height: '4.5vh' }}
                >
