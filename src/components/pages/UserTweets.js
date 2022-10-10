@@ -6,13 +6,14 @@ import Sidebar from '../sidebar/Sidebar'
 import FilterButton from '../FilterButton'
 import ContentCard from '../ContentCard'
 import SortSelector from '../SortSelector'
-import { TweetContentData } from './TweetContentData'
+import { UserTweetsData } from './UserTweetsData'
 
-function TweetContent(props) {
-   const [tweetData, setTweetData] = useState(null)
-   const [weeklyData, setWeeklyData] = useState(null)
+function UserTweets(props) {
+   const [nlpData, setNlpData] = useState(null)
+   const [userTweetData, setUserTweetData] = useState(null)
+   const [wordcloudData, setWordcloudData] = useState(null)
    const [filterItems, setFilterItems] = useState(
-      [TweetContentData.map((content) => content['data'])][0]
+      [UserTweetsData.map((content) => content['data'])][0]
    )
 
    useEffect(() => {
@@ -21,20 +22,28 @@ function TweetContent(props) {
          if (props.company.indexOf(' ') >= 0) {
             company = company.replace(' ', '+')
          }
-
          axios
-            .get('/api/tweets/'.concat(company))
+            .get('/api/'.concat(company).concat('/weekly/linguistic_features'))
             .then((res) => {
-               setTweetData(res.data)
+               setNlpData(res.data)
             })
             .catch((err) => {
                console.log(err)
             })
 
          axios
-            .get('/api/weeklyData/'.concat(company))
+            .get('/api/'.concat(company).concat('/weekly/activity'))
             .then((res) => {
-               setWeeklyData(res.data)
+               setUserTweetData(res.data)
+            })
+            .catch((err) => {
+               console.log(err)
+            })
+
+         axios
+            .get('/api/'.concat(company).concat('/weekly/words'))
+            .then((res) => {
+               setWordcloudData(res.data)
             })
             .catch((err) => {
                console.log(err)
@@ -42,22 +51,8 @@ function TweetContent(props) {
       }
    }, [props.company, props.filterItems])
 
-   function parseWeeklyData(key, weeklyData, nlpFlag) {
-      var parsedData = {}
-
-      for (let date in weeklyData) {
-         if (nlpFlag) {
-            parsedData[date] = weeklyData[date]['nlp_features'][key]
-         } else {
-            parsedData[date] = weeklyData[date][key]
-         }
-      }
-      return parsedData
-   }
-
    function handleFilterItems(item) {
       var itemsArr = [...filterItems]
-
       if (itemsArr.indexOf(item) === -1) {
          itemsArr.push(item)
          setFilterItems(itemsArr)
@@ -67,7 +62,8 @@ function TweetContent(props) {
       }
    }
 
-   if (tweetData && weeklyData) {
+   if (nlpData && userTweetData && wordcloudData) {
+      var latestDate = Object.keys(nlpData).pop()
       return (
          <>
             <Grid
@@ -88,7 +84,7 @@ function TweetContent(props) {
                   spacing={1}
                   style={{ height: '4.5vh' }}
                >
-                  {TweetContentData.map((content) => {
+                  {UserTweetsData.map((content) => {
                      return (
                         <Grid item>
                            <FilterButton
@@ -104,21 +100,25 @@ function TweetContent(props) {
                <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title={'Average Readability Grade'}
-                     data={tweetData['summaryData']['avgReadGrade']}
+                     data={
+                        nlpData[latestDate]['nlp_features'][
+                           'avg_flesch_reading_ease'
+                        ]
+                     }
                      showPercent={false}
                   />
                </Grid>
                <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title={'Average Number of Words'}
-                     data={tweetData['summaryData']['avgWords']}
+                     data={nlpData[latestDate]['nlp_features']['avg_words']}
                      showPercent={false}
                   />
                </Grid>
                <Grid item xs={12} s={6} md={4}>
                   <Widget
-                     title={'Average Number of Syllables'}
-                     data={tweetData['summaryData']['avgSyllables']}
+                     title={'Average Number of Links'}
+                     data={nlpData[latestDate]['nlp_features']['avg_links']}
                      showPercent={false}
                   />
                </Grid>
@@ -130,7 +130,7 @@ function TweetContent(props) {
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="wordCloud"
-                                 data={{ words: tweetData['wordFrequency'] }}
+                                 data={{ words: wordcloudData['wordcloud'] }}
                               />
                            </Grid>
                         )
@@ -141,9 +141,12 @@ function TweetContent(props) {
                                  cardType="line"
                                  data={{
                                     title: 'Tweet Likes',
-                                    labels: Object.keys(tweetData['data']),
-                                    data: Object.values(tweetData['data']).map(
-                                       (val) => val['likeCount']
+                                    labels: Object.keys(userTweetData),
+                                    data: Object.values(userTweetData).map(
+                                       (val) =>
+                                          val['tweet_metrics']['other_users'][
+                                             'like_count'
+                                          ]
                                     ),
                                  }}
                               />
@@ -156,9 +159,12 @@ function TweetContent(props) {
                                  cardType="line"
                                  data={{
                                     title: 'Retweets',
-                                    labels: Object.keys(tweetData['data']),
-                                    data: Object.values(tweetData['data']).map(
-                                       (val) => val['retweetCount']
+                                    labels: Object.keys(userTweetData),
+                                    data: Object.values(userTweetData).map(
+                                       (val) =>
+                                          val['tweet_metrics']['other_users'][
+                                             'retweet_count'
+                                          ]
                                     ),
                                  }}
                               />
@@ -171,28 +177,24 @@ function TweetContent(props) {
                                  cardType="bar"
                                  data={{
                                     title: 'Weekly User Tweets',
-                                    labels: Object.keys(weeklyData),
-                                    data: parseWeeklyData(
-                                       'user_tweets',
-                                       weeklyData,
-                                       0
+                                    labels: Object.keys(userTweetData),
+                                    data: Object.values(userTweetData).map(
+                                       (val) => val['user_tweets']
                                     ),
                                  }}
                               />
                            </Grid>
                         )
-                     case 'Average Tweet Characters':
+                     case 'Weekly Users':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="line"
                                  data={{
                                     title: 'Weekly Average Tweet Characters',
-                                    labels: Object.keys(weeklyData),
-                                    data: parseWeeklyData(
-                                       'avg_chars',
-                                       weeklyData,
-                                       1
+                                    labels: Object.keys(userTweetData),
+                                    data: Object.values(userTweetData).map(
+                                       (val) => val['users']
                                     ),
                                  }}
                               />
@@ -206,4 +208,4 @@ function TweetContent(props) {
    }
 }
 
-export default TweetContent
+export default UserTweets

@@ -18,18 +18,40 @@ const db = admin.firestore()
 app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/:company/:time/:feature', (req, res) => {
-   let data = []
+   let company = req.params['company']
+   if (company.indexOf('+') >= 0) {
+      company = company.replace('+', ' ')
+   }
+   let data = {}
+   let allData = {}
    let featureData = db
       .collection('company_data')
-      .doc(req.params['company'])
+      .doc(company)
       .collection(req.params['time'])
       .doc(req.params['feature'])
       .collection('data')
-      .doc('1. Top 10')
    featureData.get().then((querySnapshot) => {
-      Object.keys(querySnapshot.data()).forEach((key) => {
-         data.push({ text: key, value: querySnapshot.data()[key] })
+      var done = false
+      querySnapshot.forEach((document) => {
+         if (document.id === '1. Top 10') {
+            data['wordcloud'] = []
+            for (var key in document.data()) {
+               data['wordcloud'].push({
+                  text: key,
+                  value: document.data()[key],
+               })
+            }
+            done = true
+         } else if (done === false) {
+            allData[document.id] = document.data()
+         }
       })
+      var keys = Object.keys(allData)
+      keys = keys.slice(-15)
+      for (let i in keys) {
+         var key = keys[i]
+         data[key] = allData[key]
+      }
       res.send(data)
    })
 })

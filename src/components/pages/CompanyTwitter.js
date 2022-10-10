@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Widget from '../Widget'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
-import Sidebar from '../sidebar/Sidebar'
 import ContentCard from '../ContentCard'
 import { companyTwitterData } from './CompanyTwitterData'
 import FilterButton from '../FilterButton'
@@ -38,6 +37,7 @@ ChartJS.register(
 )
 
 function CompanyTwitter(props) {
+   const [companyTweetData, setCompanyTweetData] = useState(null)
    const [twitterData, setTwitterData] = useState(null)
    const [weeklyData, setWeeklyData] = useState(null)
    const [weeklyHasData, setWeeklyHasData] = useState(null)
@@ -65,6 +65,12 @@ function CompanyTwitter(props) {
             setWeeklyData(res.data)
             setWeeklyHasData(parseWeeklyDataHas(res.data))
          })
+
+         axios
+            .get('/api/'.concat(company).concat('/weekly/activity'))
+            .then((res) => {
+               setCompanyTweetData(res.data)
+            })
       }
    }, [props.company])
 
@@ -121,7 +127,7 @@ function CompanyTwitter(props) {
       }
    }
 
-   if (twitterData && weeklyData && weeklyHasData) {
+   if (twitterData && weeklyData && weeklyHasData && companyTweetData) {
       return (
          <>
             <Grid
@@ -156,7 +162,7 @@ function CompanyTwitter(props) {
                   <SortSelector />
                </Grid>
 
-               <Grid item xs={12} s={6} md={4}>
+               {/* <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title="Follower Count"
                      data={twitterData['summary']['followers_count']}
@@ -178,24 +184,57 @@ function CompanyTwitter(props) {
                      data={twitterData['summary']['tweet_count']}
                      showPercent={true}
                   />
-               </Grid>
+               </Grid> */}
 
                {filterItems.map((item) => {
                   switch (item) {
-                     case 'NLP Data':
+                     case 'Company Tweets':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType="stackedBar"
+                                 cardType="line"
                                  data={{
-                                    title: 'Weekly Company Tweets',
-                                    labels: [
-                                       'has_emoticon_ratio',
-                                       'has_hashtag_ratio',
-                                       'has_link_ratio',
-                                       'has_mention_ratio',
-                                    ],
-                                    data: weeklyHasData,
+                                    title: 'Company Tweets',
+                                    labels: Object.keys(companyTweetData),
+                                    data: Object.values(companyTweetData).map(
+                                       (val) => val['company_tweets']
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Tweet Likes':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: 'Tweet Likes',
+                                    labels: Object.keys(companyTweetData),
+                                    data: Object.values(companyTweetData).map(
+                                       (val) =>
+                                          val['tweet_metrics']['company'][
+                                             'like_count'
+                                          ]
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Retweets':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: 'Retweets',
+                                    labels: Object.keys(companyTweetData),
+                                    data: Object.values(companyTweetData).map(
+                                       (val) =>
+                                          val['tweet_metrics']['company'][
+                                             'retweet_count'
+                                          ]
+                                    ),
                                  }}
                               />
                            </Grid>
@@ -206,46 +245,25 @@ function CompanyTwitter(props) {
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: 'Weekly Users',
-                                    labels: Object.keys(weeklyData),
-                                    data: parseWeeklyData(
-                                       'users',
-                                       weeklyData,
-                                       0
+                                    title: 'Users',
+                                    labels: Object.keys(companyTweetData),
+                                    data: Object.values(companyTweetData).map(
+                                       (val) => val['users']
                                     ),
                                  }}
                               />
                            </Grid>
                         )
-                     case 'Mentions':
+                     case 'User Tweets About Company':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: 'Weekly Average Mentions',
-                                    labels: Object.keys(weeklyData),
-                                    data: parseWeeklyData(
-                                       'avg_mentions',
-                                       weeklyData,
-                                       1
-                                    ),
-                                 }}
-                              />
-                           </Grid>
-                        )
-                     case 'VADER':
-                        return (
-                           <Grid item xs={12} s={6} md={4}>
-                              <ContentCard
-                                 cardType="bar"
-                                 data={{
-                                    title: 'Weekly Average VADER Sentiment',
-                                    labels: Object.keys(weeklyData),
-                                    data: parseWeeklyData(
-                                       'avg_vader_sentiment',
-                                       weeklyData,
-                                       1
+                                    title: 'User Tweets About Company',
+                                    labels: Object.keys(companyTweetData),
+                                    data: Object.values(companyTweetData).map(
+                                       (val) => val['user_tweets']
                                     ),
                                  }}
                               />

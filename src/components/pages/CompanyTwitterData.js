@@ -1,18 +1,22 @@
 export const companyTwitterData = [
    {
-      data: 'NLP Data',
-      dataType: 'stackedBar',
+      data: 'Company Tweets',
+      dataType: 'line',
+   },
+   {
+      data: 'Tweet Likes',
+      dataType: 'line',
+   },
+   {
+      data: 'Retweets',
+      dataType: 'line',
    },
    {
       data: 'Users',
       dataType: 'line',
    },
    {
-      data: 'Mentions',
+      data: 'User Tweets About Company',
       dataType: 'line',
-   },
-   {
-      data: 'VADER',
-      dataType: 'bar',
    },
 ]

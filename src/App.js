@@ -7,7 +7,7 @@ import Screening from './components/pages/Screening'
 import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import CompanyTwitter from './components/pages/CompanyTwitter'
-import TweetContent from './components/pages/TweetContent'
+import UserTweets from './components/pages/UserTweets'
 import Sidebar from './components/sidebar/Sidebar'
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -70,7 +70,7 @@ function App() {
                />
                <Route
                   path="/user-tweets"
-                  element={<TweetContent company={navbarSearch} />}
+                  element={<UserTweets company={navbarSearch} />}
                />
             </Routes>
          </div>

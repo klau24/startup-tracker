@@ -1,4 +1,4 @@
-export const TweetContentData = [
+export const UserTweetsData = [
    {
       data: 'Word Cloud',
       dataType: 'wordCloud',
@@ -16,7 +16,7 @@ export const TweetContentData = [
       dataType: 'bar',
    },
    {
-      data: 'Average Tweet Characters',
+      data: 'Weekly Users',
       dataType: 'line',
    },
 ]
