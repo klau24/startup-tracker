@@ -28,14 +28,14 @@ function Widget(props) {
             >
                {props.data}
 
-               <span className="pl-3 font-normal text-base">
+               {/* <span className="pl-3 font-normal text-base">
                   + 0% <KeyboardArrowUpIcon className="text-green-500" />
-               </span>
+               </span> */}
             </Typography>
             <Divider light />
-            <Typography className="pt-3" color="text.secondary">
+            {/* <Typography className="pt-3" color="text.secondary">
                Compared to last month
-            </Typography>
+            </Typography> */}
          </CardContent>
       </Card>
    )

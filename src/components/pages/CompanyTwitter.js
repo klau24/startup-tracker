@@ -123,7 +123,7 @@ function CompanyTwitter(props) {
                   />
                </Grid>
 
-               {/* <Grid item xs={12} s={6} md={4}>
+               <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title="Follower Count"
                      data={twitterData['summary']['followers_count']}
@@ -145,7 +145,7 @@ function CompanyTwitter(props) {
                      data={twitterData['summary']['tweet_count']}
                      showPercent={true}
                   />
-               </Grid> */}
+               </Grid>
 
                {filterItems.map((item) => {
                   switch (item) {
