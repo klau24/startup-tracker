@@ -14,6 +14,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 function App() {
    const [isOpen, setIsOpen] = useState(false)
    const [navbarSearch, setNavbarSearch] = useState(null)
+   const [sortSelectorVal, setSortSelectorVal] = useState('daily')
 
    const currPage = useLocation()
    const navigate = useNavigate()
@@ -28,6 +29,10 @@ function App() {
       } else if (searchVal.target.nodeName === 'INPUT') {
          setNavbarSearch(searchVal.target.value)
       }
+   }
+
+   const handleSortSelector = (sortVal) => {
+      setSortSelectorVal(sortVal.toLowerCase())
    }
 
    useEffect(() => {
@@ -66,11 +71,23 @@ function App() {
                <Route path="/contact" element={<Contact />} />
                <Route
                   path="/company-twitter"
-                  element={<CompanyTwitter company={navbarSearch} />}
+                  element={
+                     <CompanyTwitter
+                        company={navbarSearch}
+                        sortBy={sortSelectorVal}
+                        handleSort={handleSortSelector}
+                     />
+                  }
                />
                <Route
                   path="/user-tweets"
-                  element={<UserTweets company={navbarSearch} />}
+                  element={
+                     <UserTweets
+                        company={navbarSearch}
+                        sortBy={sortSelectorVal}
+                        handleSort={handleSortSelector}
+                     />
+                  }
                />
             </Routes>
          </div>

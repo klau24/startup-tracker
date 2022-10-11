@@ -57,9 +57,9 @@ function ContentCard(props) {
          case 'wordCloud':
             return (
                <ReactWordcloud
-                  fontsizes={[70, 100]}
+                  fontsizes={[10, 80]}
                   words={props.data['words']}
-                  options={{ padding: 1, fontSizes: [20, 70] }}
+                  options={{ padding: 1, fontSizes: [20, 30] }}
                />
             )
          case 'stackedBar':

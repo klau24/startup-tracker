@@ -1,14 +1,15 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 
-function SortSelector() {
-   const [sortBy, setSortBy] = React.useState('')
+function SortSelector(props) {
+   const [sortVal, setSortVal] = useState('daily')
 
    const handleChange = (event) => {
-      setSortBy(event.target.value)
+      setSortVal(event.explicitOriginalTarget.childNodes[0].data.toLowerCase())
+      props.sortBy(event.explicitOriginalTarget.childNodes[0].data)
    }
 
    return (
@@ -16,14 +17,14 @@ function SortSelector() {
          <InputLabel>Sort By</InputLabel>
          <Select
             id="select-sort"
-            value={sortBy}
+            value={sortVal}
             label="Sort By"
             onChange={handleChange}
          >
-            <MenuItem value={0}>None</MenuItem>
-            <MenuItem value={1}>Weekly</MenuItem>
-            <MenuItem value={2}>Monthly</MenuItem>
-            <MenuItem value={3}>Yearly</MenuItem>
+            <MenuItem value={'daily'}>Daily</MenuItem>
+            <MenuItem value={'weekly'}>Weekly</MenuItem>
+            <MenuItem value={'monthly'}>Monthly</MenuItem>
+            <MenuItem value={'quarterly'}>Quarterly</MenuItem>
          </Select>
       </FormControl>
    )

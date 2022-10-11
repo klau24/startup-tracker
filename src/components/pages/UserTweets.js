@@ -23,7 +23,13 @@ function UserTweets(props) {
             company = company.replace(' ', '+')
          }
          axios
-            .get('/api/'.concat(company).concat('/weekly/linguistic_features'))
+            .get(
+               '/api/'
+                  .concat(company)
+                  .concat('/')
+                  .concat(props.sortBy)
+                  .concat('/linguistic_features')
+            )
             .then((res) => {
                setNlpData(res.data)
             })
@@ -32,7 +38,13 @@ function UserTweets(props) {
             })
 
          axios
-            .get('/api/'.concat(company).concat('/weekly/activity'))
+            .get(
+               '/api/'
+                  .concat(company)
+                  .concat('/')
+                  .concat(props.sortBy)
+                  .concat('/activity')
+            )
             .then((res) => {
                setUserTweetData(res.data)
             })
@@ -41,7 +53,13 @@ function UserTweets(props) {
             })
 
          axios
-            .get('/api/'.concat(company).concat('/weekly/words'))
+            .get(
+               '/api/'
+                  .concat(company)
+                  .concat('/')
+                  .concat(props.sortBy)
+                  .concat('/words')
+            )
             .then((res) => {
                setWordcloudData(res.data)
             })
@@ -49,7 +67,7 @@ function UserTweets(props) {
                console.log(err)
             })
       }
-   }, [props.company, props.filterItems])
+   }, [props.company, props.filterItems, props.sortBy])
 
    function handleFilterItems(item) {
       var itemsArr = [...filterItems]
@@ -94,7 +112,10 @@ function UserTweets(props) {
                         </Grid>
                      )
                   })}
-                  <SortSelector />
+                  <SortSelector
+                     currentSort={props.sortBy}
+                     sortBy={props.handleSort}
+                  />
                </Grid>
 
                <Grid item xs={12} s={6} md={4}>
