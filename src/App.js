@@ -8,6 +8,7 @@ import About from './components/pages/About'
 import Contact from './components/pages/Contact'
 import CompanyTwitter from './components/pages/CompanyTwitter'
 import UserTweets from './components/pages/UserTweets'
+import AdvancedNLP from './components/pages/AdvancedNLP'
 import Sidebar from './components/sidebar/Sidebar'
 import { useNavigate, useLocation } from 'react-router-dom'
 
@@ -83,6 +84,16 @@ function App() {
                   path="/user-tweets"
                   element={
                      <UserTweets
+                        company={navbarSearch}
+                        sortBy={sortSelectorVal}
+                        handleSort={handleSortSelector}
+                     />
+                  }
+               />
+               <Route
+                  path="/advanced-nlp"
+                  element={
+                     <AdvancedNLP
                         company={navbarSearch}
                         sortBy={sortSelectorVal}
                         handleSort={handleSortSelector}

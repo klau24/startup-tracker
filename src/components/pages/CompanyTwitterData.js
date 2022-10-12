@@ -1,5 +1,13 @@
 export const companyTwitterData = [
    {
+      data: 'Follower Count',
+      dataType: 'line',
+   },
+   {
+      data: 'Number of Tweets',
+      dataType: 'line',
+   },
+   {
       data: 'Company Tweets',
       dataType: 'line',
    },
@@ -13,10 +21,6 @@ export const companyTwitterData = [
    },
    {
       data: 'Users',
-      dataType: 'line',
-   },
-   {
-      data: 'User Tweets About Company',
       dataType: 'line',
    },
 ]

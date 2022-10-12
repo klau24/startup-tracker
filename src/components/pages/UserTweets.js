@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import Widget from '../Widget'
-import Sidebar from '../sidebar/Sidebar'
 import FilterButton from '../FilterButton'
 import ContentCard from '../ContentCard'
 import SortSelector from '../SortSelector'
@@ -13,7 +12,7 @@ function UserTweets(props) {
    const [userTweetData, setUserTweetData] = useState(null)
    const [wordcloudData, setWordcloudData] = useState(null)
    const [filterItems, setFilterItems] = useState(
-      [UserTweetsData.map((content) => content['data'])][0]
+      [UserTweetsData.map((content) => content)][0]
    )
 
    useEffect(() => {
@@ -102,7 +101,7 @@ function UserTweets(props) {
                   spacing={1}
                   style={{ height: '4.5vh' }}
                >
-                  {UserTweetsData.map((content) => {
+                  {filterItems.map((content) => {
                      return (
                         <Grid item>
                            <FilterButton
@@ -118,39 +117,55 @@ function UserTweets(props) {
                   />
                </Grid>
 
-               <Grid item xs={12} s={6} md={4}>
-                  <Widget
-                     title={'Average Readability Grade'}
-                     data={
-                        nlpData[latestDate]['nlp_features'][
-                           'avg_flesch_reading_ease'
-                        ]
-                     }
-                     showPercent={false}
-                  />
-               </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <Widget
-                     title={'Average Number of Words'}
-                     data={nlpData[latestDate]['nlp_features']['avg_words']}
-                     showPercent={false}
-                  />
-               </Grid>
-               <Grid item xs={12} s={6} md={4}>
-                  <Widget
-                     title={'Average Number of Links'}
-                     data={nlpData[latestDate]['nlp_features']['avg_links']}
-                     showPercent={false}
-                  />
-               </Grid>
-
                {filterItems.map((item) => {
-                  switch (item) {
+                  switch (item.data) {
+                     case 'Average Readability Grade':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <Widget
+                                 title={'Average Readability Grade'}
+                                 data={
+                                    nlpData[latestDate]['nlp_features'][
+                                       'avg_flesch_reading_ease'
+                                    ]
+                                 }
+                                 showPercent={false}
+                              />
+                           </Grid>
+                        )
+                     case 'Average Number of Words':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <Widget
+                                 title={'Average Number of Words'}
+                                 data={
+                                    nlpData[latestDate]['nlp_features'][
+                                       'avg_words'
+                                    ]
+                                 }
+                                 showPercent={false}
+                              />
+                           </Grid>
+                        )
+                     case 'Average Number of Links':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <Widget
+                                 title={'Average Number of Links'}
+                                 data={
+                                    nlpData[latestDate]['nlp_features'][
+                                       'avg_links'
+                                    ]
+                                 }
+                                 showPercent={false}
+                              />
+                           </Grid>
+                        )
                      case 'Word Cloud':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType="wordCloud"
+                                 cardType={item.dataType}
                                  data={{ words: wordcloudData['wordcloud'] }}
                               />
                            </Grid>
@@ -159,7 +174,7 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType="line"
+                                 cardType={item.dataType}
                                  data={{
                                     title: 'Tweet Likes',
                                     labels: Object.keys(userTweetData),
@@ -177,7 +192,7 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType="line"
+                                 cardType={item.dataType}
                                  data={{
                                     title: 'Retweets',
                                     labels: Object.keys(userTweetData),
@@ -195,9 +210,9 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType="bar"
+                                 cardType={item.dataType}
                                  data={{
-                                    title: 'Weekly User Tweets',
+                                    title: 'User Tweets',
                                     labels: Object.keys(userTweetData),
                                     data: Object.values(userTweetData).map(
                                        (val) => val['user_tweets']
@@ -206,16 +221,16 @@ function UserTweets(props) {
                               />
                            </Grid>
                         )
-                     case 'Weekly Users':
+                     case 'User Tweets About Company':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType="line"
+                                 cardType={item.dataType}
                                  data={{
-                                    title: 'Weekly Average Tweet Characters',
+                                    title: 'User Tweets About Company',
                                     labels: Object.keys(userTweetData),
                                     data: Object.values(userTweetData).map(
-                                       (val) => val['users']
+                                       (val) => val['user_tweets']
                                     ),
                                  }}
                               />

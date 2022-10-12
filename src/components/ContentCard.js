@@ -5,33 +5,85 @@ import { Line, Bar } from 'react-chartjs-2'
 import ReactWordcloud from 'react-wordcloud'
 import InfoIcon from '@mui/icons-material/Info'
 import CardHeader from '@material-ui/core/CardHeader'
+import {
+   Chart as ChartJS,
+   CategoryScale,
+   LinearScale,
+   PointElement,
+   LineElement,
+   Title,
+   Tooltip,
+   Legend,
+   Filler,
+} from 'chart.js'
+
+ChartJS.register(
+   CategoryScale,
+   LinearScale,
+   PointElement,
+   LineElement,
+   Title,
+   Tooltip,
+   Legend,
+   Filler
+)
 
 function ContentCard(props) {
    const renderSelection = () => {
       switch (props.cardType) {
          case 'line':
-            return (
-               <Line
-                  data={{
-                     labels: props.data['labels'],
-                     datasets: [
-                        {
-                           data: props.data['data'],
-                           backgroundColor: '#ffffff ',
-                           borderColor: '#B2002C',
+            if (props.data['fill']) {
+               return (
+                  <Line
+                     data={{
+                        labels: props.data['labels'],
+                        datasets: [
+                           {
+                              data: props.data['data'],
+                              borderColor: '#252A34',
+                              tension: 0.4,
+                              fill: {
+                                 target: 'origin',
+                                 below: 'rgba(255, 26, 104, .7)',
+                                 above: 'rgba(75, 192, 192, .7)',
+                              },
+                           },
+                        ],
+                     }}
+                     options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                           legend: { display: false },
+                           title: { display: true, text: props.data['title'] },
                         },
-                     ],
-                  }}
-                  options={{
-                     responsive: true,
-                     maintainAspectRatio: false,
-                     plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: props.data['title'] },
-                     },
-                  }}
-               />
-            )
+                     }}
+                  />
+               )
+            } else {
+               return (
+                  <Line
+                     data={{
+                        labels: props.data['labels'],
+                        datasets: [
+                           {
+                              data: props.data['data'],
+                              borderColor: '#252A34',
+                              tension: 0.4,
+                           },
+                        ],
+                     }}
+                     options={{
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                           legend: { display: false },
+                           title: { display: true, text: props.data['title'] },
+                        },
+                     }}
+                  />
+               )
+            }
          case 'bar':
             return (
                <Bar
@@ -40,7 +92,7 @@ function ContentCard(props) {
                      datasets: [
                         {
                            data: props.data['data'],
-                           backgroundColor: '#B2002C ',
+                           backgroundColor: '#252A34',
                         },
                      ],
                   }}

@@ -6,41 +6,12 @@ import ContentCard from '../ContentCard'
 import { companyTwitterData } from './CompanyTwitterData'
 import FilterButton from '../FilterButton'
 import SortSelector from '../SortSelector'
-import {
-   Chart as ChartJS,
-   CategoryScale,
-   LinearScale,
-   BarElement,
-   Title,
-   Tooltip,
-   Legend,
-   ArcElement,
-   PointElement,
-   LineElement,
-   RadialLinearScale,
-} from 'chart.js'
-
-import annotationPlugin from 'chartjs-plugin-annotation'
-
-ChartJS.register(
-   CategoryScale,
-   LinearScale,
-   BarElement,
-   Title,
-   Tooltip,
-   Legend,
-   ArcElement,
-   PointElement,
-   LineElement,
-   RadialLinearScale,
-   annotationPlugin
-)
 
 function CompanyTwitter(props) {
-   const [companyTweetData, setCompanyTweetData] = useState(null)
+   const [activity, setActivity] = useState(null)
    const [twitterData, setTwitterData] = useState(null)
    const [filterItems, setFilterItems] = useState(
-      [companyTwitterData.map((content) => content['data'])][0]
+      [companyTwitterData.map((content) => content)][0]
    )
 
    useEffect(() => {
@@ -51,7 +22,7 @@ function CompanyTwitter(props) {
             company = company.replace(' ', '+')
          }
          axios
-            .get('/api/companyTwitterData/'.concat(company))
+            .get('/api/'.concat(company).concat('/companyTwitterData'))
             .then((res) => {
                setTwitterData(res.data)
             })
@@ -68,14 +39,15 @@ function CompanyTwitter(props) {
                   .concat('/activity')
             )
             .then((res) => {
-               setCompanyTweetData(res.data)
+               setActivity(res.data)
             })
       }
    }, [props.company, props.sortBy])
 
    function handleFilterItems(item) {
       var itemsArr = [...filterItems]
-
+      console.log(item)
+      console.log(itemsArr)
       if (itemsArr.indexOf(item) === -1) {
          itemsArr.push(item)
          setFilterItems(itemsArr)
@@ -85,7 +57,7 @@ function CompanyTwitter(props) {
       }
    }
 
-   if (twitterData && companyTweetData) {
+   if (twitterData && activity) {
       return (
          <>
             <Grid
@@ -123,32 +95,46 @@ function CompanyTwitter(props) {
                   />
                </Grid>
 
-               <Grid item xs={12} s={6} md={4}>
-                  <Widget
-                     title="Follower Count"
-                     data={twitterData['summary']['followers_count']}
-                     showPercent={true}
-                  />
-               </Grid>
-
-               <Grid item xs={12} s={6} md={4}>
+               {/* <Grid item xs={12} s={6} md={4}>
                   <Widget
                      title="Following Count"
                      data={twitterData['summary']['following_count']}
                      showPercent={true}
                   />
-               </Grid>
-
-               <Grid item xs={12} s={6} md={4}>
-                  <Widget
-                     title="Number of Tweets"
-                     data={twitterData['summary']['tweet_count']}
-                     showPercent={true}
-                  />
-               </Grid>
+               </Grid> */}
 
                {filterItems.map((item) => {
-                  switch (item) {
+                  switch (item.data) {
+                     case 'Follower Count':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: 'Follower Count',
+                                    labels: Object.keys(twitterData),
+                                    data: Object.values(twitterData).map(
+                                       (val) => val['followers_count']
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Number of Tweets':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: 'Number of Tweets',
+                                    labels: Object.keys(twitterData),
+                                    data: Object.values(twitterData).map(
+                                       (val) => val['tweet_count']
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
                      case 'Company Tweets':
                         return (
                            <Grid item xs={12} s={6} md={4}>
@@ -156,8 +142,8 @@ function CompanyTwitter(props) {
                                  cardType="line"
                                  data={{
                                     title: 'Company Tweets',
-                                    labels: Object.keys(companyTweetData),
-                                    data: Object.values(companyTweetData).map(
+                                    labels: Object.keys(activity),
+                                    data: Object.values(activity).map(
                                        (val) => val['company_tweets']
                                     ),
                                  }}
@@ -171,8 +157,8 @@ function CompanyTwitter(props) {
                                  cardType="line"
                                  data={{
                                     title: 'Tweet Likes',
-                                    labels: Object.keys(companyTweetData),
-                                    data: Object.values(companyTweetData).map(
+                                    labels: Object.keys(activity),
+                                    data: Object.values(activity).map(
                                        (val) =>
                                           val['tweet_metrics']['company'][
                                              'like_count'
@@ -189,8 +175,8 @@ function CompanyTwitter(props) {
                                  cardType="line"
                                  data={{
                                     title: 'Retweets',
-                                    labels: Object.keys(companyTweetData),
-                                    data: Object.values(companyTweetData).map(
+                                    labels: Object.keys(activity),
+                                    data: Object.values(activity).map(
                                        (val) =>
                                           val['tweet_metrics']['company'][
                                              'retweet_count'
@@ -207,24 +193,9 @@ function CompanyTwitter(props) {
                                  cardType="line"
                                  data={{
                                     title: 'Users',
-                                    labels: Object.keys(companyTweetData),
-                                    data: Object.values(companyTweetData).map(
+                                    labels: Object.keys(activity),
+                                    data: Object.values(activity).map(
                                        (val) => val['users']
-                                    ),
-                                 }}
-                              />
-                           </Grid>
-                        )
-                     case 'User Tweets About Company':
-                        return (
-                           <Grid item xs={12} s={6} md={4}>
-                              <ContentCard
-                                 cardType="line"
-                                 data={{
-                                    title: 'User Tweets About Company',
-                                    labels: Object.keys(companyTweetData),
-                                    data: Object.values(companyTweetData).map(
-                                       (val) => val['user_tweets']
                                     ),
                                  }}
                               />
