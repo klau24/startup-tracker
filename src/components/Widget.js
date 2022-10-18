@@ -1,10 +1,10 @@
 import React from 'react'
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import InfoIcon from '@mui/icons-material/Info'
 import Divider from '@material-ui/core/Divider'
+import Tooltip from '@mui/material/Tooltip'
 
 function Widget(props) {
    return (
@@ -18,24 +18,19 @@ function Widget(props) {
             >
                {props.title}
                <div>
-                  <InfoIcon style={{ color: 'grey' }} />
+                  <Tooltip title={props.tooltip}>
+                     <InfoIcon style={{ color: 'gray' }} />
+                  </Tooltip>
                </div>
             </Typography>
             <Typography
                variant="h5"
                component="div"
-               sx={{ mb: 1.5, fontWeight: 'bold' }}
+               sx={{ mb: 1.5, fontWeight: 'bold', textAlign: 'center' }}
             >
                {props.data}
-
-               {/* <span className="pl-3 font-normal text-base">
-                  + 0% <KeyboardArrowUpIcon className="text-green-500" />
-               </span> */}
             </Typography>
             <Divider light />
-            {/* <Typography className="pt-3" color="text.secondary">
-               Compared to last month
-            </Typography> */}
          </CardContent>
       </Card>
    )

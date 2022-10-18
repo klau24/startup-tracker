@@ -5,28 +5,8 @@ import { Line, Bar } from 'react-chartjs-2'
 import ReactWordcloud from 'react-wordcloud'
 import InfoIcon from '@mui/icons-material/Info'
 import CardHeader from '@material-ui/core/CardHeader'
-import {
-   Chart as ChartJS,
-   CategoryScale,
-   LinearScale,
-   PointElement,
-   LineElement,
-   Title,
-   Tooltip,
-   Legend,
-   Filler,
-} from 'chart.js'
-
-ChartJS.register(
-   CategoryScale,
-   LinearScale,
-   PointElement,
-   LineElement,
-   Title,
-   Tooltip,
-   Legend,
-   Filler
-)
+import Tooltip from '@mui/material/Tooltip'
+import Chart from 'chart.js/auto'
 
 function ContentCard(props) {
    const renderSelection = () => {
@@ -150,7 +130,11 @@ function ContentCard(props) {
          }}
       >
          <CardHeader
-            action={<InfoIcon className="mr-3" style={{ color: 'gray' }} />}
+            action={
+               <Tooltip title={props.tooltip}>
+                  <InfoIcon className="mr-3" style={{ color: 'gray' }} />
+               </Tooltip>
+            }
          />
          <CardContent className="h-4/5">{renderSelection()}</CardContent>
       </Card>

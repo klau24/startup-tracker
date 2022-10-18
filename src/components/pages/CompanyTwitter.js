@@ -11,7 +11,7 @@ function CompanyTwitter(props) {
    const [activity, setActivity] = useState(null)
    const [twitterData, setTwitterData] = useState(null)
    const [filterItems, setFilterItems] = useState(
-      [companyTwitterData.map((content) => content)][0]
+      [companyTwitterData.map((content) => content['data'])][0]
    )
 
    useEffect(() => {
@@ -58,6 +58,7 @@ function CompanyTwitter(props) {
    }
 
    if (twitterData && activity) {
+      console.log(filterItems)
       return (
          <>
             <Grid
@@ -104,7 +105,7 @@ function CompanyTwitter(props) {
                </Grid> */}
 
                {filterItems.map((item) => {
-                  switch (item.data) {
+                  switch (item) {
                      case 'Follower Count':
                         return (
                            <Grid item xs={12} s={6} md={4}>
@@ -117,6 +118,8 @@ function CompanyTwitter(props) {
                                        (val) => val['followers_count']
                                     ),
                                  }}
+                                 //tooltip={item.tooltip}
+                                 tooltip="Number of Twitter followers"
                               />
                            </Grid>
                         )
@@ -132,6 +135,8 @@ function CompanyTwitter(props) {
                                        (val) => val['tweet_count']
                                     ),
                                  }}
+                                 //tooltip={item.tooltip}
+                                 tooltip="Tweets over time"
                               />
                            </Grid>
                         )
@@ -147,6 +152,8 @@ function CompanyTwitter(props) {
                                        (val) => val['company_tweets']
                                     ),
                                  }}
+                                 //tooltip={item.tooltip}
+                                 tooltip="Company tweets over time"
                               />
                            </Grid>
                         )
@@ -165,6 +172,8 @@ function CompanyTwitter(props) {
                                           ]
                                     ),
                                  }}
+                                 //tooltip={item.tooltip}
+                                 tooltip="Likes on company tweets"
                               />
                            </Grid>
                         )
@@ -183,6 +192,8 @@ function CompanyTwitter(props) {
                                           ]
                                     ),
                                  }}
+                                 //tooltip={item.tooltip}
+                                 tooltip="Retweets on company tweets"
                               />
                            </Grid>
                         )
@@ -198,6 +209,8 @@ function CompanyTwitter(props) {
                                        (val) => val['users']
                                     ),
                                  }}
+                                 //tooltip={item.tooltip}
+                                 tooltip="Number of users"
                               />
                            </Grid>
                         )

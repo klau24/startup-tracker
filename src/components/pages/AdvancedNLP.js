@@ -104,6 +104,98 @@ function AdvancedNLP(props) {
                               />
                            </Grid>
                         )
+                     case 'Hugging Face Sentiment':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType={item.dataType}
+                                 data={{
+                                    title: 'Hugging Face Sentiment',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features'][
+                                             'avg_hugging_face_sentiment'
+                                          ]
+                                    ),
+                                    fill: 1,
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Synsets Ratio':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType={item.dataType}
+                                 data={{
+                                    title: 'Synsets Ratio',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features'][
+                                             'avg_synset_ratio'
+                                          ]
+                                    ),
+                                    fill: 1,
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Emoticon Ratio':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType={item.dataType}
+                                 data={{
+                                    title: 'Emoticon Ratio',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features'][
+                                             'has_emoticon_ratio'
+                                          ]
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Hashtag Ratio':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType={item.dataType}
+                                 data={{
+                                    title: 'Hashtag Ratio',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features'][
+                                             'hash_hashtag_ratio'
+                                          ]
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
+                     case 'Mention Ratio':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType={item.dataType}
+                                 data={{
+                                    title: 'Mention Ratio',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features'][
+                                             'hash_mention_ratio'
+                                          ]
+                                    ),
+                                 }}
+                              />
+                           </Grid>
+                        )
                   }
                })}
             </Grid>

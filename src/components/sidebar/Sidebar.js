@@ -22,8 +22,8 @@ function Sidebar(props) {
       window !== undefined ? () => window().document.body : undefined
 
    const drawer = (
-      <div>
-         <List>
+      <div className="pt-4">
+         <List className="font-mono">
             {SidebarData.map((item, index) => (
                <ListItem key={item} sx={{ padding: 2 }}>
                   <ListItemButton>
@@ -69,16 +69,24 @@ function Sidebar(props) {
                '& .MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: drawerWidth,
+                  backgroundColor: '#FFFFFE',
+                  zIndex: 0,
                },
             }}
             anchor="bottom"
             open
             PaperProps={{
                sx: {
-                  height: '94.13%',
+                  height: '100%',
                },
             }}
          >
+            <Link
+               className="pt-7 flex justify-evenly items-center text-black relative font-mono"
+               to="/"
+            >
+               startup-tracker
+            </Link>
             {drawer}
          </Drawer>
       </Box>

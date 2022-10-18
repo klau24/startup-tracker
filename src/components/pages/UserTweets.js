@@ -11,8 +11,10 @@ function UserTweets(props) {
    const [nlpData, setNlpData] = useState(null)
    const [userTweetData, setUserTweetData] = useState(null)
    const [wordcloudData, setWordcloudData] = useState(null)
+   const [emojiCloud, setEmojiCloud] = useState(null)
+   const [hashtagCloud, setHashtagCloud] = useState(null)
    const [filterItems, setFilterItems] = useState(
-      [UserTweetsData.map((content) => content)][0]
+      [UserTweetsData.map((content) => content['data'])][0]
    )
 
    useEffect(() => {
@@ -65,6 +67,36 @@ function UserTweets(props) {
             .catch((err) => {
                console.log(err)
             })
+
+         axios
+            .get(
+               '/api/'
+                  .concat(company)
+                  .concat('/')
+                  .concat(props.sortBy)
+                  .concat('/emojis')
+            )
+            .then((res) => {
+               setEmojiCloud(res.data)
+            })
+            .catch((err) => {
+               console.log(err)
+            })
+
+         axios
+            .get(
+               '/api/'
+                  .concat(company)
+                  .concat('/')
+                  .concat(props.sortBy)
+                  .concat('/hashtags')
+            )
+            .then((res) => {
+               setHashtagCloud(res.data)
+            })
+            .catch((err) => {
+               console.log(err)
+            })
       }
    }, [props.company, props.filterItems, props.sortBy])
 
@@ -102,14 +134,16 @@ function UserTweets(props) {
                   style={{ height: '4.5vh' }}
                >
                   {filterItems.map((content) => {
-                     return (
-                        <Grid item>
-                           <FilterButton
-                              text={content['data']}
-                              filterItems={handleFilterItems}
-                           />
-                        </Grid>
-                     )
+                     if (content.indexOf('Average') === -1) {
+                        return (
+                           <Grid item>
+                              <FilterButton
+                                 text={content}
+                                 filterItems={handleFilterItems}
+                              />
+                           </Grid>
+                        )
+                     }
                   })}
                   <SortSelector
                      currentSort={props.sortBy}
@@ -118,7 +152,7 @@ function UserTweets(props) {
                </Grid>
 
                {filterItems.map((item) => {
-                  switch (item.data) {
+                  switch (item) {
                      case 'Average Readability Grade':
                         return (
                            <Grid item xs={12} s={6} md={4}>
@@ -129,7 +163,7 @@ function UserTweets(props) {
                                        'avg_flesch_reading_ease'
                                     ]
                                  }
-                                 showPercent={false}
+                                 tooltip="Flesch Reading Ease Grade"
                               />
                            </Grid>
                         )
@@ -143,7 +177,7 @@ function UserTweets(props) {
                                        'avg_words'
                                     ]
                                  }
-                                 showPercent={false}
+                                 tooltip="Avg. number of words in a tweet"
                               />
                            </Grid>
                         )
@@ -157,7 +191,7 @@ function UserTweets(props) {
                                        'avg_links'
                                     ]
                                  }
-                                 showPercent={false}
+                                 tooltip="Avg. website links in a tweet"
                               />
                            </Grid>
                         )
@@ -165,8 +199,9 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="wordCloud"
                                  data={{ words: wordcloudData['wordcloud'] }}
+                                 tooltip="Tweet word cloud"
                               />
                            </Grid>
                         )
@@ -174,7 +209,7 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Tweet Likes',
                                     labels: Object.keys(userTweetData),
@@ -185,6 +220,7 @@ function UserTweets(props) {
                                           ]
                                     ),
                                  }}
+                                 tooltip="User tweet likes"
                               />
                            </Grid>
                         )
@@ -192,7 +228,7 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Retweets',
                                     labels: Object.keys(userTweetData),
@@ -203,6 +239,7 @@ function UserTweets(props) {
                                           ]
                                     ),
                                  }}
+                                 tooltip="User tweet retweets"
                               />
                            </Grid>
                         )
@@ -210,7 +247,7 @@ function UserTweets(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'User Tweets',
                                     labels: Object.keys(userTweetData),
@@ -218,21 +255,27 @@ function UserTweets(props) {
                                        (val) => val['user_tweets']
                                     ),
                                  }}
+                                 tooltip="User tweets about company"
                               />
                            </Grid>
                         )
-                     case 'User Tweets About Company':
+                     case 'Emoji Cloud':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
-                                 data={{
-                                    title: 'User Tweets About Company',
-                                    labels: Object.keys(userTweetData),
-                                    data: Object.values(userTweetData).map(
-                                       (val) => val['user_tweets']
-                                    ),
-                                 }}
+                                 cardType="wordCloud"
+                                 data={{ words: emojiCloud['wordcloud'] }}
+                                 tooltip="Emoji word cloud"
+                              />
+                           </Grid>
+                        )
+                     case 'Hashtag Cloud':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="wordCloud"
+                                 data={{ words: hashtagCloud['wordcloud'] }}
+                                 tooltip="Hashtag word cloud"
                               />
                            </Grid>
                         )
