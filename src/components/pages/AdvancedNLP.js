@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
-import FilterButton from '../FilterButton'
+import GenericButton from '../GenericButton'
 import ContentCard from '../ContentCard'
 import SortSelector from '../SortSelector'
 import { advancedNlpData } from './AdvancedNLPData'
@@ -9,7 +9,7 @@ import { advancedNlpData } from './AdvancedNLPData'
 function AdvancedNLP(props) {
    const [nlpData, setNlpData] = useState(null)
    const [filterItems, setFilterItems] = useState(
-      [advancedNlpData.map((content) => content)][0]
+      [advancedNlpData.map((content) => content['data'])][0]
    )
    useEffect(() => {
       var company = props.company
@@ -48,13 +48,7 @@ function AdvancedNLP(props) {
    if (nlpData) {
       return (
          <>
-            <Grid
-               className="p-4"
-               container
-               justifyContent="center"
-               style={{ height: '95vh', overflow: 'auto' }}
-               spacing={2}
-            >
+            <Grid className="p-4" container justifyContent="center" spacing={2}>
                <Grid item xs={12} s={12} md={12}>
                   <h1 className="text-center text-2xl font-bold">
                      {props.company}
@@ -71,9 +65,10 @@ function AdvancedNLP(props) {
                   {filterItems.map((content) => {
                      return (
                         <Grid item>
-                           <FilterButton
-                              text={content['data']}
+                           <GenericButton
+                              text={content}
                               filterItems={handleFilterItems}
+                              isFilter={true}
                            />
                         </Grid>
                      )
@@ -84,12 +79,12 @@ function AdvancedNLP(props) {
                   />
                </Grid>
                {filterItems.map((item) => {
-                  switch (item.data) {
+                  switch (item) {
                      case 'Vader Sentiment':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Vader Sentiment',
                                     labels: Object.keys(nlpData),
@@ -108,7 +103,7 @@ function AdvancedNLP(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Hugging Face Sentiment',
                                     labels: Object.keys(nlpData),
@@ -127,7 +122,7 @@ function AdvancedNLP(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Synsets Ratio',
                                     labels: Object.keys(nlpData),
@@ -146,7 +141,7 @@ function AdvancedNLP(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Emoticon Ratio',
                                     labels: Object.keys(nlpData),
@@ -164,7 +159,7 @@ function AdvancedNLP(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Hashtag Ratio',
                                     labels: Object.keys(nlpData),
@@ -182,7 +177,7 @@ function AdvancedNLP(props) {
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
-                                 cardType={item.dataType}
+                                 cardType="line"
                                  data={{
                                     title: 'Mention Ratio',
                                     labels: Object.keys(nlpData),

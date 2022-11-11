@@ -20,20 +20,18 @@ function NavSearchbar(props) {
          },
       },
    })
-
    return (
       <div>
          <ThemeProvider theme={theme}>
             <Autocomplete
-               id="search-startup"
+               id="search"
                style={{ width: props.width }}
-               freeSolo
-               options={props.companies.map((company) => company.label)}
+               options={Object.values(props.data).map((company) => company)}
                onChange={props.handleNavbarSearch}
                renderInput={(params) => (
                   <TextField
                      {...params}
-                     label="Search Startup"
+                     label={props.label}
                      InputProps={{
                         ...params.InputProps,
                         startAdornment: (

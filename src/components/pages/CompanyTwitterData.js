@@ -1,6 +1,6 @@
 export const companyTwitterData = [
    {
-      data: 'Follower Count',
+      data: 'Followers Count',
       dataType: 'line',
       tooltip: 'Number of Twitter followers',
    },

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import Widget from '../Widget'
-import FilterButton from '../FilterButton'
+import GenericButton from '../GenericButton'
 import ContentCard from '../ContentCard'
 import SortSelector from '../SortSelector'
 import { UserTweetsData } from './UserTweetsData'
@@ -115,12 +115,7 @@ function UserTweets(props) {
       var latestDate = Object.keys(nlpData).pop()
       return (
          <>
-            <Grid
-               className="p-4"
-               container
-               spacing={2}
-               style={{ height: '95vh', overflow: 'auto' }}
-            >
+            <Grid className="p-4" container spacing={2}>
                <Grid item xs={12} s={12} md={12}>
                   <h1 className="text-center text-2xl font-bold">
                      {props.company}
@@ -137,9 +132,10 @@ function UserTweets(props) {
                      if (content.indexOf('Average') === -1) {
                         return (
                            <Grid item>
-                              <FilterButton
+                              <GenericButton
                                  text={content}
                                  filterItems={handleFilterItems}
+                                 isFilter={true}
                               />
                            </Grid>
                         )

@@ -24,6 +24,10 @@ function App() {
    }
 
    const handleNavbarSearch = (searchVal) => {
+      if (typeof searchVal === 'string') {
+         setNavbarSearch(searchVal)
+         navigate('/company-twitter')
+      }
       if (searchVal.target.nodeName === 'LI') {
          setNavbarSearch(searchVal.target.textContent)
          navigate('/company-twitter')
@@ -57,50 +61,55 @@ function App() {
    }
    return (
       <div className="w-screen h-screen">
-         <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
-         <NavDropdown isOpen={isOpen} toggle={toggle} />
-         <div className="flex">
-            {renderSidebar()}
-            <Routes>
-               <Route
-                  path="/"
-                  exact
-                  element={<Home handleNavbarSearch={handleNavbarSearch} />}
-               />
-               <Route path="/screening" element={<Screening />} />
-               <Route path="/about" element={<About />} />
-               <Route path="/contact" element={<Contact />} />
-               <Route
-                  path="/company-twitter"
-                  element={
-                     <CompanyTwitter
-                        company={navbarSearch}
-                        sortBy={sortSelectorVal}
-                        handleSort={handleSortSelector}
-                     />
-                  }
-               />
-               <Route
-                  path="/user-tweets"
-                  element={
-                     <UserTweets
-                        company={navbarSearch}
-                        sortBy={sortSelectorVal}
-                        handleSort={handleSortSelector}
-                     />
-                  }
-               />
-               <Route
-                  path="/advanced-nlp"
-                  element={
-                     <AdvancedNLP
-                        company={navbarSearch}
-                        sortBy={sortSelectorVal}
-                        handleSort={handleSortSelector}
-                     />
-                  }
-               />
-            </Routes>
+         <div className="flex flex-col">
+            <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
+            <NavDropdown isOpen={isOpen} toggle={toggle} />
+            <div className="flex">
+               {renderSidebar()}
+               <Routes>
+                  <Route
+                     path="/"
+                     exact
+                     element={<Home handleNavbarSearch={handleNavbarSearch} />}
+                  />
+                  <Route
+                     path="/screening"
+                     element={<Screening onCompanyClick={handleNavbarSearch} />}
+                  />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route
+                     path="/company-twitter"
+                     element={
+                        <CompanyTwitter
+                           company={navbarSearch}
+                           sortBy={sortSelectorVal}
+                           handleSort={handleSortSelector}
+                        />
+                     }
+                  />
+                  <Route
+                     path="/user-tweets"
+                     element={
+                        <UserTweets
+                           company={navbarSearch}
+                           sortBy={sortSelectorVal}
+                           handleSort={handleSortSelector}
+                        />
+                     }
+                  />
+                  <Route
+                     path="/advanced-nlp"
+                     element={
+                        <AdvancedNLP
+                           company={navbarSearch}
+                           sortBy={sortSelectorVal}
+                           handleSort={handleSortSelector}
+                        />
+                     }
+                  />
+               </Routes>
+            </div>
          </div>
       </div>
    )

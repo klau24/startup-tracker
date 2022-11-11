@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Button from '@mui/material/Button'
 
-function FilterButton(props) {
+function GenericButton(props) {
    const [flag, setFlag] = useState(1)
 
    function handleFlag() {
@@ -9,11 +9,19 @@ function FilterButton(props) {
       props.filterItems(props.text)
    }
 
+   function changeVariant() {
+      if (!props.isFilter) {
+         return 'contained'
+      } else {
+         return flag & props.isFilter ? 'contained' : 'outlined'
+      }
+   }
+
    return (
       <Button
          sx={{ borderRadius: '12px', textTransform: 'none' }}
          onClick={handleFlag}
-         variant={flag ? 'contained' : 'outlined'}
+         variant={changeVariant()}
          size="medium"
       >
          {props.text}
@@ -21,4 +29,4 @@ function FilterButton(props) {
    )
 }
 
-export default FilterButton
+export default GenericButton

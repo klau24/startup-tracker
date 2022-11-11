@@ -7,7 +7,6 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import Toolbar from '@mui/material/Toolbar'
 
 const drawerWidth = 240
 
@@ -43,25 +42,6 @@ function Sidebar(props) {
          component="nav"
          sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
       >
-         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-         <Drawer
-            container={container}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{
-               keepMounted: true, // Better open performance on mobile.
-            }}
-            sx={{
-               display: { xs: 'block', sm: 'none' },
-               '& .MuiDrawer-paper': {
-                  boxSizing: 'border-box',
-                  width: drawerWidth,
-               },
-            }}
-         >
-            {drawer}
-         </Drawer>
          <Drawer
             variant="permanent"
             sx={{
@@ -70,14 +50,13 @@ function Sidebar(props) {
                   boxSizing: 'border-box',
                   width: drawerWidth,
                   backgroundColor: '#FFFFFE',
-                  zIndex: 0,
                },
             }}
             anchor="bottom"
             open
             PaperProps={{
                sx: {
-                  height: '100%',
+                  height: '100vh',
                },
             }}
          >

@@ -22,8 +22,9 @@ function Home(props) {
                <h1 className="p-10 font-mono text-5xl">startup-tracker</h1>
                <NavSearchbar
                   width={700}
-                  companies={companies}
+                  data={companies}
                   handleNavbarSearch={props.handleNavbarSearch}
+                  label="Search Startup"
                />
             </div>
          </div>

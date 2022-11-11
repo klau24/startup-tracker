@@ -4,7 +4,7 @@ import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import ContentCard from '../ContentCard'
 import { companyTwitterData } from './CompanyTwitterData'
-import FilterButton from '../FilterButton'
+import GenericButton from '../GenericButton'
 import SortSelector from '../SortSelector'
 
 function CompanyTwitter(props) {
@@ -61,13 +61,7 @@ function CompanyTwitter(props) {
       console.log(filterItems)
       return (
          <>
-            <Grid
-               className="p-4"
-               container
-               justifyContent="center"
-               style={{ height: '95vh', overflow: 'auto' }}
-               spacing={2}
-            >
+            <Grid className="p-4" container justifyContent="center" spacing={2}>
                <Grid item xs={12} s={12} md={12}>
                   <h1 className="text-center text-2xl font-bold">
                      {props.company}
@@ -83,9 +77,10 @@ function CompanyTwitter(props) {
                   {companyTwitterData.map((content) => {
                      return (
                         <Grid item>
-                           <FilterButton
+                           <GenericButton
                               text={content['data']}
                               filterItems={handleFilterItems}
+                              isFilter={true}
                            />
                         </Grid>
                      )
