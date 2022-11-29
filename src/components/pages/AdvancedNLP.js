@@ -166,7 +166,7 @@ function AdvancedNLP(props) {
                                     data: Object.values(nlpData).map(
                                        (val) =>
                                           val['nlp_features'][
-                                             'hash_hashtag_ratio'
+                                             'has_hashtag_ratio'
                                           ]
                                     ),
                                  }}
@@ -184,7 +184,7 @@ function AdvancedNLP(props) {
                                     data: Object.values(nlpData).map(
                                        (val) =>
                                           val['nlp_features'][
-                                             'hash_mention_ratio'
+                                             'has_mention_ratio'
                                           ]
                                     ),
                                  }}

@@ -34,6 +34,8 @@ const features = [
    { label: 'Company Retweets' },
    { label: 'Users' },
    { label: 'User Tweets' },
+   { label: 'User Tweet Likes' },
+   { label: 'User Retweets' },
 ]
 
 function Screening(props) {
