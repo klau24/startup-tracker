@@ -48,11 +48,17 @@ function AdvancedNLP(props) {
    if (nlpData) {
       return (
          <>
-            <Grid className="p-4" container justifyContent="center" spacing={2}>
+            <Grid
+               className="pt-4 pb-4 pl-12 pr-12"
+               container
+               justifyContent="center"
+               spacing={2.5}
+            >
                <Grid item xs={12} s={12} md={12}>
-                  <h1 className="text-center text-2xl font-bold">
+                  <h1 className="text-center text-xl">Advanced NLP</h1>
+                  <h2 className="pt-3 text-center text-2xl font-bold">
                      {props.company}
-                  </h1>
+                  </h2>
                </Grid>
 
                <Grid

@@ -10,7 +10,6 @@ import CompanyTwitter from './components/pages/CompanyTwitter'
 import UserTweets from './components/pages/UserTweets'
 import AdvancedNLP from './components/pages/AdvancedNLP'
 import Sidebar from './components/sidebar/Sidebar'
-import Grid from '@mui/material/Grid'
 import { useNavigate, useLocation } from 'react-router-dom'
 
 function App() {
@@ -61,65 +60,53 @@ function App() {
       }
    }
    return (
-      <>
-         <Grid container justifyContent="center">
-            <Grid item xs={12} s={12} md={12}>
-               <Navbar
-                  toggle={toggle}
-                  handleNavbarSearch={handleNavbarSearch}
-               />
-               <NavDropdown isOpen={isOpen} toggle={toggle} />
-            </Grid>
-            <Grid item xs={2} s={2} md={2}>
-               {renderSidebar()}
-            </Grid>
-            <Grid item xs={9} s={9} md={9}>
-               <Routes>
-                  <Route
-                     path="/"
-                     exact
-                     element={<Home handleNavbarSearch={handleNavbarSearch} />}
+      <div>
+         <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
+         <NavDropdown isOpen={isOpen} toggle={toggle} />
+         <Routes>
+            <Route
+               path="/"
+               exact
+               element={<Home handleNavbarSearch={handleNavbarSearch} />}
+            />
+            <Route
+               path="/screening"
+               element={<Screening onCompanyClick={handleNavbarSearch} />}
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route
+               path="/company-twitter"
+               element={
+                  <CompanyTwitter
+                     company={navbarSearch}
+                     sortBy={sortSelectorVal}
+                     handleSort={handleSortSelector}
                   />
-                  <Route
-                     path="/screening"
-                     element={<Screening onCompanyClick={handleNavbarSearch} />}
+               }
+            />
+            <Route
+               path="/user-tweets"
+               element={
+                  <UserTweets
+                     company={navbarSearch}
+                     sortBy={sortSelectorVal}
+                     handleSort={handleSortSelector}
                   />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route
-                     path="/company-twitter"
-                     element={
-                        <CompanyTwitter
-                           company={navbarSearch}
-                           sortBy={sortSelectorVal}
-                           handleSort={handleSortSelector}
-                        />
-                     }
+               }
+            />
+            <Route
+               path="/advanced-nlp"
+               element={
+                  <AdvancedNLP
+                     company={navbarSearch}
+                     sortBy={sortSelectorVal}
+                     handleSort={handleSortSelector}
                   />
-                  <Route
-                     path="/user-tweets"
-                     element={
-                        <UserTweets
-                           company={navbarSearch}
-                           sortBy={sortSelectorVal}
-                           handleSort={handleSortSelector}
-                        />
-                     }
-                  />
-                  <Route
-                     path="/advanced-nlp"
-                     element={
-                        <AdvancedNLP
-                           company={navbarSearch}
-                           sortBy={sortSelectorVal}
-                           handleSort={handleSortSelector}
-                        />
-                     }
-                  />
-               </Routes>
-            </Grid>
-         </Grid>
-      </>
+               }
+            />
+         </Routes>
+      </div>
    )
 }
 
