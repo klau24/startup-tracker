@@ -61,11 +61,17 @@ function CompanyTwitter(props) {
       console.log(filterItems)
       return (
          <>
-            <Grid className="p-4" container justifyContent="center" spacing={2}>
+            <Grid
+               className="pt-4 pb-4 pl-12 pr-12"
+               container
+               justifyContent="center"
+               spacing={2.5}
+            >
                <Grid item xs={12} s={12} md={12}>
-                  <h1 className="text-center text-2xl font-bold">
+                  <h1 className="text-center text-xl">Company Twitter</h1>
+                  <h2 className="pt-3 text-center text-2xl font-bold">
                      {props.company}
-                  </h1>
+                  </h2>
                </Grid>
                <Grid
                   className="p-4 pb-12"
@@ -91,17 +97,9 @@ function CompanyTwitter(props) {
                   />
                </Grid>
 
-               {/* <Grid item xs={12} s={6} md={4}>
-                  <Widget
-                     title="Following Count"
-                     data={twitterData['summary']['following_count']}
-                     showPercent={true}
-                  />
-               </Grid> */}
-
                {filterItems.map((item) => {
                   switch (item) {
-                     case 'Follower Count':
+                     case 'Followers Count':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard

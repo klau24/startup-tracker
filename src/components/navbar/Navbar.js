@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import NavSearchbar from './NavSearchbar'
-import { MenuIcon } from '@heroicons/react/outline'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import Sidebar from '../sidebar/Sidebar'
 
 const Navbar = (props) => {
    const [companies, setCompanies] = useState(null)
    const [location, setLocation] = useState(null)
+   const [isOpen, setIsOpen] = useState(false)
 
    let currPage = useLocation()
    useEffect(() => {
@@ -22,6 +25,10 @@ const Navbar = (props) => {
       setLocation(currPage.pathname)
    }, [currPage.pathname])
 
+   const handleDrawerToggle = () => {
+      setIsOpen(!isOpen)
+   }
+
    const renderSearchbar = () => {
       if (location !== '/') {
          return (
@@ -35,13 +42,35 @@ const Navbar = (props) => {
       }
    }
 
+   const renderLogo = () => {
+      if (!isOpen && location !== '/') {
+         return <Link to="/">startup-tracker</Link>
+      }
+   }
+
+   const renderMenu = () => {
+      if (!isOpen && location !== '/') {
+         return (
+            <IconButton
+               color="inherit"
+               aria-label="open drawer"
+               edge="start"
+               onClick={handleDrawerToggle}
+            >
+               <MenuIcon />
+            </IconButton>
+         )
+      }
+   }
    if (companies) {
       return (
          <nav
             className="flex justify-evenly items-center h-20 bg-stHeader text-blacks shadow-sm font-mono"
             role="navigation"
          >
-            {/* <Link to="/">startup-tracker</Link> */}
+            <Sidebar isOpen={isOpen} handleDrawerToggle={handleDrawerToggle} />
+            {renderMenu()}
+            {renderLogo()}
             {renderSearchbar()}
             <div
                className="px-4 cursor-pointer md:hidden"
