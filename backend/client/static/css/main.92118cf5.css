@@ -363,6 +363,9 @@ video {
       max-width: 1536px;
    }
 }
+.static {
+   position: static;
+}
 .relative {
    position: relative;
 }
@@ -375,14 +378,14 @@ video {
 .flex {
    display: flex;
 }
+.table {
+   display: table;
+}
 .grid {
    display: grid;
 }
 .hidden {
    display: none;
-}
-.h-screen {
-   height: 100vh;
 }
 .h-4\/5 {
    height: 80%;
@@ -393,11 +396,11 @@ video {
 .h-6 {
    height: 1.5rem;
 }
+.h-screen {
+   height: 100vh;
+}
 .h-1\/2 {
    height: 50%;
-}
-.w-screen {
-   width: 100vw;
 }
 .w-6 {
    width: 1.5rem;
@@ -432,6 +435,9 @@ video {
 .justify-evenly {
    justify-content: space-evenly;
 }
+.border {
+   border-width: 1px;
+}
 .bg-stHeader {
    --tw-bg-opacity: 1;
    background-color: rgb(255 255 254 / var(--tw-bg-opacity));
@@ -446,14 +452,29 @@ video {
    padding-left: 1rem;
    padding-right: 1rem;
 }
-.pl-3 {
-   padding-left: 0.75rem;
+.pt-4 {
+   padding-top: 1rem;
+}
+.pb-4 {
+   padding-bottom: 1rem;
+}
+.pl-12 {
+   padding-left: 3rem;
+}
+.pr-12 {
+   padding-right: 3rem;
 }
 .pt-3 {
    padding-top: 0.75rem;
 }
 .pb-12 {
    padding-bottom: 3rem;
+}
+.pt-7 {
+   padding-top: 1.75rem;
+}
+.pt-10 {
+   padding-top: 2.5rem;
 }
 .text-center {
    text-align: center;
@@ -462,9 +483,9 @@ video {
    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       Liberation Mono, Courier New, monospace;
 }
-.text-base {
-   font-size: 1rem;
-   line-height: 1.5rem;
+.text-xl {
+   font-size: 1.25rem;
+   line-height: 1.75rem;
 }
 .text-2xl {
    font-size: 1.5rem;
@@ -474,11 +495,11 @@ video {
    font-size: 3rem;
    line-height: 1;
 }
-.font-normal {
-   font-weight: 400;
-}
 .font-bold {
    font-weight: 700;
+}
+.normal-case {
+   text-transform: none;
 }
 .shadow-sm {
    --tw-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -507,4 +528,4 @@ video {
       display: none;
    }
 }
-/*# sourceMappingURL=main.2b0e9a97.css.map*/
+/*# sourceMappingURL=main.92118cf5.css.map*/
