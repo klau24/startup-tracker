@@ -86,114 +86,117 @@ function AdvancedNLP(props) {
                </Grid>
                {filterItems.map((item) => {
                   switch (item) {
-                     case 'Vader Sentiment':
+                     case 'Mentions':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: 'Vader Sentiment',
+                                    title: 'Mentions',
                                     labels: Object.keys(nlpData),
                                     data: Object.values(nlpData).map(
                                        (val) =>
                                           val['nlp_features'][
-                                             'avg_vader_sentiment'
+                                             'avg_num_mentions'
+                                          ]
+                                    ),
+                                    fill: 0,
+                                 }}
+                                 isGraph={1}
+                              />
+                           </Grid>
+                        )
+                     case 'Tweets About Funding':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: 'Tweets About Funding',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features']['tweet funding']
+                                    ),
+                                    fill: 1,
+                                 }}
+                                 isGraph={1}
+                              />
+                           </Grid>
+                        )
+                     case 'Tweets About Management Change':
+                        return (
+                           <Grid item xs={12} s={6} md={4}>
+                              <ContentCard
+                                 cardType="line"
+                                 data={{
+                                    title: 'Tweets About Management Change',
+                                    labels: Object.keys(nlpData),
+                                    data: Object.values(nlpData).map(
+                                       (val) =>
+                                          val['nlp_features'][
+                                             'tweet management change'
                                           ]
                                     ),
                                     fill: 1,
                                  }}
+                                 isGraph={1}
                               />
                            </Grid>
                         )
-                     case 'Hugging Face Sentiment':
+                     case 'Bert Sentiment':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: 'Hugging Face Sentiment',
+                                    title: 'Bert Sentiment',
                                     labels: Object.keys(nlpData),
                                     data: Object.values(nlpData).map(
                                        (val) =>
                                           val['nlp_features'][
-                                             'avg_hugging_face_sentiment'
+                                             'avg_bert_sentiment'
                                           ]
                                     ),
                                     fill: 1,
                                  }}
+                                 isGraph={1}
                               />
                            </Grid>
                         )
-                     case 'Synsets Ratio':
+                     case 'Synset Complexity':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: 'Synsets Ratio',
+                                    title: 'Synset Complexity',
                                     labels: Object.keys(nlpData),
                                     data: Object.values(nlpData).map(
                                        (val) =>
                                           val['nlp_features'][
-                                             'avg_synset_ratio'
+                                             'avg_synset_complexity'
                                           ]
                                     ),
-                                    fill: 1,
                                  }}
+                                 isGraph={1}
                               />
                            </Grid>
                         )
-                     case 'Emoticon Ratio':
+                     case 'Tweet Characters':
                         return (
                            <Grid item xs={12} s={6} md={4}>
                               <ContentCard
                                  cardType="line"
                                  data={{
-                                    title: 'Emoticon Ratio',
+                                    title: 'Tweet Characters',
                                     labels: Object.keys(nlpData),
                                     data: Object.values(nlpData).map(
                                        (val) =>
-                                          val['nlp_features'][
-                                             'has_emoticon_ratio'
-                                          ]
+                                          val['nlp_features']['avg_num_chars']
                                     ),
                                  }}
-                              />
-                           </Grid>
-                        )
-                     case 'Hashtag Ratio':
-                        return (
-                           <Grid item xs={12} s={6} md={4}>
-                              <ContentCard
-                                 cardType="line"
-                                 data={{
-                                    title: 'Hashtag Ratio',
-                                    labels: Object.keys(nlpData),
-                                    data: Object.values(nlpData).map(
-                                       (val) =>
-                                          val['nlp_features'][
-                                             'has_hashtag_ratio'
-                                          ]
-                                    ),
-                                 }}
-                              />
-                           </Grid>
-                        )
-                     case 'Mention Ratio':
-                        return (
-                           <Grid item xs={12} s={6} md={4}>
-                              <ContentCard
-                                 cardType="line"
-                                 data={{
-                                    title: 'Mention Ratio',
-                                    labels: Object.keys(nlpData),
-                                    data: Object.values(nlpData).map(
-                                       (val) =>
-                                          val['nlp_features'][
-                                             'has_mention_ratio'
-                                          ]
-                                    ),
-                                 }}
+                                 isGraph={1}
                               />
                            </Grid>
                         )

@@ -6,7 +6,7 @@ import ReactWordcloud from 'react-wordcloud'
 import InfoIcon from '@mui/icons-material/Info'
 import CardHeader from '@material-ui/core/CardHeader'
 import Tooltip from '@mui/material/Tooltip'
-import Chart from 'chart.js/auto'
+import Grid from '@mui/material/Grid'
 
 function ContentCard(props) {
    const renderSelection = () => {
@@ -115,6 +115,34 @@ function ContentCard(props) {
                   }}
                />
             )
+         case 'info':
+            return (
+               <>
+                  <Grid
+                     className="pt-4 pl-12 pr-12"
+                     container
+                     justifyContent="center"
+                  >
+                     <Grid item xs={6} s={4} md={4}>
+                        <img
+                           src={props.data['image']}
+                           width="250"
+                           height="200"
+                        />
+                        <div className="pt-3">
+                           <b>{props.data['title']}</b>
+                           <p>{props.data['position']}</p>
+                           <p>{props.data['email']}</p>
+                        </div>
+                     </Grid>
+                     <Grid item xs={6} s={8} md={8}>
+                        <p>{props.data['description']}</p>
+                        <br />
+                        <p>{props.data['description2']}</p>
+                     </Grid>
+                  </Grid>
+               </>
+            )
          default:
             return null
       }
@@ -129,13 +157,17 @@ function ContentCard(props) {
             height: '50vh',
          }}
       >
-         <CardHeader
-            action={
-               <Tooltip title={props.tooltip}>
-                  <InfoIcon className="mr-3" style={{ color: 'gray' }} />
-               </Tooltip>
-            }
-         />
+         {props.isGraph ? (
+            <CardHeader
+               action={
+                  <Tooltip title={props.tooltip}>
+                     <InfoIcon className="mr-3" style={{ color: 'gray' }} />
+                  </Tooltip>
+               }
+            />
+         ) : (
+            ''
+         )}
          <CardContent className="h-4/5">{renderSelection()}</CardContent>
       </Card>
    )

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Widget from '../Widget'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import ContentCard from '../ContentCard'
 import { companyTwitterData } from './CompanyTwitterData'
 import GenericButton from '../GenericButton'
 import SortSelector from '../SortSelector'
+import { Chart as ChartJS, registerables } from 'chart.js'
+ChartJS.register(...registerables)
 
 function CompanyTwitter(props) {
    const [activity, setActivity] = useState(null)
@@ -111,7 +112,7 @@ function CompanyTwitter(props) {
                                        (val) => val['followers_count']
                                     ),
                                  }}
-                                 //tooltip={item.tooltip}
+                                 isGraph={1}
                                  tooltip="Number of Twitter followers"
                               />
                            </Grid>
@@ -128,7 +129,7 @@ function CompanyTwitter(props) {
                                        (val) => val['tweet_count']
                                     ),
                                  }}
-                                 //tooltip={item.tooltip}
+                                 isGraph={1}
                                  tooltip="Tweets over time"
                               />
                            </Grid>
@@ -146,6 +147,7 @@ function CompanyTwitter(props) {
                                     ),
                                  }}
                                  //tooltip={item.tooltip}
+                                 isGraph={1}
                                  tooltip="Company tweets over time"
                               />
                            </Grid>
@@ -166,6 +168,7 @@ function CompanyTwitter(props) {
                                     ),
                                  }}
                                  //tooltip={item.tooltip}
+                                 isGraph={1}
                                  tooltip="Likes on company tweets"
                               />
                            </Grid>
@@ -186,6 +189,7 @@ function CompanyTwitter(props) {
                                     ),
                                  }}
                                  //tooltip={item.tooltip}
+                                 isGraph={1}
                                  tooltip="Retweets on company tweets"
                               />
                            </Grid>
@@ -203,6 +207,7 @@ function CompanyTwitter(props) {
                                     ),
                                  }}
                                  //tooltip={item.tooltip}
+                                 isGraph={1}
                                  tooltip="Number of users"
                               />
                            </Grid>

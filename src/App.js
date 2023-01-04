@@ -54,11 +54,6 @@ function App() {
       }
    }, [currPage.pathname])
 
-   const renderSidebar = () => {
-      if (currPage.pathname !== '/') {
-         return <Sidebar />
-      }
-   }
    return (
       <div>
          <Navbar toggle={toggle} handleNavbarSearch={handleNavbarSearch} />
@@ -111,52 +106,3 @@ function App() {
 }
 
 export default App
-
-/*
- <div className="flex flex-row">
-               {renderSidebar()}
-               <Routes>
-               <Route
-                  path="/"
-                  exact
-                  element={<Home handleNavbarSearch={handleNavbarSearch} />}
-               />
-               <Route
-                  path="/screening"
-                  element={<Screening onCompanyClick={handleNavbarSearch} />}
-               />
-               <Route path="/about" element={<About />} />
-               <Route path="/contact" element={<Contact />} />
-               <Route
-                  path="/company-twitter"
-                  element={
-                     <CompanyTwitter
-                        company={navbarSearch}
-                        sortBy={sortSelectorVal}
-                        handleSort={handleSortSelector}
-                     />
-                  }
-               />
-               <Route
-                  path="/user-tweets"
-                  element={
-                     <UserTweets
-                        company={navbarSearch}
-                        sortBy={sortSelectorVal}
-                        handleSort={handleSortSelector}
-                     />
-                  }
-               />
-               <Route
-                  path="/advanced-nlp"
-                  element={
-                     <AdvancedNLP
-                        company={navbarSearch}
-                        sortBy={sortSelectorVal}
-                        handleSort={handleSortSelector}
-                     />
-                  }
-               />
-            </Routes>
-         </div>
-   */

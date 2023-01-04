@@ -1,26 +1,26 @@
 export const advancedNlpData = [
    {
-      data: 'Vader Sentiment',
+      data: 'Mentions',
       dataType: 'line',
    },
    {
-      data: 'Hugging Face Sentiment',
+      data: 'Tweets About Funding',
       dataType: 'line',
    },
    {
-      data: 'Synsets Ratio',
+      data: 'Tweets About Management Change',
       dataType: 'line',
    },
    {
-      data: 'Emoticon Ratio',
+      data: 'Bert Sentiment',
       dataType: 'line',
    },
    {
-      data: 'Hashtag Ratio',
+      data: 'Synset Complexity',
       dataType: 'line',
    },
    {
-      data: 'Mention Ratio',
+      data: 'Tweet Characters',
       dataType: 'line',
    },
 ]

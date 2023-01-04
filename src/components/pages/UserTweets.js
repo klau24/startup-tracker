@@ -199,6 +199,7 @@ function UserTweets(props) {
                                  cardType="wordCloud"
                                  data={{ words: wordcloudData['wordcloud'] }}
                                  tooltip="Tweet word cloud"
+                                 isGraph={1}
                               />
                            </Grid>
                         )
@@ -217,6 +218,7 @@ function UserTweets(props) {
                                           ]
                                     ),
                                  }}
+                                 isGraph={1}
                                  tooltip="User tweet likes"
                               />
                            </Grid>
@@ -236,6 +238,7 @@ function UserTweets(props) {
                                           ]
                                     ),
                                  }}
+                                 isGraph={1}
                                  tooltip="User tweet retweets"
                               />
                            </Grid>
@@ -252,6 +255,7 @@ function UserTweets(props) {
                                        (val) => val['user_tweets']
                                     ),
                                  }}
+                                 isGraph={1}
                                  tooltip="User tweets about company"
                               />
                            </Grid>
@@ -262,6 +266,7 @@ function UserTweets(props) {
                               <ContentCard
                                  cardType="wordCloud"
                                  data={{ words: emojiCloud['wordcloud'] }}
+                                 isGraph={1}
                                  tooltip="Emoji word cloud"
                               />
                            </Grid>
@@ -272,6 +277,7 @@ function UserTweets(props) {
                               <ContentCard
                                  cardType="wordCloud"
                                  data={{ words: hashtagCloud['wordcloud'] }}
+                                 isGraph={1}
                                  tooltip="Hashtag word cloud"
                               />
                            </Grid>
