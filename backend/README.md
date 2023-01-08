@@ -4,6 +4,19 @@
 #### Applies user selected filters and gets the top 25% of companies
 GET `/api/screening/:filters`
 
+Example call: `/api/screening/Followers%20Count,Company%20Tweets`
+
+```
+{
+  "0": "AllSeated",
+  "1": "BeeFlow",
+  "2": "Genomatica",
+  "3": "Advantia Health",
+  "4": "Kyte (Information Services)",
+  "5": "Metadata (Media and Information Services)"
+}
+```
+
 #### Gets the company's feature during a specified time frame
 `GET /api/:company/:time/:feature`
 
