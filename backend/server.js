@@ -19,14 +19,27 @@ app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/screening/:filters', (req, res) => {
    var companies = [
-      'Ducalis',
-      'Quickframe',
-      'PrizePool',
-      'Accion Systems',
-      'Dataherald',
-      'Pentester Academy',
-      'Yotascale',
-      'Scienaptic',
+      'OpenExchange',
+      'Metadata (Media and Information Services)',
+      'ZeroStorefront',
+      'Elevate Brands',
+      'Kasa Living',
+      'Strike Graph',
+      'Seel (CommercialProfessional Insurance)',
+      'AllSeated',
+      'Experic',
+      'Good Mylk Co.',
+      'OnSite Waste Technologies',
+      'Kyte (Information Services)',
+      'Genomatica',
+      'Xpansiv',
+      'Sweet Flower',
+      'Emergence Healthcare Group',
+      'BeeFlow',
+      'Advantia Health',
+      'Utobo',
+      'Panhwar Jet',
+      'Wheels',
    ]
    var topN = Math.round(companies.length * 0.25) // later change to a req param
    var paths = {
@@ -44,23 +57,30 @@ app.get('/api/screening/:filters', (req, res) => {
       'User Retweets':
          'daily/activity/data/tweet_metrics/other_users/retweet_count',
    }
+
    var filters = req.params['filters'].split(',')
+   console.log(filters)
    const gatherData = async () => {
       let featureObj = {}
       let resultCompany = []
+      // iterate through filters
       for (var i = 0; i < filters.length; i++) {
          featureObj[filters[i]] = {}
+         // iterate through companies
          for (var j = 0; j < companies.length; j++) {
+            // filter metric in company twitter data
             if (paths[filters[i]].includes('company_twitter_data')) {
                let featureData = db
                   .collection('company_data')
                   .doc(companies[j])
                   .collection('company_twitter_data')
                let doc = await featureData.get()
-               let filter = paths[filters[i]].split('/').pop()
+               let filter = paths[filters[i]].split('/').pop() // get metric
                doc = doc.docs[doc.docs.length - 1] // get most recent data
-               featureObj[filters[i]][companies[j]] =
-                  doc.data()['data']['public_metrics'][filter]
+               if (typeof doc !== 'undefined') {
+                  featureObj[filters[i]][companies[j]] =
+                     doc.data()['data']['public_metrics'][filter]
+               }
             } else {
                let featureData = db
                   .collection('company_data')

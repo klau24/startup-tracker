@@ -62,6 +62,7 @@ function Screening(props) {
 
    const handleApply = () => {
       var filters = selectedFilters.join()
+      console.log('/api/screening/' + filters)
       axios
          .get('/api/screening/' + filters)
          .then((res) => {
