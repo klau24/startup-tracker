@@ -1,18 +1,91 @@
 # startup-tracker Backend Endpoints
 
 ## Existing Routes
-### Contacts
-#### Get Aggregate of Race
-`GET /api/contacts/race`
+#### Applies user selected filters and gets the top 25% of companies
+GET `/api/screening/:filters`
 
-#### Get Aggregate of sex
-`GET /api/contacts/sex`
+#### Gets the company's feature during a specified time frame
+`GET /api/:company/:time/:feature`
 
-#### Get Aggregate of isDeceased
-`GET /api/contacts/isDeceased`
+Example call: `/api/Ducalis/weekly/activity`
 
-#### Get Aggregate of age
-`GET /api/contacts/age`
+```
+{
+  "2022-06-27": {
+    "company_tweets": 0,
+    "users": 2,
+    "tweet_metrics": {
+      "company": {
+        "like_count": 0,
+        "quote_count": 0,
+        "retweet_count": 0,
+        "reply_count": 0
+      },
+      "other_users": {
+        "retweet_count": 4,
+        "quote_count": 0,
+        "like_count": 9,
+        "reply_count": 1
+      }
+    },
+    "user_tweets": 2
+  },
+  ...
+}
+```
 
-#### Get Aggregate of isActive
-`GET /api/contacts/isActive`
+##### Get aggregate of companies from `1. Supported Companies` document in `company_data` collection
+`GET /api/companies`
+
+```
+{
+  "0": "OpenExchange",
+  "1": "Metadata (Media and Information Services)",
+  "2": "ZeroStorefront",
+  "3": "Elevate Brands",
+  "4": "Kasa Living",
+  "5": "Strike Graph",
+  "6": "Seel (CommercialProfessional Insurance)",
+  "7": "AllSeated",
+  "8": "Experic",
+  "9": "Good Mylk Co.",
+  "10": "OnSite Waste Technologies",
+  "11": "Kyte (Information Services)",
+  "12": "Genomatica",
+  "13": "Xpansiv",
+  "14": "Sweet Flower",
+  "15": "Emergence Healthcare Group",
+  "16": "BeeFlow",
+  "17": "Advantia Health",
+  "18": "Utobo",
+  "19": "Panhwar Jet",
+  "20": "Wheels"
+}
+```
+#### Get twitter data for specified company
+`GET /api/:company/companyTwitterData`
+
+Example call: `/api/Ducalis/companyTwitterData`
+```
+{
+  "2022-07-18": {
+    "listed_count": 0,
+    "followers_count": 39,
+    "following_count": 266,
+    "tweet_count": 102
+  },
+  "2022-08-15": {
+    "following_count": 269,
+    "followers_count": 39,
+    "tweet_count": 102,
+    "listed_count": 0
+  },
+  "2022-08-22": {
+    "listed_count": 0,
+    "tweet_count": 102,
+    "following_count": 269,
+    "followers_count": 39
+  },
+  ...
+}
+```
