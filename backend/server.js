@@ -57,9 +57,7 @@ app.get('/api/screening/:filters', (req, res) => {
       'User Retweets':
          'daily/activity/data/tweet_metrics/other_users/retweet_count',
    }
-
    var filters = req.params['filters'].split(',')
-   console.log(filters)
    const gatherData = async () => {
       let featureObj = {}
       let resultCompany = []
@@ -112,14 +110,13 @@ app.get('/api/screening/:filters', (req, res) => {
                .sort(([, a], [, b]) => b - a)
                .splice(0, topN)
          )
-         console.log(sortable)
+         //store actual filter values in resultCompany as well
          resultCompany = [...resultCompany, ...Object.keys(sortable)]
       }
-      return resultCompany
+      return { companies: [...new Set(resultCompany)], feature: featureObj }
    }
    gatherData().then((data) => {
-      console.log({ ...[...new Set(data)] })
-      res.send({ ...[...new Set(data)] })
+      res.send(data)
    })
 })
 

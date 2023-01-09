@@ -118,7 +118,7 @@ function AdvancedNLP(props) {
                                        (val) =>
                                           val['nlp_features']['tweet funding']
                                     ),
-                                    fill: 1,
+                                    fill: 0,
                                  }}
                                  isGraph={1}
                               />
@@ -138,7 +138,7 @@ function AdvancedNLP(props) {
                                              'tweet management change'
                                           ]
                                     ),
-                                    fill: 1,
+                                    fill: 0,
                                  }}
                                  isGraph={1}
                               />
@@ -178,6 +178,7 @@ function AdvancedNLP(props) {
                                              'avg_synset_complexity'
                                           ]
                                     ),
+                                    fill: 0,
                                  }}
                                  isGraph={1}
                               />
@@ -195,6 +196,7 @@ function AdvancedNLP(props) {
                                        (val) =>
                                           val['nlp_features']['avg_num_chars']
                                     ),
+                                    fill: 0,
                                  }}
                                  isGraph={1}
                               />

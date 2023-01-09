@@ -1,7 +1,9 @@
 # startup-tracker Backend Endpoints
 
 ## Existing Routes
+
 #### Applies user selected filters and gets the top 25% of companies
+
 GET `/api/screening/:filters`
 
 Example call: `/api/screening/Followers%20Count,Company%20Tweets`
@@ -18,6 +20,7 @@ Example call: `/api/screening/Followers%20Count,Company%20Tweets`
 ```
 
 #### Gets the company's feature during a specified time frame
+
 `GET /api/:company/:time/:feature`
 
 Example call: `/api/Ducalis/weekly/activity`
@@ -48,6 +51,7 @@ Example call: `/api/Ducalis/weekly/activity`
 ```
 
 ##### Get aggregate of companies from `1. Supported Companies` document in `company_data` collection
+
 `GET /api/companies`
 
 ```
@@ -75,10 +79,13 @@ Example call: `/api/Ducalis/weekly/activity`
   "20": "Wheels"
 }
 ```
+
 #### Get twitter data for specified company
+
 `GET /api/:company/companyTwitterData`
 
 Example call: `/api/Ducalis/companyTwitterData`
+
 ```
 {
   "2022-07-18": {
