@@ -378,9 +378,6 @@ video {
 .flex {
    display: flex;
 }
-.table {
-   display: table;
-}
 .grid {
    display: grid;
 }
@@ -455,9 +452,6 @@ video {
 .pt-4 {
    padding-top: 1rem;
 }
-.pb-4 {
-   padding-bottom: 1rem;
-}
 .pl-12 {
    padding-left: 3rem;
 }
@@ -466,6 +460,9 @@ video {
 }
 .pt-3 {
    padding-top: 0.75rem;
+}
+.pb-4 {
+   padding-bottom: 1rem;
 }
 .pb-12 {
    padding-bottom: 3rem;
@@ -528,4 +525,4 @@ video {
       display: none;
    }
 }
-/*# sourceMappingURL=main.92118cf5.css.map*/
+/*# sourceMappingURL=main.b1f93dce.css.map*/
