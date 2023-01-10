@@ -1,9 +1,5 @@
 ## TO-DO
 
--  Create sidebar component
--  Write test cases
--  Setup CI/CD
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
