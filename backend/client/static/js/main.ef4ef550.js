@@ -1,4 +1,4 @@
-/*! For license information please see main.4c3a13bf.js.LICENSE.txt */
+/*! For license information please see main.ef4ef550.js.LICENSE.txt */
 !(function () {
    var e = {
          76: function (e, t, n) {
@@ -30011,9 +30011,11 @@
                                    )
                            } else
                               p &&
-                                 c.addRule(d, {}, s).addRule(u.key, r[d], {
-                                    selector: u.selector,
-                                 })
+                                 c
+                                    .addRule(d, {}, s)
+                                    .addRule(u.key, r[d], {
+                                       selector: u.selector,
+                                    })
                            delete r[d]
                         }
                      }
@@ -59140,27 +59142,6 @@
                            children: (0, Nt.jsx)(hO, {
                               cardType: 'info',
                               data: {
-                                 image: vO,
-                                 title: 'Foaad Khosmood, Ph.D. \u0641\u0648\u0627\u062f\xa0\u062e\u0648\u0634\u0645\u0648\u062f',
-                                 position:
-                                    'Forbes Endowed Professor of Computer Engineering',
-                                 email: 'foaad@calpoly.edu',
-                                 description:
-                                    'Foaad Khosmood (he/him\xa0Persian:\xa0\u0641\u0648\u0627\u062f\xa0\u062e\u0648\u0634\u0645\u0648\u062f)\xa0is Forbes Endowed Professor of Computer Engineering at California Polytechnic State University (Cal Poly) and research director at\xa0Institute for Advanced Technology & Public Policy. Foaad holds a Ph.D. in Computer Science from the\xa0University of California Santa Cruz. His\xa0dissertation work\xa0was on "Computational Style Processing".',
-                                 description2:
-                                    "A distinguished scholarship\xa0award winner, Foaad's\xa0research interests include natural language processing (NLP), artificial intelligence, digital government, interactive entertainment, game AI and game jams. He is co-founder and past president of\xa0Global Game Jam, Inc. where he was responsible for organizing the world's largest game creation activity (120+ countries). Foaad served as general chair for\xa0FDG 2019.",
-                              },
-                              isGraph: 0,
-                           }),
-                        }),
-                        (0, Nt.jsx)(pp, {
-                           item: !0,
-                           xs: 12,
-                           s: 12,
-                           md: 12,
-                           children: (0, Nt.jsx)(hO, {
-                              cardType: 'info',
-                              data: {
                                  image: mO,
                                  title: 'Mahdi Rastad, Ph.D.',
                                  position: 'Associate Professor of Finance',
@@ -59187,6 +59168,27 @@
                                     'JPMorgan Chase & Co. Machine Learning Engineer, VP',
                                  email: 'sadra.amiri@gmail.com',
                                  description: '',
+                              },
+                              isGraph: 0,
+                           }),
+                        }),
+                        (0, Nt.jsx)(pp, {
+                           item: !0,
+                           xs: 12,
+                           s: 12,
+                           md: 12,
+                           children: (0, Nt.jsx)(hO, {
+                              cardType: 'info',
+                              data: {
+                                 image: vO,
+                                 title: 'Foaad Khosmood, Ph.D. \u0641\u0648\u0627\u062f\xa0\u062e\u0648\u0634\u0645\u0648\u062f',
+                                 position:
+                                    'Forbes Endowed Professor of Computer Engineering',
+                                 email: 'foaad@calpoly.edu',
+                                 description:
+                                    'Foaad Khosmood (he/him\xa0Persian:\xa0\u0641\u0648\u0627\u062f\xa0\u062e\u0648\u0634\u0645\u0648\u062f)\xa0is Forbes Endowed Professor of Computer Engineering at California Polytechnic State University (Cal Poly) and research director at\xa0Institute for Advanced Technology & Public Policy. Foaad holds a Ph.D. in Computer Science from the\xa0University of California Santa Cruz. His\xa0dissertation work\xa0was on "Computational Style Processing".',
+                                 description2:
+                                    "A distinguished scholarship\xa0award winner, Foaad's\xa0research interests include natural language processing (NLP), artificial intelligence, digital government, interactive entertainment, game AI and game jams. He is co-founder and past president of\xa0Global Game Jam, Inc. where he was responsible for organizing the world's largest game creation activity (120+ countries). Foaad served as general chair for\xa0FDG 2019.",
                               },
                               isGraph: 0,
                            }),
@@ -60302,4 +60304,4 @@
          )
       })()
 })()
-//# sourceMappingURL=main.4c3a13bf.js.map
+//# sourceMappingURL=main.ef4ef550.js.map
