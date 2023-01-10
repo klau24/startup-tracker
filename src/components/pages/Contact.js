@@ -20,23 +20,6 @@ function Contact() {
                <ContentCard
                   cardType="info"
                   data={{
-                     image: foaad,
-                     title: 'Foaad Khosmood, Ph.D. فواد خوشمود',
-                     position:
-                        'Forbes Endowed Professor of Computer Engineering',
-                     email: 'foaad@calpoly.edu',
-                     description:
-                        'Foaad Khosmood (he/him Persian: فواد خوشمود) is Forbes Endowed Professor of Computer Engineering at California Polytechnic State University (Cal Poly) and research director at Institute for Advanced Technology & Public Policy. Foaad holds a Ph.D. in Computer Science from the University of California Santa Cruz. His dissertation work was on "Computational Style Processing".',
-                     description2:
-                        "A distinguished scholarship award winner, Foaad's research interests include natural language processing (NLP), artificial intelligence, digital government, interactive entertainment, game AI and game jams. He is co-founder and past president of Global Game Jam, Inc. where he was responsible for organizing the world's largest game creation activity (120+ countries). Foaad served as general chair for FDG 2019.",
-                  }}
-                  isGraph={0}
-               />
-            </Grid>
-            <Grid item xs={12} s={12} md={12}>
-               <ContentCard
-                  cardType="info"
-                  data={{
                      image: mahdi,
                      title: 'Mahdi Rastad, Ph.D.',
                      position: 'Associate Professor of Finance',
@@ -59,6 +42,23 @@ function Contact() {
                         'JPMorgan Chase & Co. Machine Learning Engineer, VP',
                      email: 'sadra.amiri@gmail.com',
                      description: '',
+                  }}
+                  isGraph={0}
+               />
+            </Grid>
+            <Grid item xs={12} s={12} md={12}>
+               <ContentCard
+                  cardType="info"
+                  data={{
+                     image: foaad,
+                     title: 'Foaad Khosmood, Ph.D. فواد خوشمود',
+                     position:
+                        'Forbes Endowed Professor of Computer Engineering',
+                     email: 'foaad@calpoly.edu',
+                     description:
+                        'Foaad Khosmood (he/him Persian: فواد خوشمود) is Forbes Endowed Professor of Computer Engineering at California Polytechnic State University (Cal Poly) and research director at Institute for Advanced Technology & Public Policy. Foaad holds a Ph.D. in Computer Science from the University of California Santa Cruz. His dissertation work was on "Computational Style Processing".',
+                     description2:
+                        "A distinguished scholarship award winner, Foaad's research interests include natural language processing (NLP), artificial intelligence, digital government, interactive entertainment, game AI and game jams. He is co-founder and past president of Global Game Jam, Inc. where he was responsible for organizing the world's largest game creation activity (120+ countries). Foaad served as general chair for FDG 2019.",
                   }}
                   isGraph={0}
                />
