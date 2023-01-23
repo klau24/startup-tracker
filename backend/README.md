@@ -2,11 +2,11 @@
 
 ## Existing Routes
 
-#### Applies user selected filters and gets the top 25% of companies
+#### `GET /api/screening/:filters`
 
-GET `/api/screening/:filters`
+Applies user selected filters and gets the top 25% of companies
 
-** This endpoint needs refactoring. Pretty messy right now. **
+**This endpoint needs refactoring. Pretty messy right now.**
 
 Example call: `/api/screening/Followers%20Count,Company%20Tweets`
 
@@ -21,9 +21,9 @@ Example call: `/api/screening/Followers%20Count,Company%20Tweets`
 }
 ```
 
-#### Gets the company's feature during a specified time frame
+#### `GET /api/:company/:time/:feature`
 
-`GET /api/:company/:time/:feature`
+Gets the company's feature during a specified time frame
 
 Example call: `/api/Ducalis/weekly/activity`
 
@@ -52,9 +52,9 @@ Example call: `/api/Ducalis/weekly/activity`
 }
 ```
 
-##### Get aggregate of companies from `1. Supported Companies` document in `company_data` collection
+##### `GET /api/companies`
 
-`GET /api/companies`
+Get aggregate of companies from `1. Supported Companies` document in `company_data` collection
 
 ```
 {
@@ -82,9 +82,9 @@ Example call: `/api/Ducalis/weekly/activity`
 }
 ```
 
-#### Get twitter data for specified company
+#### `GET /api/:company/companyTwitterData`
 
-`GET /api/:company/companyTwitterData`
+Get twitter data for specified company
 
 Example call: `/api/Ducalis/companyTwitterData`
 
