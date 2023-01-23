@@ -6,6 +6,8 @@
 
 GET `/api/screening/:filters`
 
+** This endpoint needs refactoring. Pretty messy right now. **
+
 Example call: `/api/screening/Followers%20Count,Company%20Tweets`
 
 ```
