@@ -1,4 +1,4 @@
-/*! For license information please see main.ef4ef550.js.LICENSE.txt */
+/*! For license information please see main.924ca302.js.LICENSE.txt */
 !(function () {
    var e = {
          76: function (e, t, n) {
@@ -59124,9 +59124,10 @@
             },
             vO = n.p + 'static/media/foaad.6302756c103846617592.png',
             mO = n.p + 'static/media/mahdi.1a8bcb88d3adae2f8f6a.jpg',
-            gO = n.p + 'static/media/emily.61c90f2e1cd6b09a2f93.png',
-            yO = n.p + 'static/media/kenny.415617a5788da2f03f28.jpg'
-         var bO = function () {
+            gO = n.p + 'static/media/nick.58451cb1e614970fa2fa.png',
+            yO = n.p + 'static/media/emily.61c90f2e1cd6b09a2f93.png',
+            bO = n.p + 'static/media/kenny.415617a5788da2f03f28.jpg'
+         var xO = function () {
                return (0, Nt.jsx)(Nt.Fragment, {
                   children: (0, Nt.jsxs)(pp, {
                      className: 'pt-4 pb-4 pl-12 pr-12',
@@ -59201,7 +59202,7 @@
                            children: (0, Nt.jsx)(hO, {
                               cardType: 'info',
                               data: {
-                                 image: gO,
+                                 image: yO,
                                  title: 'Emily Gavrilenko',
                                  position: 'Computer Science Graduate Student',
                                  email: 'egavrile@calpoly.edu',
@@ -59218,12 +59219,31 @@
                            children: (0, Nt.jsx)(hO, {
                               cardType: 'info',
                               data: {
-                                 image: yO,
+                                 image: gO,
+                                 title: 'Nicholas Hausman',
+                                 position:
+                                    'Computer Science Student, Data Science Minor',
+                                 email: 'nrhausma@calpoly.edu',
+                                 description:
+                                    'Nick is a 4th year student at Cal Poly studying Computer and Data Science. He is interested in deep learning, natural language processing, finance, and gaming.',
+                              },
+                              isGraph: 0,
+                           }),
+                        }),
+                        (0, Nt.jsx)(pp, {
+                           item: !0,
+                           xs: 12,
+                           s: 12,
+                           md: 12,
+                           children: (0, Nt.jsx)(hO, {
+                              cardType: 'info',
+                              data: {
+                                 image: bO,
                                  title: 'Kenny Lau',
                                  position: 'Computer Science Graduate Student',
                                  email: 'klau24@calpoly.edu',
                                  description:
-                                    'Kenny is a 5th year computer science graduate student at Cal Poly and the developer of the startup-tracker website. He is interested in natural language processing, knowledge graphs, and deep learning. On his free time, he likes to workout, cook, read, and play with his cats Georgia and Zoro.',
+                                    'Kenny is a 5th year computer science graduate student at Cal Poly and a developer of the startup-tracker website. He is interested in natural language processing, knowledge graphs, and deep learning. On his free time, he likes to workout, cook, read, and play with his cats Georgia and Zoro.',
                               },
                               isGraph: 0,
                            }),
@@ -59232,7 +59252,7 @@
                   }),
                })
             },
-            xO = [
+            wO = [
                {
                   data: 'Followers Count',
                   dataType: 'line',
@@ -59260,7 +59280,7 @@
                },
                { data: 'Users', dataType: 'line', tooltip: 'Number of users' },
             ]
-         var wO = function (e) {
+         var kO = function (e) {
             var n = (0, t.useState)('daily'),
                r = (0, o.Z)(n, 2),
                i = r[0],
@@ -59300,7 +59320,7 @@
             })
          }
          ew.register.apply(ew, (0, un.Z)(Wk))
-         var kO = function (e) {
+         var SO = function (e) {
                var n = (0, t.useState)(null),
                   r = (0, o.Z)(n, 2),
                   i = r[0],
@@ -59310,7 +59330,7 @@
                   u = l[0],
                   c = l[1],
                   d = (0, t.useState)(
-                     xO.map(function (e) {
+                     wO.map(function (e) {
                         return e.data
                      })
                   ),
@@ -59394,11 +59414,11 @@
                                  spacing: 1,
                                  style: { height: '4.5vh' },
                                  children: [
-                                    xO.map(function (e) {
+                                    wO.map(function (e) {
                                        return (0,
                                        Nt.jsx)(pp, { item: !0, children: (0, Nt.jsx)(av, { text: e.data, filterItems: v, isFilter: !0 }) })
                                     }),
-                                    (0, Nt.jsx)(wO, {
+                                    (0, Nt.jsx)(kO, {
                                        currentSort: e.sortBy,
                                        sortBy: e.handleSort,
                                     }),
@@ -59544,7 +59564,7 @@
                      })
                   )
             },
-            SO = t.forwardRef(function (e, n) {
+            _O = t.forwardRef(function (e, n) {
                var r = e.absolute,
                   i = void 0 !== r && r,
                   o = e.classes,
@@ -59592,7 +59612,7 @@
                   )
                )
             }),
-            _O = Ud(
+            CO = Ud(
                function (e) {
                   return {
                      root: {
@@ -59619,8 +59639,8 @@
                   }
                },
                { name: 'MuiDivider' }
-            )(SO)
-         var CO = function (e) {
+            )(_O)
+         var MO = function (e) {
                return (0, Nt.jsx)(hv, {
                   sx: { minWidth: 225, borderRadius: 4, boxShadow: 3 },
                   children: (0, Nt.jsxs)(yv, {
@@ -59652,12 +59672,12 @@
                            },
                            children: e.data,
                         }),
-                        (0, Nt.jsx)(_O, { light: !0 }),
+                        (0, Nt.jsx)(CO, { light: !0 }),
                      ],
                   }),
                })
             },
-            MO = [
+            EO = [
                {
                   data: 'Average Readability Grade',
                   dataType: 'widget',
@@ -59704,7 +59724,7 @@
                   tooltip: 'Hashtag word cloud',
                },
             ]
-         var EO = function (e) {
+         var ZO = function (e) {
                var n = (0, t.useState)(null),
                   r = (0, o.Z)(n, 2),
                   i = r[0],
@@ -59726,7 +59746,7 @@
                   w = x[0],
                   k = x[1],
                   S = (0, t.useState)(
-                     MO.map(function (e) {
+                     EO.map(function (e) {
                         return e.data
                      })
                   ),
@@ -59866,7 +59886,7 @@
                                           }),
                                        })
                                  }),
-                                 (0, Nt.jsx)(wO, {
+                                 (0, Nt.jsx)(kO, {
                                     currentSort: e.sortBy,
                                     sortBy: e.handleSort,
                                  }),
@@ -59876,13 +59896,13 @@
                               switch (e) {
                                  case 'Average Readability Grade':
                                     return (0,
-                                    Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(CO, { title: 'Average Readability Grade', data: i[Z].nlp_features.avg_flesch_reading_ease, tooltip: 'Flesch Reading Ease Grade' }) })
+                                    Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(MO, { title: 'Average Readability Grade', data: i[Z].nlp_features.avg_flesch_reading_ease, tooltip: 'Flesch Reading Ease Grade' }) })
                                  case 'Average Number of Words':
                                     return (0,
-                                    Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(CO, { title: 'Average Number of Words', data: i[Z].nlp_features.avg_words, tooltip: 'Avg. number of words in a tweet' }) })
+                                    Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(MO, { title: 'Average Number of Words', data: i[Z].nlp_features.avg_words, tooltip: 'Avg. number of words in a tweet' }) })
                                  case 'Average Number of Links':
                                     return (0,
-                                    Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(CO, { title: 'Average Number of Links', data: i[Z].nlp_features.avg_links, tooltip: 'Avg. website links in a tweet' }) })
+                                    Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(MO, { title: 'Average Number of Links', data: i[Z].nlp_features.avg_links, tooltip: 'Avg. website links in a tweet' }) })
                                  case 'Word Cloud':
                                     return (0,
                                     Nt.jsx)(pp, { item: !0, xs: 12, s: 6, md: 4, children: (0, Nt.jsx)(hO, { cardType: 'wordCloud', data: { words: p.wordcloud }, tooltip: 'Tweet word cloud', isGraph: 1 }) })
@@ -59964,7 +59984,7 @@
                   })
                }
             },
-            ZO = [
+            PO = [
                { data: 'Mentions', dataType: 'line' },
                { data: 'Tweets About Funding', dataType: 'line' },
                { data: 'Tweets About Management Change', dataType: 'line' },
@@ -59972,13 +59992,13 @@
                { data: 'Synset Complexity', dataType: 'line' },
                { data: 'Tweet Characters', dataType: 'line' },
             ]
-         var PO = function (e) {
+         var OO = function (e) {
             var n = (0, t.useState)(null),
                r = (0, o.Z)(n, 2),
                i = r[0],
                a = r[1],
                s = (0, t.useState)(
-                  ZO.map(function (e) {
+                  PO.map(function (e) {
                      return e.data
                   })
                ),
@@ -60055,7 +60075,7 @@
                                  return (0,
                                  Nt.jsx)(pp, { item: !0, children: (0, Nt.jsx)(av, { text: e, filterItems: d, isFilter: !0 }) })
                               }),
-                              (0, Nt.jsx)(wO, {
+                              (0, Nt.jsx)(kO, {
                                  currentSort: e.sortBy,
                                  sortBy: e.handleSort,
                               }),
@@ -60202,7 +60222,7 @@
                   }),
                })
          }
-         var OO = function () {
+         var RO = function () {
             var e = (0, t.useState)(!1),
                n = (0, o.Z)(e, 2),
                r = n[0],
@@ -60267,11 +60287,11 @@
                            }),
                            (0, Nt.jsx)(z, {
                               path: '/contact',
-                              element: (0, Nt.jsx)(bO, {}),
+                              element: (0, Nt.jsx)(xO, {}),
                            }),
                            (0, Nt.jsx)(z, {
                               path: '/company-twitter',
-                              element: (0, Nt.jsx)(kO, {
+                              element: (0, Nt.jsx)(SO, {
                                  company: l,
                                  sortBy: f,
                                  handleSort: y,
@@ -60279,7 +60299,7 @@
                            }),
                            (0, Nt.jsx)(z, {
                               path: '/user-tweets',
-                              element: (0, Nt.jsx)(EO, {
+                              element: (0, Nt.jsx)(ZO, {
                                  company: l,
                                  sortBy: f,
                                  handleSort: y,
@@ -60287,7 +60307,7 @@
                            }),
                            (0, Nt.jsx)(z, {
                               path: '/advanced-nlp',
-                              element: (0, Nt.jsx)(PO, {
+                              element: (0, Nt.jsx)(OO, {
                                  company: l,
                                  sortBy: f,
                                  handleSort: y,
@@ -60300,8 +60320,8 @@
             )
          }
          i.createRoot(document.getElementById('root')).render(
-            (0, Nt.jsx)(H, { children: (0, Nt.jsx)(OO, {}) })
+            (0, Nt.jsx)(H, { children: (0, Nt.jsx)(RO, {}) })
          )
       })()
 })()
-//# sourceMappingURL=main.ef4ef550.js.map
+//# sourceMappingURL=main.924ca302.js.map

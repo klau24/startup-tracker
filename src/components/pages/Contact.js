@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid'
 import foaad from '../../images/foaad.png'
 import mahdi from '../../images/mahdi.jpg'
 import sadra from '../../images/sadra.jpg'
+import nick from '../../images/nick.png'
 import emily from '../../images/emily.png'
 import kenny from '../../images/kenny.jpg'
 
@@ -80,12 +81,26 @@ function Contact() {
                <ContentCard
                   cardType="info"
                   data={{
+                     image: nick,
+                     title: 'Nicholas Hausman',
+                     position: 'Computer Science Student, Data Science Minor',
+                     email: 'nrhausma@calpoly.edu',
+                     description:
+                        'Nick is a 4th year student at Cal Poly studying Computer and Data Science. He is interested in deep learning, natural language processing, finance, and gaming.',
+                  }}
+                  isGraph={0}
+               />
+            </Grid>
+            <Grid item xs={12} s={12} md={12}>
+               <ContentCard
+                  cardType="info"
+                  data={{
                      image: kenny,
                      title: 'Kenny Lau',
                      position: 'Computer Science Graduate Student',
                      email: 'klau24@calpoly.edu',
                      description:
-                        'Kenny is a 5th year computer science graduate student at Cal Poly and the developer of the startup-tracker website. He is interested in natural language processing, knowledge graphs, and deep learning. On his free time, he likes to workout, cook, read, and play with his cats Georgia and Zoro.',
+                        'Kenny is a 5th year computer science graduate student at Cal Poly and a developer of the startup-tracker website. He is interested in natural language processing, knowledge graphs, and deep learning. On his free time, he likes to workout, cook, read, and play with his cats Georgia and Zoro.',
                   }}
                   isGraph={0}
                />

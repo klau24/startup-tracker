@@ -10,16 +10,14 @@ Website is currently hosted at this URL: [http://104.196.224.131/](http://104.19
 
 [Predicting Startup Success Using Publicly Available Data](https://drive.google.com/file/d/1bfbzbbVeFdBxRVeWjBTIEj-16HjIILgn/view?usp=sharing)
 
-[Emily Master Defense Slides](https://drive.google.com/file/d/1bfbzbbVeFdBxRVeWjBTIEj-16HjIILgn/view?usp=sharing)
-
 # Tech Stack
 
-* [React.js](https://reactjs.org/)
-* [TailwindCSS](https://tailwindcss.com/)
-* [MaterialUI](https://mui.com/material-ui/getting-started/overview/)
-* [Chart.js](https://www.chartjs.org/)
-* [axios](https://axios-http.com/)
-* [Express.js](https://expressjs.com/)
-* [Google Firestore](https://firebase.google.com/docs/firestore/)
+-  [React.js](https://reactjs.org/)
+-  [TailwindCSS](https://tailwindcss.com/)
+-  [MaterialUI](https://mui.com/material-ui/getting-started/overview/)
+-  [Chart.js](https://www.chartjs.org/)
+-  [axios](https://axios-http.com/)
+-  [Express.js](https://expressjs.com/)
+-  [Google Firestore](https://firebase.google.com/docs/firestore/)
 
 Please message Emily or Kenny to get access to the database

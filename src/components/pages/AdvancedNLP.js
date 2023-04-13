@@ -202,6 +202,8 @@ function AdvancedNLP(props) {
                               />
                            </Grid>
                         )
+                     default:
+                        return null
                   }
                })}
             </Grid>

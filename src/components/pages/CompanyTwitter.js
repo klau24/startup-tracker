@@ -212,6 +212,8 @@ function CompanyTwitter(props) {
                               />
                            </Grid>
                         )
+                     default:
+                        return null
                   }
                })}
             </Grid>
