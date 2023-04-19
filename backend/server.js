@@ -59,62 +59,78 @@ app.get('/api/screening/:filters', (req, res) => {
    }
    var filters = req.params['filters'].split(',')
    const gatherData = async () => {
-      let featureObj = {}
-      let resultCompany = []
-      // iterate through filters
-      for (var i = 0; i < filters.length; i++) {
-         featureObj[filters[i]] = {}
-         // iterate through companies
-         for (var j = 0; j < companies.length; j++) {
-            // filter metric in company twitter data
-            if (paths[filters[i]].includes('company_twitter_data')) {
-               let featureData = db
-                  .collection('company_data')
-                  .doc(companies[j])
-                  .collection('company_twitter_data')
-               let doc = await featureData.get()
-               let filter = paths[filters[i]].split('/').pop() // get metric
-               doc = doc.docs[doc.docs.length - 1] // get most recent data
-               if (typeof doc !== 'undefined') {
-                  featureObj[filters[i]][companies[j]] =
-                     doc.data()['data']['public_metrics'][filter]
-               }
-            } else {
-               let featureData = db
-                  .collection('company_data')
-                  .doc(companies[j])
-                  .collection('quarterly')
-                  .doc('activity')
-                  .collection('data')
-               let doc = await featureData.get()
-               let filter = paths[filters[i]].split('/').pop()
-               doc = doc.docs[doc.docs.length - 1] // get most recent data
-               if (doc !== undefined) {
-                  if (filters[i].includes('Company')) {
-                     featureObj[filters[i]][companies[j]] =
-                        doc.data()['tweet_metrics']['company'][filter]
-                  } else if (
-                     filters[i] === 'Users' ||
-                     filters[i] === 'User Tweets'
-                  ) {
-                     featureObj[filters[i]][companies[j]] = doc.data()[filter]
+      const featureObj = {}
+      const resultCompany = new Set()
+
+      // Create an array of promises for all the queries
+      const queryPromises = filters.map(async (filter) => {
+         featureObj[filter] = {}
+
+         const companyData = db.collection('company_data')
+         const twitterDataPath = paths[filter].includes('company_twitter_data')
+         const filterMetric = paths[filter].split('/').pop()
+
+         const querySnapshotPromises = companies.map(async (company) => {
+            const docRef = twitterDataPath
+               ? companyData.doc(company).collection('company_twitter_data')
+               : companyData
+                    .doc(company)
+                    .collection('quarterly')
+                    .doc('activity')
+                    .collection('data')
+
+            try {
+               const docSnapshot = await docRef.get()
+               const doc = docSnapshot.docs[docSnapshot.docs.length - 1]
+
+               if (doc && doc.exists) {
+                  if (twitterDataPath) {
+                     featureObj[filter][company] =
+                        doc.data()['data']['public_metrics'][filterMetric]
                   } else {
-                     featureObj[filters[i]][companies[j]] =
-                        doc.data()['tweet_metrics']['other_users'][filter]
+                     if (filter.includes('Company')) {
+                        featureObj[filter][company] =
+                           doc.data().tweet_metrics.company[filterMetric]
+                     } else if (
+                        filter === 'Users' ||
+                        filter === 'User Tweets'
+                     ) {
+                        featureObj[filter][company] = doc.data()[filterMetric]
+                     } else {
+                        featureObj[filter][company] =
+                           doc.data().tweet_metrics.other_users[filterMetric]
+                     }
                   }
+
+                  resultCompany.add(company)
                }
+            } catch (error) {
+               // Handle the error as appropriate for your use case
+               console.error(
+                  `Error fetching data for company ${company} and filter ${filter}:`,
+                  error
+               )
             }
-         }
-         var sortable = Object.fromEntries(
-            Object.entries(featureObj[filters[i]])
+         })
+
+         await Promise.all(querySnapshotPromises) // Wait for all the queries for this filter to complete
+      })
+
+      await Promise.all(queryPromises) // Wait for all the filters to complete
+
+      for (const filter of filters) {
+         const sortable = Object.fromEntries(
+            Object.entries(featureObj[filter])
                .sort(([, a], [, b]) => b - a)
-               .splice(0, topN)
+               .slice(0, topN)
          )
-         //store actual filter values in resultCompany as well
-         resultCompany = [...resultCompany, ...Object.keys(sortable)]
+
+         resultCompany.add(...Object.keys(sortable))
       }
-      return { companies: [...new Set(resultCompany)], feature: featureObj }
+
+      return { companies: [...resultCompany], feature: featureObj }
    }
+
    gatherData().then((data) => {
       res.send(data)
    })
