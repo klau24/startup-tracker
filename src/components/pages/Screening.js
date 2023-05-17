@@ -3,6 +3,7 @@ import NavSearchbar from '../navbar/NavSearchbar'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import Table from '@mui/material/Table'
+import { DataGrid } from '@mui/x-data-grid'
 import TableHead from '@mui/material/TableHead'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -60,6 +61,7 @@ function Screening(props) {
    }
    const handleClear = () => {
       setSelectedFilters([])
+      setScreenerRes(null)
    }
 
    const handleApply = () => {
@@ -76,7 +78,12 @@ function Screening(props) {
 
    const handleNavbarSearch = (searchVal) => {
       if (searchVal.target.textContent !== '') {
-         setSelectedFilters([...selectedFilters, searchVal.target.textContent])
+         if (!selectedFilters.includes(searchVal.target.textContent)) {
+            setSelectedFilters([
+               ...selectedFilters,
+               searchVal.target.textContent,
+            ])
+         }
       }
    }
 
@@ -107,138 +114,27 @@ function Screening(props) {
          )
       }
    }
-   if (screenerRes) {
-      return (
-         <>
-            <Grid
-               className="p-10"
-               container
-               align="center"
-               justify="center"
-               spacing={2}
-            >
-               <Grid
-                  className="pt-7"
-                  container
-                  justifyContent="center"
-                  spacing={1}
-               >
-                  <NavSearchbar
-                     width={500}
-                     data={features}
-                     handleNavbarSearch={handleNavbarSearch}
-                     label="Filter By"
-                  />
-               </Grid>
-               <Grid
-                  className="pt-7"
-                  container
-                  justifyContent="center"
-                  spacing={1}
-               >
-                  {selectedFilters.map((content) => {
-                     return (
-                        <Grid item>
-                           <MenuButton
-                              text={content}
-                              // filterItems={handleFilterItems}
-                           />
-                        </Grid>
-                     )
-                  })}
-                  {renderApplyButton()}
-                  {renderClearButton()}
-               </Grid>
-               <Grid
-                  className="pt-7"
-                  container
-                  justifyContent="center"
-                  spacing={1}
-               >
-                  <h1 className="pt-10 text-center text-2xl font-bold">
-                     Companies matching your filter
-                  </h1>
-                  <TableContainer
-                     sx={{ m: 3, width: '100%' }}
-                     component={Paper}
-                  >
-                     <Table sx={{ minWidth: 650 }}>
-                        <TableHead>
-                           <TableRow
-                              sx={{
-                                 '& th': {
-                                    color: 'black',
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                 },
-                              }}
-                           >
-                              <TableCell className="font-bold" align="center">
-                                 Company
-                              </TableCell>
-                              {Object.keys(screenerRes['feature']).map(
-                                 (feature) => {
-                                    return (
-                                       <TableCell
-                                          align="center"
-                                          component="th"
-                                          scope="row"
-                                       >
-                                          {feature}
-                                       </TableCell>
-                                    )
-                                 }
-                              )}
-                           </TableRow>
-                        </TableHead>
-                        <TableBody>
-                           {Object.values(screenerRes['companies']).map(
-                              (company) => (
-                                 <StyledTableRow
-                                    onClick={() => handleClick(company)}
-                                    key={company}
-                                    sx={{
-                                       '&:last-child td, &:last-child th': {
-                                          border: 0,
-                                       },
-                                       cursor: 'pointer',
-                                    }}
-                                 >
-                                    <TableCell
-                                       align="center"
-                                       component="th"
-                                       scope="row"
-                                    >
-                                       {company}
-                                    </TableCell>
-                                    {Object.keys(screenerRes['feature']).map(
-                                       (feature) => {
-                                          return (
-                                             <TableCell
-                                                align="center"
-                                                component="th"
-                                                scope="row"
-                                             >
-                                                {
-                                                   screenerRes['feature'][
-                                                      feature
-                                                   ][company]
-                                                }
-                                             </TableCell>
-                                          )
-                                       }
-                                    )}
-                                 </StyledTableRow>
-                              )
-                           )}
-                        </TableBody>
-                     </Table>
-                  </TableContainer>
-               </Grid>
-            </Grid>
-         </>
-      )
-   } else if (companies) {
+
+   const columns = [
+      { field: 'name', headerName: 'Company Name', width: 250 },
+      { field: 'one', type: 'number', headerName: '1 Year Score', width: 150 },
+      { field: 'two', type: 'number', headerName: '2 Year Score', width: 150 },
+      {
+         field: 'three',
+         type: 'number',
+         headerName: '3 Year Score',
+         width: 150,
+      },
+      { field: 'four', type: 'number', headerName: '4 Year Score', width: 150 },
+      { field: 'five', type: 'number', headerName: '5 Year Score', width: 150 },
+   ]
+
+   const handleRowClick = (params) => {
+      console.log(params)
+      handleClick(params.row.id)
+   }
+
+   const renderPage = (grid) => {
       return (
          <>
             <Grid
@@ -249,7 +145,12 @@ function Screening(props) {
                justify="center"
                spacing={2}
             >
-               <Grid item>
+               <Grid
+                  className="pt-7"
+                  container
+                  justifyContent="center"
+                  spacing={1}
+               >
                   <NavSearchbar
                      width={500}
                      data={features}
@@ -276,42 +177,71 @@ function Screening(props) {
                   {renderApplyButton()}
                   {renderClearButton()}
                </Grid>
-               <Grid item>
-                  <h1 className="pt-10 text-center text-2xl font-bold">
+               <Grid
+                  className="pt-7"
+                  container
+                  justifyContent="center"
+                  spacing={1}
+               >
+                  <h1 className="text-center text-2xl font-bold">
                      Companies matching your filter
                   </h1>
-                  <TableContainer
-                     sx={{ m: 3, width: '100%' }}
-                     component={Paper}
-                  >
-                     <Table sx={{ minWidth: 650 }}>
-                        <TableBody>
-                           {Object.values(companies).map((company) => (
-                              <StyledTableRow
-                                 onClick={() => handleClick(company)}
-                                 key={company}
-                                 sx={{
-                                    '&:last-child td, &:last-child th': {
-                                       border: 0,
-                                    },
-                                    cursor: 'pointer',
-                                 }}
-                              >
-                                 <TableCell
-                                    align="center"
-                                    component="th"
-                                    scope="row"
-                                 >
-                                    {company}
-                                 </TableCell>
-                              </StyledTableRow>
-                           ))}
-                        </TableBody>
-                     </Table>
-                  </TableContainer>
                </Grid>
+               <Grid>{grid}</Grid>
             </Grid>
          </>
+      )
+   }
+
+   if (screenerRes) {
+      selectedFilters.forEach((filter) =>
+         columns.push({ field: filter, headerName: filter, width: 150 })
+      )
+
+      const rows = Object.values(screenerRes['companies']).map((company) => ({
+         id: company,
+         name: company,
+         one: Math.random().toFixed(2),
+         two: Math.random().toFixed(2),
+         three: Math.random().toFixed(2),
+         four: Math.random().toFixed(2),
+         five: Math.random().toFixed(2),
+      }))
+
+      var newRows = []
+      rows.forEach((row) => {
+         var newRow = {}
+         Object.keys(screenerRes['feature']).forEach((feature) => {
+            newRow[feature] = screenerRes['feature'][feature][row.name]
+         })
+         Object.keys(row).forEach((key) => (newRow[key] = row[key]))
+         newRows.push(newRow)
+      })
+
+      return renderPage(
+         <DataGrid
+            onRowClick={handleRowClick}
+            sx={{ m: 3, width: '100%' }}
+            columns={columns}
+            rows={newRows}
+         />
+      )
+   } else if (companies) {
+      return renderPage(
+         <DataGrid
+            onRowClick={handleRowClick}
+            sx={{ m: 3, width: '100%' }}
+            columns={columns}
+            rows={Object.values(companies).map((company) => ({
+               id: company,
+               name: company,
+               one: Math.random().toFixed(2),
+               two: Math.random().toFixed(2),
+               three: Math.random().toFixed(2),
+               four: Math.random().toFixed(2),
+               five: Math.random().toFixed(2),
+            }))}
+         />
       )
    }
 }

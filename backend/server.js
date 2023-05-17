@@ -18,7 +18,7 @@ const db = admin.firestore()
 app.use(express.static(path.join(__dirname, 'client')))
 
 app.get('/api/screening/:filters', (req, res) => {
-   var companies = [
+   /*var companies = [
       'OpenExchange',
       'Metadata (Media and Information Services)',
       'ZeroStorefront',
@@ -40,8 +40,8 @@ app.get('/api/screening/:filters', (req, res) => {
       'Utobo',
       'Panhwar Jet',
       'Wheels',
-   ]
-   var topN = Math.round(companies.length * 0.25) // later change to a req param
+   ]*/
+
    var paths = {
       'Followers Count': 'company_twitter_data/followers_count',
       'Following Count': 'company_twitter_data/following_count',
@@ -58,7 +58,7 @@ app.get('/api/screening/:filters', (req, res) => {
          'daily/activity/data/tweet_metrics/other_users/retweet_count',
    }
    var filters = req.params['filters'].split(',')
-   const gatherData = async () => {
+   const gatherData = async (companies, topN) => {
       const featureObj = {}
       const resultCompany = new Set()
 
@@ -131,9 +131,16 @@ app.get('/api/screening/:filters', (req, res) => {
       return { companies: [...resultCompany], feature: featureObj }
    }
 
-   gatherData().then((data) => {
-      res.send(data)
-   })
+   db.collection('company_data')
+      .doc('1. Supported Companies')
+      .get()
+      .then((querySnapshot) => {
+         var companies = querySnapshot.data().companies
+         var topN = Math.round(companies.length * 0.25) // later change to a req param
+         gatherData(companies, topN).then((data) => {
+            res.send(data)
+         })
+      })
 })
 
 app.get('/api/:company/:time/:feature', (req, res) => {
@@ -174,6 +181,7 @@ app.get('/api/:company/:time/:feature', (req, res) => {
       res.send(data)
    })
 })
+
 app.get('/api/companies', (req, res) => {
    let companies = db.collection('company_data').doc('1. Supported Companies')
    companies.get().then((querySnapshot) => {
