@@ -5,7 +5,7 @@ import foaad from '../../images/foaad.png'
 import mahdi from '../../images/mahdi.jpg'
 import sadra from '../../images/sadra.jpg'
 import nick from '../../images/nick.png'
-import mansi from '../../images/mansi.png'
+import mansi from '../../images/mansi.JPG'
 import emily from '../../images/emily.png'
 import kenny from '../../images/kenny.jpg'
 
