@@ -95,6 +95,19 @@ function Contact() {
                <ContentCard
                   cardType="info"
                   data={{
+                     image: nick,
+                     title: 'Mansi',
+                     position: 'Computer Science Student, Data Science Minor',
+                     email: 'MANSI@calpoly.edu',
+                     description: 'Mansi Description',
+                  }}
+                  isGraph={0}
+               />
+            </Grid>
+            <Grid item xs={12} s={12} md={12}>
+               <ContentCard
+                  cardType="info"
+                  data={{
                      image: kenny,
                      title: 'Kenny Lau',
                      position: 'Computer Science Graduate Student',
