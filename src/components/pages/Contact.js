@@ -5,6 +5,7 @@ import foaad from '../../images/foaad.png'
 import mahdi from '../../images/mahdi.jpg'
 import sadra from '../../images/sadra.jpg'
 import nick from '../../images/nick.png'
+import mansi from '../../images/mansi.png'
 import emily from '../../images/emily.png'
 import kenny from '../../images/kenny.jpg'
 
@@ -95,11 +96,12 @@ function Contact() {
                <ContentCard
                   cardType="info"
                   data={{
-                     image: nick,
-                     title: 'Mansi',
+                     image: mansi,
+                     title: 'Mansi Achuthan',
                      position: 'Computer Science Student, Data Science Minor',
-                     email: 'MANSI@calpoly.edu',
-                     description: 'Mansi Description',
+                     email: 'machutha@calpoly.edu',
+                     description:
+                        'Mansi is a 4th year student at Cal Poly studying Computer Science, minoring in Data Science and Statistics. She is interested in distributed systems and deep learning. In her free time, she likes to dance and make mashups of her favorite songs.',
                   }}
                   isGraph={0}
                />
