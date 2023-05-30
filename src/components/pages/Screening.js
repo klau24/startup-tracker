@@ -27,7 +27,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
       height: 20,
    },
 }))
-
+/*
 const features = [
    { label: 'Followers Count' },
    { label: 'Following Count' },
@@ -38,10 +38,11 @@ const features = [
    { label: 'User Tweets' },
    { label: 'User Tweet Likes' },
    { label: 'User Retweets' },
-]
+] */
 
 function Screening(props) {
    const [companies, setCompanies] = useState(null)
+   const [features, setFeatures] = useState(null)
    const [screenerRes, setScreenerRes] = useState(null)
    const [selectedFilters, setSelectedFilters] = useState([])
 
@@ -49,7 +50,16 @@ function Screening(props) {
       axios
          .get('/api/companies')
          .then((res) => {
+            console.log(res.data)
             setCompanies(res.data)
+         })
+         .catch((err) => {
+            console.log(err)
+         })
+      axios
+         .get('/api/filters')
+         .then((res) => {
+            setFeatures(res.data)
          })
          .catch((err) => {
             console.log(err)

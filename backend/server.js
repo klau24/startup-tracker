@@ -17,31 +17,14 @@ const db = admin.firestore()
 
 app.use(express.static(path.join(__dirname, 'client')))
 
-app.get('/api/screening/:filters', (req, res) => {
-   /*var companies = [
-      'OpenExchange',
-      'Metadata (Media and Information Services)',
-      'ZeroStorefront',
-      'Elevate Brands',
-      'Kasa Living',
-      'Strike Graph',
-      'Seel (CommercialProfessional Insurance)',
-      'AllSeated',
-      'Experic',
-      'Good Mylk Co.',
-      'OnSite Waste Technologies',
-      'Kyte (Information Services)',
-      'Genomatica',
-      'Xpansiv',
-      'Sweet Flower',
-      'Emergence Healthcare Group',
-      'BeeFlow',
-      'Advantia Health',
-      'Utobo',
-      'Panhwar Jet',
-      'Wheels',
-   ]*/
+app.get('/api/filters', (req, res) => {
+   let filters = db.collection('filter_mappings')
+   filters.get().then((querySnapshot) => {
+      res.send({ ...querySnapshot.docs.map((doc) => doc.id) })
+   })
+})
 
+app.get('/api/screening/:filters', (req, res) => {
    var paths = {
       'Followers Count': 'company_twitter_data/followers_count',
       'Following Count': 'company_twitter_data/following_count',
@@ -61,48 +44,31 @@ app.get('/api/screening/:filters', (req, res) => {
    const gatherData = async (companies, topN) => {
       const featureObj = {}
       const resultCompany = new Set()
+      const companyData = db.collection('company_data_restructured')
 
       // Create an array of promises for all the queries
       const queryPromises = filters.map(async (filter) => {
          featureObj[filter] = {}
-
-         const companyData = db.collection('company_data')
-         const twitterDataPath = paths[filter].includes('company_twitter_data')
-         const filterMetric = paths[filter].split('/').pop()
-
+         var mapped_filter = await db
+            .collection('filter_mappings')
+            .doc(filter)
+            .get()
+         mapped_filter = mapped_filter.data()
          const querySnapshotPromises = companies.map(async (company) => {
-            const docRef = twitterDataPath
-               ? companyData.doc(company).collection('company_twitter_data')
-               : companyData
-                    .doc(company)
-                    .collection('quarterly')
-                    .doc('activity')
-                    .collection('data')
-
             try {
-               const docSnapshot = await docRef.get()
-               const doc = docSnapshot.docs[docSnapshot.docs.length - 1]
+               const dates = await companyData.doc(company).listCollections()
+               const mostRecentDate = dates[dates.length - 1]
+               const docRef = mostRecentDate.doc(mapped_filter.collection)
+               const doc = await docRef.get()
 
                if (doc && doc.exists) {
-                  if (twitterDataPath) {
-                     featureObj[filter][company] =
-                        doc.data()['data']['public_metrics'][filterMetric]
-                  } else {
-                     if (filter.includes('Company')) {
-                        featureObj[filter][company] =
-                           doc.data().tweet_metrics.company[filterMetric]
-                     } else if (
-                        filter === 'Users' ||
-                        filter === 'User Tweets'
-                     ) {
-                        featureObj[filter][company] = doc.data()[filterMetric]
-                     } else {
-                        featureObj[filter][company] =
-                           doc.data().tweet_metrics.other_users[filterMetric]
-                     }
+                  var feature_value = doc.data()
+                  var path = mapped_filter.path.split('/')
+                  console.log(feature_value, path)
+                  for (const subdoc of path) {
+                     feature_value = feature_value[subdoc]
                   }
-
-                  resultCompany.add(company)
+                  featureObj[filter][company] = feature_value
                }
             } catch (error) {
                // Handle the error as appropriate for your use case
@@ -118,24 +84,26 @@ app.get('/api/screening/:filters', (req, res) => {
 
       await Promise.all(queryPromises) // Wait for all the filters to complete
 
+      console.log(featureObj)
       for (const filter of filters) {
          const sortable = Object.fromEntries(
             Object.entries(featureObj[filter])
                .sort(([, a], [, b]) => b - a)
                .slice(0, topN)
          )
-
-         resultCompany.add(...Object.keys(sortable))
+         Object.keys(sortable).forEach(resultCompany.add, resultCompany)
       }
-
       return { companies: [...resultCompany], feature: featureObj }
    }
 
-   db.collection('company_data')
-      .doc('1. Supported Companies')
+   const companies = []
+   db.collection('company_data_restructured')
       .get()
       .then((querySnapshot) => {
-         var companies = querySnapshot.data().companies
+         querySnapshot.forEach((doc) => {
+            const company_name = doc.id
+            companies.push(company_name)
+         })
          var topN = Math.round(companies.length * 0.25) // later change to a req param
          gatherData(companies, topN).then((data) => {
             res.send(data)
@@ -183,10 +151,50 @@ app.get('/api/:company/:time/:feature', (req, res) => {
 })
 
 app.get('/api/companies', (req, res) => {
-   let companies = db.collection('company_data').doc('1. Supported Companies')
+   let companies = db.collection('company_data_restructured')
    companies.get().then((querySnapshot) => {
-      res.send({ ...querySnapshot.data()['companies'] })
+      res.send({ ...querySnapshot.docs.map((doc) => doc.id) })
    })
+})
+
+app.get('/api/screening', (req, res) => {
+   let companies = db.collection('company_data_restructured')
+   const gatherData = async () => {
+      const data = {}
+      companies
+         .get()
+         .then(async (querySnapshot) => {
+            const querySnapshotPromises = querySnapshot.docs.map(
+               async (doc) => {
+                  const company_id = doc.id
+                  db.collection('company_data_restructured')
+                     .doc(company_id)
+                     .listCollections()
+                     .then((dates) => {
+                        const mostRecentDate = dates[dates.length - 1]
+                        const docRef = mostRecentDate.doc('model_data')
+                        docRef
+                           .get()
+                           .then((features) => {
+                              data[company_id] = features.data()
+                           })
+                           .catch((error) => {
+                              console.error(company_id, error)
+                           })
+                     })
+                     .catch((error) => {
+                        console.error(company_id, error)
+                     })
+               }
+            )
+            await Promise.all(querySnapshotPromises)
+            return data
+         })
+         .catch((error) => {
+            console.error(error)
+         })
+   }
+   gatherData().then((data) => res.send({ data }))
 })
 
 app.get('/api/:company/companyTwitterData', (req, res) => {
