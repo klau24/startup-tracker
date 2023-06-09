@@ -118,9 +118,6 @@ function UserTweets(props) {
             <Grid className="pt-4 pb-4 pl-12 pr-12" container spacing={2.5}>
                <Grid item xs={12} s={12} md={12}>
                   <h1 className="text-center text-xl">User Tweets</h1>
-                  <h2 className="pt-3 text-center text-2xl font-bold">
-                     {props.company}
-                  </h2>
                </Grid>
                <Grid
                   className="p-4 pb-12"

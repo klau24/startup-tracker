@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import { Box } from '@mui/system'
@@ -6,6 +7,8 @@ import Widget from '../Widget'
 import ContentCard from '../ContentCard'
 import { companyTwitterData } from './CompanyTwitterData'
 import { companySourceData } from './CompanySourceData'
+import AdvancedNLP from './AdvancedNLP'
+import UserTweets from './UserTweets'
 import GenericButton from '../GenericButton'
 import SortSelector from '../SortSelector'
 import { Chart as ChartJS, registerables } from 'chart.js'
@@ -107,7 +110,6 @@ function CompanyTwitter(props) {
                switch (item) {
                   case 'Twitter':
                      if (twitterData && activity) {
-                        console.log(filterItems)
                         return (
                            <>
                               <Grid
@@ -297,6 +299,28 @@ function CompanyTwitter(props) {
                                     }
                                  })}
                               </Grid>
+                              <Grid
+                                 className="p-4 pb-12"
+                                 container
+                                 justifyContent="center"
+                                 spacing={1}
+                                 style={{ height: '4.5vh' }}
+                              ></Grid>
+                              <AdvancedNLP
+                                 company={props.company}
+                                 sortBy={props.sortBy}
+                              />
+                              <Grid
+                                 className="p-4 pb-12"
+                                 container
+                                 justifyContent="center"
+                                 spacing={1}
+                                 style={{ height: '4.5vh' }}
+                              ></Grid>
+                              <UserTweets
+                                 company={props.company}
+                                 sortBy={props.sortBy}
+                              />
                            </>
                         )
                      }
