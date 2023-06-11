@@ -68,7 +68,7 @@ const Navbar = (props) => {
             className="flex justify-evenly items-center h-20 bg-stHeader text-blacks shadow-sm font-mono"
             role="navigation"
          >
-            <Sidebar isOpen={isOpen} handleDrawerToggle={handleDrawerToggle} />
+            {/* <Sidebar isOpen={isOpen} handleDrawerToggle={handleDrawerToggle} /> */}
             {renderMenu()}
             {renderLogo()}
             {renderSearchbar()}

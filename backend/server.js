@@ -218,6 +218,91 @@ app.get('/api/:company/companyTwitterData', (req, res) => {
    })
 })
 
+// app.get('/api/:company/companyPredictionData', (req, res) => {
+//    // Data is currently only weekly
+//    let company = req.params['company']
+//    if (company.indexOf('+') >= 0) {
+//       company = company.replace('+', ' ')
+//    }
+
+//    let twitterData = db
+//       .collection('company_data')
+//       .doc(company)
+//       .collection('company_twitter_data_weekly')
+
+//    var data = {}
+//    twitterData.get().then((querySnapshot) => {
+//       querySnapshot.forEach((document) => {
+//          data[document.id] = document.data()
+//       })
+//       res.send(data)
+//    })
+// })
+
+// app.get('/api/:company/companyPredictionData', async (req, res) => {
+//    let company = req.params['company']
+//    if (company.indexOf('+') >= 0) {
+//       company = company.replace('+', ' ')
+//    }
+
+//    let predictionData = db
+//       .collection('company_data_restructured')
+//       .doc(company)
+
+//    const collections = await predictionData.listCollections();
+
+//    var data = {}
+//    collections.forEach(collection => {
+//       const model_data = db.collection(collection.id);
+//       const snapshot = model_data.get();
+//       console.log(snapshot)
+//       snapshot.forEach(doc => {
+//          console.log(doc.id, '=>', doc.data());
+//          data[collection.id] = doc.data()
+//       });
+//       console.log('Found subcollection with id:', collection.id);
+//       });
+//    console.log(data)
+//    res.send(data)
+// })
+
+app.get('/api/:company/companyPredictionData', async (req, res) => {
+   try {
+      let company = req.params['company']
+      if (company.includes('+')) {
+         company = company.replace('+', ' ')
+      }
+
+      const predictionData = db
+         .collection('company_data_restructured')
+         .doc(company)
+      const collectionsSnapshot = await predictionData.listCollections()
+
+      const data = {}
+      const sortedCollectionIds = collectionsSnapshot
+         .map((collection) => collection.id)
+         .sort()
+
+      for (const collectionId of sortedCollectionIds) {
+         const modelDataSnapshot = await predictionData
+            .collection(collectionId)
+            .doc('model_data')
+            .get()
+
+         if (modelDataSnapshot.exists) {
+            const modelData = modelDataSnapshot.data()
+            console.log(collectionId)
+            data[collectionId] = modelData
+         }
+      }
+
+      res.send(data)
+   } catch (error) {
+      console.log('Error retrieving company prediction data:', error)
+      res.status(500).send('Internal Server Error')
+   }
+})
+
 app.get('/', (req, res) => {
    res.sendFile(path.join(__dirname, 'client', 'index.html'))
 })
