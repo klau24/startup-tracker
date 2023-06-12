@@ -413,31 +413,71 @@ function CompanyTwitter(props) {
                         )
                      }
                   case 'Crunchbase':
-                     const schools = ['School A', 'School B', 'School C']
-                     const degrees = ['Degree A', 'Degree B', 'Degree C']
                      return (
-                        <Box sx={{ display: 'flex', gap: '20px' }}>
-                           <Widget
-                              title={"Founders' Alma Maters"}
-                              data={schools.map((school) => (
-                                 <>
-                                    {school}
-                                    <br />
-                                 </>
-                              ))}
-                              tooltip="Schools attended by the founders of the company"
-                           />
-                           <Widget
-                              title={"Founders' Degrees"}
-                              data={degrees.map((degree) => (
-                                 <>
-                                    {degree}
-                                    <br />
-                                 </>
-                              ))}
-                              tooltip="Degrees pursued by the founders of the company"
-                           />
-                        </Box>
+                        <div
+                           style={{
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              height: '100%',
+                           }}
+                        >
+                           {loading ? (
+                              <div
+                                 style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                 }}
+                              >
+                                 <p>Loading Crunchbase data...</p>
+                                 <br />
+                                 <BarLoader color="#000000" loading={loading} />
+                              </div>
+                           ) : predictionData ? (
+                              <Box sx={{ display: 'flex', gap: '20px' }}>
+                                 <Widget
+                                    title={"Founders' Alma Maters"}
+                                    data={predictionData[
+                                       Object.keys(predictionData).splice(-1)[0]
+                                    ]['founder_schools'].map((school) => (
+                                       <>
+                                          {school}
+                                          <br />
+                                       </>
+                                    ))}
+                                    tooltip="Schools attended by the founders of the company"
+                                 />
+                                 <Widget
+                                    title={"Founders' Degree Subjects"}
+                                    data={predictionData[
+                                       Object.keys(predictionData).splice(-1)[0]
+                                    ]['founder_degree_subj'].map((degree) => (
+                                       <>
+                                          {degree}
+                                          <br />
+                                       </>
+                                    ))}
+                                    tooltip="Degrees pursued by the founders of the company"
+                                 />
+                                 <Widget
+                                    title={"Founders' Degree Types"}
+                                    data={predictionData[
+                                       Object.keys(predictionData).splice(-1)[0]
+                                    ]['founder_degree_type'].map((type) => (
+                                       <>
+                                          {type}
+                                          <br />
+                                       </>
+                                    ))}
+                                    tooltip="Degrees pursued by the founders of the company"
+                                 />
+                              </Box>
+                           ) : (
+                              <p>No data available!</p>
+                           )}
+                        </div>
                      )
                   default:
                      return null
