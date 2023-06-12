@@ -13,6 +13,7 @@ import TableRow, { tableRowClasses } from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import MenuButton from '../MenuButton'
 import GenericButton from '../GenericButton'
+import { BarLoader } from 'react-spinners'
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
    [`&.${tableRowClasses.root}`]: {
@@ -45,10 +46,11 @@ function Screening(props) {
    const [features, setFeatures] = useState(null)
    const [screenerRes, setScreenerRes] = useState(null)
    const [selectedFilters, setSelectedFilters] = useState([])
+   const [loading, setLoading] = useState(true)
 
    useEffect(() => {
       axios
-         .get('/api/companies')
+         .get('/api/screen')
          .then((res) => {
             console.log(res.data)
             setCompanies(res.data)
@@ -127,16 +129,17 @@ function Screening(props) {
 
    const columns = [
       { field: 'name', headerName: 'Company Name', width: 250 },
-      { field: 'one', type: 'number', headerName: '1 Year Score', width: 150 },
-      { field: 'two', type: 'number', headerName: '2 Year Score', width: 150 },
+      {
+         field: 'description',
+         headerName: 'Company Description',
+         width: 400,
+      },
       {
          field: 'three',
          type: 'number',
-         headerName: '3 Year Score',
+         headerName: 'Company Funding Score (3 years from now)',
          width: 150,
       },
-      { field: 'four', type: 'number', headerName: '4 Year Score', width: 150 },
-      { field: 'five', type: 'number', headerName: '5 Year Score', width: 150 },
    ]
 
    const handleRowClick = (params) => {
@@ -203,20 +206,22 @@ function Screening(props) {
       )
    }
 
+   var rows = []
+
+   if (companies) {
+      rows = Object.values(companies.data).map((company) => ({
+         id: company.name,
+         name: company.name,
+         description: company.description,
+         three: company.prediction ? company.prediction : -1.0,
+      }))
+      console.log(rows)
+   }
+
    if (screenerRes) {
       selectedFilters.forEach((filter) =>
          columns.push({ field: filter, headerName: filter, width: 150 })
       )
-
-      const rows = Object.values(screenerRes['companies']).map((company) => ({
-         id: company,
-         name: company,
-         one: Math.random().toFixed(2),
-         two: Math.random().toFixed(2),
-         three: Math.random().toFixed(2),
-         four: Math.random().toFixed(2),
-         five: Math.random().toFixed(2),
-      }))
 
       var newRows = []
       rows.forEach((row) => {
@@ -237,20 +242,13 @@ function Screening(props) {
          />
       )
    } else if (companies) {
+      console.log(companies)
       return renderPage(
          <DataGrid
             onRowClick={handleRowClick}
             sx={{ m: 3, width: '100%' }}
             columns={columns}
-            rows={Object.values(companies).map((company) => ({
-               id: company,
-               name: company,
-               one: Math.random().toFixed(2),
-               two: Math.random().toFixed(2),
-               three: Math.random().toFixed(2),
-               four: Math.random().toFixed(2),
-               five: Math.random().toFixed(2),
-            }))}
+            rows={rows}
          />
       )
    }

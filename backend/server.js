@@ -157,44 +157,42 @@ app.get('/api/companies', (req, res) => {
    })
 })
 
-app.get('/api/screening', (req, res) => {
-   let companies = db.collection('company_data_restructured')
-   const gatherData = async () => {
+app.get('/api/screen', async (req, res) => {
+   const gatherData = async (companies) => {
       const data = {}
-      companies
-         .get()
-         .then(async (querySnapshot) => {
-            const querySnapshotPromises = querySnapshot.docs.map(
-               async (doc) => {
-                  const company_id = doc.id
-                  db.collection('company_data_restructured')
-                     .doc(company_id)
-                     .listCollections()
-                     .then((dates) => {
-                        const mostRecentDate = dates[dates.length - 1]
-                        const docRef = mostRecentDate.doc('model_data')
-                        docRef
-                           .get()
-                           .then((features) => {
-                              data[company_id] = features.data()
-                           })
-                           .catch((error) => {
-                              console.error(company_id, error)
-                           })
-                     })
-                     .catch((error) => {
-                        console.error(company_id, error)
-                     })
-               }
-            )
-            await Promise.all(querySnapshotPromises)
-            return data
-         })
-         .catch((error) => {
-            console.error(error)
-         })
+      const querySnapshotPromises = companies.map(async (doc) => {
+         try {
+            const dates = await db
+               .collection('company_data_restructured')
+               .doc(doc.id)
+               .listCollections()
+            const mostRecentDate = dates[dates.length - 1]
+            const docRef = mostRecentDate.doc('model_data')
+            const features = await docRef.get()
+            data[doc.id] = {
+               name: doc.id,
+               prediction: features.data()['3_year_prediction'],
+               description: features.data()['description'],
+            }
+         } catch (error) {
+            console.error(doc.id, error)
+         }
+      })
+
+      await Promise.all(querySnapshotPromises)
+      return data
    }
-   gatherData().then((data) => res.send({ data }))
+
+   try {
+      const companiesSnapshot = await db
+         .collection('company_data_restructured')
+         .get()
+      const data = await gatherData(companiesSnapshot.docs)
+      res.send({ data })
+   } catch (error) {
+      console.error(error)
+      res.status(500).send({ error: 'An error occurred' })
+   }
 })
 
 app.get('/api/:company/companyTwitterData', (req, res) => {

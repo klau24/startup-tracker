@@ -12,6 +12,40 @@ import AdvancedNLP from './components/pages/AdvancedNLP'
 import Sidebar from './components/sidebar/Sidebar'
 import { useNavigate, useLocation } from 'react-router-dom'
 
+const Login = () => {
+   const [isVerified, setIsVerified] = useState(false)
+
+   const checkPw = () => {
+      // gets the current input value
+      const answer = document.getElementById('password').value
+
+      if (answer === 'startup') {
+         setIsVerified(true)
+      } else {
+         alert("Sorry, that's not it")
+      }
+   }
+
+   return (
+      <>
+         {isVerified ? (
+            <App />
+         ) : (
+            <center>
+               <form onSubmit={checkPw}>
+                  <input
+                     id="password"
+                     name="password"
+                     placeholder="password"
+                     type="password"
+                  />
+                  <button>UNLOCK</button>
+               </form>
+            </center>
+         )}
+      </>
+   )
+}
 function App() {
    const [isOpen, setIsOpen] = useState(false)
    const [navbarSearch, setNavbarSearch] = useState(null)
@@ -105,4 +139,4 @@ function App() {
    )
 }
 
-export default App
+export default Login
