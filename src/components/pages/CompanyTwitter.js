@@ -157,8 +157,10 @@ function CompanyTwitter(props) {
                            data={{
                               title: 'Funding Success Prediction Scores',
                               labels: Object.keys(predictionData),
-                              data: Object.values(predictionData).map(
-                                 (val) => val['3_year_probability']
+                              data: Object.values(predictionData).map((val) =>
+                                 val['3_year_probability']
+                                    ? val['3_year_probability']
+                                    : val['3_year_prediction']
                               ),
                            }}
                            isGraph={1}
