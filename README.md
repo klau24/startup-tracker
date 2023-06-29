@@ -4,6 +4,10 @@ A website that visualizes startup social media data to draw conclusions about st
 
 ![image](https://user-images.githubusercontent.com/49251143/213969906-276882e8-f294-4a5c-936b-5de59f9b8af3.png)
 
+![image](https://user-images.githubusercontent.com/49251143/223628353-d1a3dabf-5164-49b1-8dd1-0d26a45f1954.png)
+
+![image](https://user-images.githubusercontent.com/49251143/223628512-36e1ad5b-e64c-49d8-9255-a7ed1d550220.png)
+
 Website is currently hosted at this URL: [http://104.196.224.131/](http://104.196.224.131/)
 
 # Resources
