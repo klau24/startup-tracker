@@ -56,9 +56,6 @@ function AdvancedNLP(props) {
             >
                <Grid item xs={12} s={12} md={12}>
                   <h1 className="text-center text-xl">Advanced NLP</h1>
-                  <h2 className="pt-3 text-center text-2xl font-bold">
-                     {props.company}
-                  </h2>
                </Grid>
 
                <Grid
@@ -202,6 +199,8 @@ function AdvancedNLP(props) {
                               />
                            </Grid>
                         )
+                     default:
+                        return null
                   }
                })}
             </Grid>

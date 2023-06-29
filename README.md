@@ -12,9 +12,9 @@ Website is currently hosted at this URL: [http://104.196.224.131/](http://104.19
 
 # Resources
 
-[Predicting Startup Success Using Publicly Available Data](https://drive.google.com/file/d/1bfbzbbVeFdBxRVeWjBTIEj-16HjIILgn/view?usp=sharing)
+[Predicting Startup Success Using Publicly Available Data](https://digitalcommons.calpoly.edu/cgi/viewcontent.cgi?article=4203&context=theses) By Emily Gavrilenko
 
-[Emily Master Defense Slides](https://drive.google.com/file/d/1bfbzbbVeFdBxRVeWjBTIEj-16HjIILgn/view?usp=sharing)
+[Utilizing Public Data and Feature Engineering Techniques to Predict Startup Success](https://github.com/klau24/startup-tracker/files/11775963/final-market-report.pdf) By Mansi Achuthan, Nicholas Hausman
 
 # Tech Stack
 
